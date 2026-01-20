@@ -35,5 +35,8 @@
     "**/*.md": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "jiti": "^2.6.1"
   }
 }
