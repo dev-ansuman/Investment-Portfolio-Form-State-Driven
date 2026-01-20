@@ -1,96 +1,102 @@
-/* :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, Courier, monospace;
+  box-sizing: border-box;
 }
 
 body {
-  margin: 0;
+  background-color: #eefdf5;;
+}
+
+.formScreen {
+  background-color: white;
+  height: 100%;
+  width: 48%;
+  /* width: 96%; */
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border-radius: 20px;
+  border: 1px solid #00bc7d(28, 27, 27);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* background-color: green; */
+  /* padding: 24px; */
+  padding: 2.3% 3%;
+  align-items: flex-start;
+  gap: 20px;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.fieldDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5px;
+  width: 100%;
+  /* background-color: red; */
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.fieldTitle {
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #3178c6aa);
+.subFieldTitle {
+  font-size: 11px;
 }
 
-.card {
-  padding: 2em;
+
+.fieldInput {
+  border: 1px solid rgb(97, 95, 95);
+  border-radius: 6px;
+  background-color: rgb(248, 248, 248);
+  height: 29px;
+  width: 100%;
+  /* background-color: green; */
 }
 
-.read-the-docs {
-  color: #888;
+.goalHorizon {
+  display: flex;
+  /* background-color: red; */
+  width: 100%;
+  gap: 10px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.radioContainer {
+  display: flex;
+  /* gap: 12px; */
+  gap: 2.5%;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+
+.radioCheckboxText {
+    font-size: 12px;
+    border: 1px solid rgb(97, 95, 95);
+    color: rgb(97, 95, 95);
+    /* padding: 5px 9px; */
+    border-radius: 10px;
+    cursor: pointer;
+    width: 19%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 7px 12px;
+    /* background-color: green; */
+}
+
+/* .portfolioTypeDiv input:checked+.radioCheckboxText {
+    background-color: #42e0ae;
+    border: 1px solid black;
+    color: black;
+
 } */
+
+.required {
+  color: red;
+}
+
+
+/* part 2 */
+
+.asset {
+  display: flex;
+}

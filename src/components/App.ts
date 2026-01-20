@@ -1,4 +1,3 @@
-import { form } from './Form.ts'
+import { formScreen } from './Form/Form.ts';
 
-
-export { form }
+export { formScreen };

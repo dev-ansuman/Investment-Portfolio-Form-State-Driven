@@ -1,61 +1,62 @@
-const createInput = (label: string, placeholder: string): HTMLDivElement => {
-    const inputDiv = document.createElement('div') as HTMLDivElement
-    inputDiv.classList.add('inputDiv')
+const createDiv = () => {
+  const newDiv = document.createElement('div') as HTMLDivElement;
+  return newDiv;
+};
 
-    const inputLabel = document.createElement('label') as HTMLLabelElement
-    inputLabel.textContent = label
+const createLabel = () => {
+  const newLabel = document.createElement('label') as HTMLLabelElement;
+  return newLabel;
+};
 
-    const input = document.createElement('input') as HTMLInputElement
-    input.placeholder = placeholder
+const createInput = (inputType: string = 'text', nameAttribute: string): HTMLInputElement => {
+  const input = document.createElement('input') as HTMLInputElement;
+  input.type = inputType;
+  input.name = nameAttribute;
 
-    inputDiv.append(inputLabel, input)
+  return input;
+};
 
-    return inputDiv;
-}
-
-const createDropdown = (label: string, options: string[]) => {
-    const dropdownDiv = document.createElement('div') as HTMLDivElement
-    dropdownDiv.classList.add('dropdownDiv')
-
-    const dropdownLabel = document.createElement('label') as HTMLLabelElement
-    dropdownLabel.textContent = label
-
-    const select = document.createElement('select') as HTMLSelectElement
-    for(let i = -1; i < options.length; i++) {
-        const option = document.createElement('option') as HTMLOptionElement
-        if(i === -1) {
-            option.textContent = '-- Select --'
-            select.appendChild(option)
-            continue
-        }
-        option.textContent = options[i]
-        select.appendChild(option)
+const createDropdown = (options: string[], nameAttribute: string): HTMLSelectElement => {
+  const select = document.createElement('select') as HTMLSelectElement;
+  select.name = nameAttribute;
+  for (let i = -1; i < options.length; i++) {
+    const option = document.createElement('option') as HTMLOptionElement;
+    if (i === -1) {
+      option.textContent = '-- Select --';
+      select.appendChild(option);
+      continue;
     }
+    option.textContent = options[i];
+    select.appendChild(option);
+  }
 
-    dropdownDiv.append(dropdownLabel, select)
+  return select;
+};
 
-    return dropdownDiv;
-}
+const createRadioORCheckbox = (
+  options: string[],
+  inputName: string,
+  inputType: string
+): HTMLDivElement => {
+  const radioContainer = createDiv() as HTMLDivElement;
+  radioContainer.classList.add('radioContainer');
 
-const createRadio = (label: string, options: string[]) => {
-    const radioDiv = document.createElement('div') as HTMLDivElement
-    radioDiv.classList.add('radioDiv')
+  for (let i = 0; i < options.length; i++) {
+    const radioInput = createInput(inputType, '') as HTMLInputElement;
+    radioInput.classList.add('radioCheckbox');
+    radioInput.setAttribute('id', options[i] + `${inputName}`);
+    radioInput.name = inputName;
+    radioInput.hidden = true;
 
-    const radioDivLabel = document.createElement('label') as HTMLLabelElement
-    radioDivLabel.textContent = label
+    const label = document.createElement('label') as HTMLLabelElement;
+    label.setAttribute('for', radioInput.id);
+    label.textContent = options[i];
+    label.classList.add('radioCheckboxText');
 
-    for(let i = 0; i < options.length; i++) {
-        const label = document.createElement('label') as HTMLLabelElement
-        label.id = i.toString()
+    radioContainer.append(radioInput, label);
+  }
 
-        const radioInput = document.createElement('input') as HTMLInputElement
-        radioInput.type = 'radio'
-        radioInput.setAttribute('for', `${i}`)
+  return radioContainer;
+};
 
-        radioInput.textContent = options[i]
-        // select.appendChild(option)
-    }
-
-}
-
-export { createInput, createDropdown, createRadio }
+export { createLabel, createDiv, createInput, createDropdown, createRadioORCheckbox };
