@@ -21,6 +21,13 @@ const createInput = (inputType: string = 'text', nameAttribute: string): HTMLInp
   return input;
 };
 
+const createTextarea = (textareaPlaceholder: string, textareaRows: number): HTMLTextAreaElement => {
+  const newtextarea = document.createElement('textarea') as HTMLTextAreaElement;
+  newtextarea.placeholder = textareaPlaceholder;
+  newtextarea.rows = textareaRows;
+  return newtextarea;
+};
+
 const createDropdown = (options: string[], nameAttribute: string): HTMLSelectElement => {
   const select = document.createElement('select') as HTMLSelectElement;
   select.name = nameAttribute;
@@ -41,7 +48,9 @@ const createDropdown = (options: string[], nameAttribute: string): HTMLSelectEle
 const createRadioORCheckbox = (
   options: string[],
   inputName: string,
-  inputType: string
+  inputType: string,
+  className: string,
+  hiddenProperty: boolean
 ): HTMLDivElement => {
   const radioContainer = createDiv() as HTMLDivElement;
   radioContainer.classList.add('radioContainer');
@@ -51,12 +60,15 @@ const createRadioORCheckbox = (
     radioInput.classList.add('radioCheckbox');
     radioInput.setAttribute('id', options[i] + `${inputName}`);
     radioInput.name = inputName;
-    radioInput.hidden = true;
+    radioInput.hidden = hiddenProperty;
 
     const label = document.createElement('label') as HTMLLabelElement;
     label.setAttribute('for', radioInput.id);
     label.textContent = options[i];
-    label.classList.add('radioCheckboxText');
+    // const someClass = 'radioCheckboxText'
+    if (className) {
+      label.classList.add(className);
+    }
 
     radioContainer.append(radioInput, label);
   }
@@ -64,4 +76,12 @@ const createRadioORCheckbox = (
   return radioContainer;
 };
 
-export { createLabel, createDiv, createButton, createInput, createDropdown, createRadioORCheckbox };
+export {
+  createLabel,
+  createDiv,
+  createButton,
+  createTextarea,
+  createInput,
+  createDropdown,
+  createRadioORCheckbox,
+};

@@ -38,6 +38,7 @@ body {
 .fieldTitle {
   font-size: 15px;
   font-weight: 600;
+  margin-left: 2px;
 }
 
 .fieldInput {
@@ -115,4 +116,11 @@ body {
 .deleteButton {
   background: transparent;
   border: none;
+}
+
+
+/* part 3 */
+.alignPreferences {
+  display: flex;
+  /* flex-direction: row; */
 }

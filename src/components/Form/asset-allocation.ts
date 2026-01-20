@@ -8,7 +8,7 @@ import {
 import { ASSET_ALLOCATION } from './constants.ts';
 
 // parent div for asset allocation
-const assetAllocation = document.createElement('div') as HTMLDivElement;
+const assetAllocation = createDiv() as HTMLDivElement;
 assetAllocation.classList.add('formScreen');
 
 // annual investment capacity div

@@ -2,7 +2,7 @@ import { createInput, createDropdown, createRadioORCheckbox, createDiv } from '.
 import { INVESTMENT_DETAILS } from './constants.ts';
 
 // parent div for investment details
-const investmentDetail = document.createElement('div') as HTMLDivElement;
+const investmentDetail = createDiv() as HTMLDivElement;
 investmentDetail.classList.add('formScreen');
 
 // portfolio name div
