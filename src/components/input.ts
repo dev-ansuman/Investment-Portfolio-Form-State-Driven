@@ -8,6 +8,11 @@ const createLabel = () => {
   return newLabel;
 };
 
+const createButton = () => {
+  const newButton = document.createElement('button') as HTMLButtonElement;
+  return newButton;
+};
+
 const createInput = (inputType: string = 'text', nameAttribute: string): HTMLInputElement => {
   const input = document.createElement('input') as HTMLInputElement;
   input.type = inputType;
@@ -59,4 +64,4 @@ const createRadioORCheckbox = (
   return radioContainer;
 };
 
-export { createLabel, createDiv, createInput, createDropdown, createRadioORCheckbox };
+export { createLabel, createDiv, createButton, createInput, createDropdown, createRadioORCheckbox };

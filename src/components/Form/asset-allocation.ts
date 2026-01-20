@@ -1,9 +1,15 @@
-import { createInput, createDropdown, createDiv, createRadioORCheckbox } from '../input.ts';
+import {
+  createInput,
+  createDropdown,
+  createDiv,
+  createRadioORCheckbox,
+  createButton,
+} from '../input.ts';
 import { ASSET_ALLOCATION } from './constants.ts';
 
 // parent div for asset allocation
-const assetAllocationScreen = document.createElement('div') as HTMLDivElement;
-assetAllocationScreen.classList.add('formScreen');
+const assetAllocation = document.createElement('div') as HTMLDivElement;
+assetAllocation.classList.add('formScreen');
 
 // annual investment capacity div
 const annualInvestmentCapacityDiv = createDiv() as HTMLDivElement;
@@ -15,6 +21,7 @@ const annualInvestmentCapacityInput = createInput(
   '',
   ASSET_ALLOCATION.ANNUAL_INVESTMENT_CAPACITY.NAME
 ) as HTMLInputElement;
+// const currencyDropdown = createDropdown(ASSET_ALLOCATION.CURRENCY.OPTIONS, ASSET_ALLOCATION.CURRENCY.NAME) as HTMLSelectElement;
 annualInvestmentCapacityInput.classList.add('fieldInput');
 annualInvestmentCapacityDiv.append(annualInvestmentCapacityTitle, annualInvestmentCapacityInput);
 
@@ -44,8 +51,18 @@ const monthlyContributionInput = createInput(
 monthlyContributionInput.classList.add('fieldInput');
 monthlyContributionDiv.append(monthlyContributionTitle, monthlyContributionInput);
 
+// putting lump sum amount and monthly contribution under a div
+const lumpMonthlyDiv = createDiv() as HTMLDivElement;
+lumpMonthlyDiv.append(lumpSumAmountDiv, monthlyContributionDiv);
+lumpMonthlyDiv.classList.add('goalHorizon');
+
 // assets container div
 const assetContainer = createDiv() as HTMLDivElement;
+assetContainer.classList.add('assetContainer');
+const assetsTitle = createDiv() as HTMLDivElement;
+assetsTitle.textContent = ASSET_ALLOCATION.ASSETS.TITLE;
+assetsTitle.classList.add('fieldTitle');
+assetContainer.append(assetsTitle);
 
 /*  function to create asset-div with asset class, percentage allocation, 
     specific fund and current value */
@@ -103,7 +120,13 @@ const createAsset = () => {
     ASSET_ALLOCATION.CURRENT_VALUE.NAME
   ) as HTMLInputElement;
   currentValueInput.classList.add('fieldInput');
-  currentValueDiv.append(currentValueTitle, currentValueInput);
+  const deleteButton = createButton() as HTMLButtonElement;
+  deleteButton.textContent = '🗑️';
+  deleteButton.classList.add('deleteButton');
+  const inputDelete = createDiv() as HTMLDivElement;
+  inputDelete.append(currentValueInput, deleteButton);
+  inputDelete.classList.add('deleteAssetContainer');
+  currentValueDiv.append(currentValueTitle, inputDelete);
 
   // appending all asset fields in the assets-div
   assetDiv.append(assetClassDiv, percentageAllocationDiv, specificFundDiv, currentValueDiv);
@@ -114,6 +137,10 @@ const createAsset = () => {
 
 // add asset-div to asset container
 assetContainer.append(createAsset());
+
+// add asset Button
+const addAssetButton = createButton() as HTMLButtonElement;
+addAssetButton.textContent = ASSET_ALLOCATION.ADD_ASSET.LABEL;
 
 // investment style div
 const investmentStyleDiv = createDiv() as HTMLDivElement;
@@ -129,12 +156,12 @@ const investmentStyleCheckBox = createRadioORCheckbox(
 // investmentStyleCheckBox.classList.add('fieldInput');
 investmentStyleDiv.append(investmentStyleTitle, investmentStyleCheckBox);
 
-assetAllocationScreen.append(
+assetAllocation.append(
   annualInvestmentCapacityDiv,
-  lumpSumAmountDiv,
-  monthlyContributionDiv,
+  lumpMonthlyDiv,
   assetContainer,
+  addAssetButton,
   investmentStyleDiv
 );
 
-export { assetAllocationScreen };
+export { assetAllocation };

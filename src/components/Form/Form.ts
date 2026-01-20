@@ -1,4 +1,5 @@
-// import {investmentDetailScreen} from './investment-details-screen.ts'
-import { assetAllocationScreen } from './asset-allocation-screen.ts';
+// import {investmentDetail} from './investment-details.ts'
+import { assetAllocation } from './asset-allocation.ts';
 
-export { assetAllocationScreen as formScreen };
+export { assetAllocation as formScreen };
+// export { investmentDetail as formScreen };

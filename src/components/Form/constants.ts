@@ -47,6 +47,10 @@ const ASSET_ALLOCATION = {
     PLACEHOLDER: 'Enter a amount, greater than 1',
     NAME: 'annualInvestmentCapacity',
   },
+  CURRENCY: {
+    OPTIONS: ['₹', '$'],
+    NAME: 'curreny',
+  },
   LUMP_SUM_AMOUNT: {
     LABEL: 'Lump Sum Amount',
     PLACEHOLDER: 'INR',
@@ -58,6 +62,9 @@ const ASSET_ALLOCATION = {
     PLACEHOLDER: 'INR',
     TYPE: 'number',
     NAME: 'monthlyContribution',
+  },
+  ASSETS: {
+    TITLE: 'Assets',
   },
   ASSET_CLASS: {
     LABEL: 'Asset Class',
@@ -78,6 +85,9 @@ const ASSET_ALLOCATION = {
     PLACEHOLDER: 'INR',
     TYPE: 'number',
     NAME: 'currentValue',
+  },
+  ADD_ASSET: {
+    LABEL: 'Add Asset',
   },
   INVESTMENT_STYLE: {
     LABEL: 'Investment Style',

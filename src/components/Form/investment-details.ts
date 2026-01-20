@@ -2,8 +2,8 @@ import { createInput, createDropdown, createRadioORCheckbox, createDiv } from '.
 import { INVESTMENT_DETAILS } from './constants.ts';
 
 // parent div for investment details
-const investmentDetailScreen = document.createElement('div') as HTMLDivElement;
-investmentDetailScreen.classList.add('formScreen');
+const investmentDetail = document.createElement('div') as HTMLDivElement;
+investmentDetail.classList.add('formScreen');
 
 // portfolio name div
 const portfolioNameDiv = createDiv() as HTMLDivElement;
@@ -78,7 +78,7 @@ const riskToleranceRadio = createRadioORCheckbox(
 riskToleranceDiv.append(riskToleranceTitle, riskToleranceRadio);
 
 // append all divs to parent
-investmentDetailScreen.append(portfolioNameDiv, portfolioTypeDiv, goalHorizonDiv, riskToleranceDiv);
+investmentDetail.append(portfolioNameDiv, portfolioTypeDiv, goalHorizonDiv, riskToleranceDiv);
 
 // export parent
-export { investmentDetailScreen };
+export { investmentDetail };
