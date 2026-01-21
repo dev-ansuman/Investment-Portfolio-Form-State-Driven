@@ -11,6 +11,8 @@ const AssetAllocation = (): HTMLDivElement => {
   // parent div for asset allocation
   const assetAllocation = createDiv() as HTMLDivElement;
   assetAllocation.classList.add('formScreen');
+  assetAllocation.id = 'asset-allocation';
+  assetAllocation.style.display = 'none';
 
   // annual investment capacity div
   const annualInvestmentCapacityDiv = createDiv() as HTMLDivElement;

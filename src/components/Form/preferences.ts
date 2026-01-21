@@ -5,6 +5,8 @@ const Preference = (): HTMLDivElement => {
   // parent div for preferences
   const preferencesDiv = createDiv() as HTMLDivElement;
   preferencesDiv.classList.add('formScreen');
+  preferencesDiv.id = 'preferences';
+  preferencesDiv.style.display = 'none';
 
   // automated rebalancing div
   const automatedRebalancingDiv = createDiv() as HTMLDivElement;

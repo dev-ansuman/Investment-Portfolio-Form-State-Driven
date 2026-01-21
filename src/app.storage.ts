@@ -1,23 +1,20 @@
-// const setLocalStorage = (data: any[]): void => {
-//     const localStorageString: string = JSON.stringify(data);
+import type { PortfolioFormRecords } from './app.types.ts';
 
-//     localStorage.setItem('portfolioFormData', localStorageString)
-// }
+const setLocalStorage = (data: PortfolioFormRecords[]): void => {
+  const localStorageString: string = JSON.stringify(data);
 
-//  const getLocalStorage = (): any[] => {
+  localStorage.setItem('portfolioFormData', localStorageString);
+};
 
-//     const localStorageString: string | null = localStorage.getItem('portfolioFormData')
+const getLocalStorage = (): PortfolioFormRecords[] => {
+  const localStorageString: string | null = localStorage.getItem('portfolioFormData');
 
-//     if (localStorageString) {
-//         const localStorageData = JSON.parse(localStorageString)
-//         return localStorageData
-//     }else {
-//         return []
-//     }
-// }
+  if (localStorageString) {
+    const localStorageData = JSON.parse(localStorageString);
+    return localStorageData;
+  } else {
+    return [];
+  }
+};
 
-// const clearLocalStorage = (): void => {
-//     localStorage.clear()
-// }
-
-// export {setLocalStorage, getLocalStorage, clearLocalStorage}
+export { setLocalStorage, getLocalStorage };

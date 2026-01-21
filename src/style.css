@@ -9,11 +9,18 @@ body {
   background-color: #eefdf5;;
 }
 
+.formContainer {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .formScreen {
   background-color: white;
   height: 100%;
-  width: 48%;
-  /* width: 96%; */
+  /* width: 48%; */
+  width: 96%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -124,3 +131,40 @@ body {
   display: flex;
   /* flex-direction: row; */
 }
+
+.navigationButton {
+    padding: 8px 15px;
+    font-size: large;
+    font-weight: 600;
+    border-radius: 16px;
+    margin-bottom: 8px;
+}
+
+.buttonContainer {
+    display: flex;
+    /* background-color: red; */
+    width: 54%;
+    justify-content: space-between;
+    margin: auto;
+}
+
+#previousButton {
+  border: 1px solid black;
+}
+
+#continueButton {
+  border: none;
+  background-color: #42e0ae;
+}
+
+/* #submitButton {
+  display: none;
+}
+
+#asset-allocation {
+  display: none;
+}
+
+#preferences {
+  display: none;
+} */

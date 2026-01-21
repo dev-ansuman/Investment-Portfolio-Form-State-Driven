@@ -1,5 +1,13 @@
 import { InvestmentDetail } from './investment-details.ts';
-// import { assetAllocation } from './asset-allocation.ts';
-// import { Preference } from './preferences.ts';
+import { AssetAllocation } from './asset-allocation.ts';
+import { Preference } from './preferences.ts';
+import { createDiv } from '../input.ts';
 
-export { InvestmentDetail as formScreen };
+const form = (): HTMLDivElement => {
+  const form = createDiv() as HTMLDivElement;
+  form.append(InvestmentDetail(), AssetAllocation(), Preference());
+
+  return form;
+};
+
+export { form as formScreen };

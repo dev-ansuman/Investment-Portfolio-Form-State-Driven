@@ -5,6 +5,8 @@ const InvestmentDetail = (): HTMLDivElement => {
   // parent div for investment details
   const investmentDetail = createDiv() as HTMLDivElement;
   investmentDetail.classList.add('formScreen');
+  investmentDetail.id = 'investment-details';
+  investmentDetail.style.display = '';
 
   // portfolio name div
   const portfolioNameDiv = createDiv() as HTMLDivElement;
