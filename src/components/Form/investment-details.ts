@@ -1,3 +1,11 @@
+import { state } from '../../app.state.ts';
+import {
+  validatePart1InvestmentGoal,
+  validatePart1InvestmentHorizon,
+  validatePart1PortfolioName,
+  validatePart1PortfolioType,
+  validatePart1RiskTolerance,
+} from '../../services/validations.ts';
 import { createInput, createDropdown, createRadioORCheckbox, createDiv } from '../input.ts';
 import { INVESTMENT_DETAILS } from './constants.ts';
 
@@ -6,7 +14,7 @@ const InvestmentDetail = (): HTMLDivElement => {
   const investmentDetail = createDiv() as HTMLDivElement;
   investmentDetail.classList.add('formScreen');
   investmentDetail.id = 'investment-details';
-  investmentDetail.style.display = '';
+  // investmentDetail.style.display = '';
 
   // portfolio name div
   const portfolioNameDiv = createDiv() as HTMLDivElement;
@@ -20,6 +28,13 @@ const InvestmentDetail = (): HTMLDivElement => {
     INVESTMENT_DETAILS.PORTFOLIO_NAME.NAME
   ) as HTMLInputElement;
   portfolioNameInput.classList.add('fieldInput');
+
+  portfolioNameInput.value = state.form.portfolioName;
+  portfolioNameInput.addEventListener('input', (event) => {
+    state.form.portfolioName = (event.target as HTMLInputElement).value;
+    validatePart1PortfolioName();
+  });
+
   portfolioNameDiv.append(portfolioNameTitle, portfolioNameInput);
 
   // portfolio type div
@@ -36,6 +51,26 @@ const InvestmentDetail = (): HTMLDivElement => {
     INVESTMENT_DETAILS.PORTFOLIO_TYPE.CLASS,
     INVESTMENT_DETAILS.PORTFOLIO_TYPE.HIDDEN
   ) as HTMLDivElement;
+
+  const portfolioTypeRadios = portfolioTypeRadio.querySelectorAll('input[type="radio"]');
+  portfolioTypeRadios.forEach((radio) => {
+    const radioInput = radio as HTMLInputElement;
+    const radioLabel = radioInput.nextElementSibling?.textContent;
+
+    if (state.form.portfolioType && radioLabel === state.form.portfolioType) {
+      radioInput.checked = true;
+    }
+
+    radioInput.addEventListener('change', (event) => {
+      const target = event.target as HTMLInputElement;
+      if (target.checked) {
+        const radioLabel = target.nextElementSibling?.textContent || '';
+        state.form.portfolioType = radioLabel;
+        validatePart1PortfolioType();
+      }
+    });
+  });
+
   portfolioTypeDiv.append(portfolioTypeTitle, portfolioTypeRadio);
 
   // investment goal div
@@ -51,6 +86,13 @@ const InvestmentDetail = (): HTMLDivElement => {
     INVESTMENT_DETAILS.INVESTMENT_GOAL.NAME
   ) as HTMLSelectElement;
   investmentGoalDropdown.classList.add('fieldInput');
+
+  investmentGoalDropdown.value = state.form.investmentGoal;
+  investmentGoalDropdown.addEventListener('change', (event) => {
+    state.form.investmentGoal = (event.target as HTMLSelectElement).value;
+    validatePart1InvestmentGoal();
+  });
+
   investmentGoalDiv.append(investmentGoalTitle, investmentGoalDropdown);
 
   // investment horizon div
@@ -66,6 +108,13 @@ const InvestmentDetail = (): HTMLDivElement => {
     INVESTMENT_DETAILS.INVESTMENT_HORIZON.NAME
   ) as HTMLSelectElement;
   investmentHorizonDropdown.classList.add('fieldInput');
+
+  investmentHorizonDropdown.value = state.form.investmentHorizon;
+  investmentHorizonDropdown.addEventListener('change', (event) => {
+    state.form.investmentHorizon = (event.target as HTMLSelectElement).value;
+    validatePart1InvestmentHorizon();
+  });
+
   investmentHorizonDiv.append(investmentHorizonTitle, investmentHorizonDropdown);
 
   // putting investment goal and investment horizon under a div
@@ -87,7 +136,26 @@ const InvestmentDetail = (): HTMLDivElement => {
     INVESTMENT_DETAILS.RISK_TOLERANCE.CLASS,
     INVESTMENT_DETAILS.RISK_TOLERANCE.HIDDEN
   ) as HTMLDivElement;
-  // riskToleranceRadio.classList.add('fieldInput');
+
+  const riskToleranceRadios = riskToleranceRadio.querySelectorAll('input[type="radio"]');
+  riskToleranceRadios.forEach((radio) => {
+    const radioInput = radio as HTMLInputElement;
+    const radioLabel = radioInput.nextElementSibling?.textContent;
+
+    if (state.form.riskTolerance && radioLabel === state.form.riskTolerance) {
+      radioInput.checked = true;
+    }
+
+    radioInput.addEventListener('change', (event) => {
+      const target = event.target as HTMLInputElement;
+      if (target.checked) {
+        const radioLabel = target.nextElementSibling?.textContent || '';
+        state.form.riskTolerance = radioLabel;
+      }
+      validatePart1RiskTolerance();
+    });
+  });
+
   riskToleranceDiv.append(riskToleranceTitle, riskToleranceRadio);
 
   // append all divs to parent

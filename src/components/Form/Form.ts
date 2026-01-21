@@ -1,13 +1,21 @@
+import { state } from '../../app.state.ts';
 import { InvestmentDetail } from './investment-details.ts';
 import { AssetAllocation } from './asset-allocation.ts';
 import { Preference } from './preferences.ts';
 import { createDiv } from '../input.ts';
 
-const form = (): HTMLDivElement => {
-  const form = createDiv() as HTMLDivElement;
-  form.append(InvestmentDetail(), AssetAllocation(), Preference());
+const formScreen = (): HTMLDivElement => {
+  const container = createDiv() as HTMLDivElement;
 
-  return form;
+  if (state.currentStep === 1) {
+    container.appendChild(InvestmentDetail());
+  } else if (state.currentStep === 2) {
+    container.appendChild(AssetAllocation());
+  } else if (state.currentStep === 3) {
+    container.appendChild(Preference());
+  }
+
+  return container;
 };
 
-export { form as formScreen };
+export { formScreen };

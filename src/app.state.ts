@@ -1,6 +1,7 @@
 import type { AppState } from './app.types';
 
 const state: AppState = {
+  currentStep: 1,
   records: [],
   form: {
     portfolioName: '',
@@ -26,7 +27,7 @@ const state: AppState = {
     automatedRebalancing: '',
     taxSavingPrefernce: '',
     financialGoals: '',
-    riskAcknowledgement: '',
+    riskAcknowledgement: false,
   },
 };
 

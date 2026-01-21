@@ -1,3 +1,5 @@
+import { state } from '../../app.state.ts';
+import { renderApp } from '../App.ts';
 import {
   createInput,
   createDropdown,
@@ -12,7 +14,6 @@ const AssetAllocation = (): HTMLDivElement => {
   const assetAllocation = createDiv() as HTMLDivElement;
   assetAllocation.classList.add('formScreen');
   assetAllocation.id = 'asset-allocation';
-  assetAllocation.style.display = 'none';
 
   // annual investment capacity div
   const annualInvestmentCapacityDiv = createDiv() as HTMLDivElement;
@@ -25,8 +26,13 @@ const AssetAllocation = (): HTMLDivElement => {
     '',
     ASSET_ALLOCATION.ANNUAL_INVESTMENT_CAPACITY.NAME
   ) as HTMLInputElement;
-  // const currencyDropdown = createDropdown(ASSET_ALLOCATION.CURRENCY.OPTIONS, ASSET_ALLOCATION.CURRENCY.NAME) as HTMLSelectElement;
   annualInvestmentCapacityInput.classList.add('fieldInput');
+  // const currencyDropdown = createDropdown(ASSET_ALLOCATION.CURRENCY.OPTIONS, ASSET_ALLOCATION.CURRENCY.NAME) as HTMLSelectElement;
+  annualInvestmentCapacityInput.value = state.form.annualInvestmentCapacity;
+  annualInvestmentCapacityInput.addEventListener('input', (event) => {
+    state.form.annualInvestmentCapacity = (event.target as HTMLInputElement).value;
+  });
+
   annualInvestmentCapacityDiv.append(annualInvestmentCapacityTitle, annualInvestmentCapacityInput);
 
   // lump sum amount div
@@ -41,6 +47,11 @@ const AssetAllocation = (): HTMLDivElement => {
     ASSET_ALLOCATION.LUMP_SUM_AMOUNT.NAME
   ) as HTMLInputElement;
   lumpSumAmountInput.classList.add('fieldInput');
+
+  lumpSumAmountInput.value = state.form.lumpSumAmount;
+  lumpSumAmountInput.addEventListener('input', (event) => {
+    state.form.lumpSumAmount = (event.target as HTMLInputElement).value;
+  });
   lumpSumAmountDiv.append(lumpSumAmountTitle, lumpSumAmountInput);
 
   // monthly contribution div
@@ -55,6 +66,11 @@ const AssetAllocation = (): HTMLDivElement => {
     ASSET_ALLOCATION.MONTHLY_CONTRIBUTION.NAME
   ) as HTMLInputElement;
   monthlyContributionInput.classList.add('fieldInput');
+
+  monthlyContributionInput.value = state.form.monthlyContribution;
+  monthlyContributionInput.addEventListener('input', (event) => {
+    state.form.monthlyContribution = (event.target as HTMLInputElement).value;
+  });
   monthlyContributionDiv.append(monthlyContributionTitle, monthlyContributionInput);
 
   // putting lump sum amount and monthly contribution under a div
@@ -72,7 +88,8 @@ const AssetAllocation = (): HTMLDivElement => {
 
   /*  function to create asset-div with asset class, percentage allocation, 
       specific fund and current value */
-  const createAsset = () => {
+  const createAsset = (index: number) => {
+    const assetData = state.form.assets[index];
     // div containing an asset
     const assetDiv = createDiv() as HTMLDivElement;
 
@@ -89,6 +106,12 @@ const AssetAllocation = (): HTMLDivElement => {
       ASSET_ALLOCATION.ASSET_CLASS.NAME
     ) as HTMLSelectElement;
     assetClassDropdown.classList.add('fieldInput');
+
+    assetClassDropdown.value = assetData.assetClass;
+    assetClassDropdown.addEventListener('input', (event) => {
+      state.form.assets[index].assetClass = (event.target as HTMLInputElement).value;
+    });
+
     assetClassDiv.append(assetClassTitle, assetClassDropdown);
 
     // percentage allocation div
@@ -103,6 +126,10 @@ const AssetAllocation = (): HTMLDivElement => {
       ASSET_ALLOCATION.PERCENTAGE_ALLOCATION.NAME
     ) as HTMLInputElement;
     percentageAllocationInput.classList.add('fieldInput');
+    percentageAllocationInput.value = assetData.percentageAllocation;
+    percentageAllocationInput.addEventListener('input', (event) => {
+      state.form.assets[index].percentageAllocation = (event.target as HTMLInputElement).value;
+    });
     percentageAllocationDiv.append(percentageAllocationTitle, percentageAllocationInput);
 
     // specific fund div
@@ -117,26 +144,52 @@ const AssetAllocation = (): HTMLDivElement => {
       ASSET_ALLOCATION.SPECIFIC_FUND.NAME
     ) as HTMLInputElement;
     specificFundInput.classList.add('fieldInput');
+
+    specificFundInput.value = assetData.specificFund;
+    specificFundInput.addEventListener('input', (event) => {
+      state.form.assets[index].specificFund = (event.target as HTMLInputElement).value;
+    });
+
     specificFundDiv.append(specificFundTitle, specificFundInput);
 
     // current value div
     const currentValueDiv = createDiv() as HTMLDivElement;
     currentValueDiv.classList.add('fieldDiv');
     currentValueDiv.id = ASSET_ALLOCATION.CURRENT_VALUE.ID;
+
     const currentValueTitle = createDiv() as HTMLDivElement;
     currentValueTitle.classList.add('subFieldTitle');
     currentValueTitle.textContent = ASSET_ALLOCATION.CURRENT_VALUE.LABEL;
+
     const currentValueInput = createInput(
       ASSET_ALLOCATION.CURRENT_VALUE.TYPE,
       ASSET_ALLOCATION.CURRENT_VALUE.NAME
     ) as HTMLInputElement;
     currentValueInput.classList.add('fieldInput');
+
+    currentValueInput.value = assetData.currentValue;
+    currentValueInput.addEventListener('input', (event) => {
+      state.form.assets[index].currentValue = (event.target as HTMLInputElement).value;
+    });
+
     const deleteButton = createButton() as HTMLButtonElement;
     deleteButton.textContent = '🗑️';
     deleteButton.classList.add('deleteButton');
+
+    deleteButton.addEventListener('click', () => {
+      // const assets = document.querySelectorAll('.asset');
+      if (state.form.assets.length < 2) {
+        alert('There should be atleast one asset!');
+        return;
+      }
+      state.form.assets.splice(index, 1);
+      renderApp();
+    });
+
     const inputDelete = createDiv() as HTMLDivElement;
     inputDelete.append(currentValueInput, deleteButton);
     inputDelete.classList.add('deleteAssetContainer');
+
     currentValueDiv.append(currentValueTitle, inputDelete);
 
     // appending all asset fields in the assets-div
@@ -147,11 +200,23 @@ const AssetAllocation = (): HTMLDivElement => {
   };
 
   // add asset-div to asset container
-  assetContainer.append(assetsTitle, createAsset());
+  assetContainer.append(assetsTitle);
+  state.form.assets.forEach((_, index) => {
+    assetContainer.appendChild(createAsset(index));
+  });
 
   // add asset Button
   const addAssetButton = createButton() as HTMLButtonElement;
   addAssetButton.textContent = ASSET_ALLOCATION.ADD_ASSET.LABEL;
+  addAssetButton.addEventListener('click', () => {
+    state.form.assets.push({
+      assetClass: '',
+      percentageAllocation: '',
+      specificFund: '',
+      currentValue: '',
+    });
+    renderApp();
+  });
 
   // investment style div
   const investmentStyleDiv = createDiv() as HTMLDivElement;
@@ -167,7 +232,31 @@ const AssetAllocation = (): HTMLDivElement => {
     ASSET_ALLOCATION.INVESTMENT_STYLE.CLASS,
     ASSET_ALLOCATION.INVESTMENT_STYLE.HIDDEN
   );
-  // investmentStyleCheckBox.classList.add('fieldInput');
+
+  const investmentStyleCheckBoxes =
+    investmentStyleCheckBox.querySelectorAll('input[type="checkbox"]');
+  investmentStyleCheckBoxes.forEach((checkbox) => {
+    const checkboxInput = checkbox as HTMLInputElement;
+    const checkboxLabel = checkboxInput.nextElementSibling?.textContent || '';
+
+    if (state.form.investmentStyle.includes(checkboxLabel)) {
+      checkboxInput.checked = true;
+    }
+
+    checkboxInput.addEventListener('change', (event) => {
+      const target = event.target as HTMLInputElement;
+      const label = target.nextElementSibling?.textContent || '';
+
+      if (target.checked) {
+        if (!state.form.investmentStyle.includes(label)) {
+          state.form.investmentStyle.push(label);
+        }
+      } else {
+        state.form.investmentStyle = state.form.investmentStyle.filter((item) => item != label);
+      }
+    });
+  });
+
   investmentStyleDiv.append(investmentStyleTitle, investmentStyleCheckBox);
 
   assetAllocation.append(

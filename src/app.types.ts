@@ -24,7 +24,7 @@ interface PortfolioFormRecords {
   automatedRebalancing: string;
   taxSavingPrefernce: string;
   financialGoals: string;
-  riskAcknowledgement: string;
+  riskAcknowledgement: boolean;
 
   createdAt: string;
 }
@@ -46,10 +46,11 @@ interface FormState {
   automatedRebalancing: string;
   taxSavingPrefernce: string;
   financialGoals: string;
-  riskAcknowledgement: string;
+  riskAcknowledgement: boolean;
 }
 
 interface AppState {
+  currentStep: number;
   records: PortfolioFormRecords[];
   form: FormState;
 }

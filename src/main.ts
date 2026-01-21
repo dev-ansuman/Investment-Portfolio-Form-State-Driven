@@ -1,5 +1,8 @@
 import './style.css';
-// import { formScreen } from './components/App.ts';
-import { formDiv } from './components/App.ts';
+import { loadFromStorage } from './app.storage.ts';
+import { renderApp } from './components/App.ts';
 
-document.querySelector<HTMLDivElement>('#app')?.append(formDiv!);
+document.addEventListener('DOMContentLoaded', () => {
+  loadFromStorage();
+  renderApp();
+});

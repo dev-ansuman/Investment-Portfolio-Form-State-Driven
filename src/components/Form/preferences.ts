@@ -1,3 +1,4 @@
+import { state } from '../../app.state';
 import { createDiv, createRadioORCheckbox, createTextarea } from '../input';
 import { PREFERENCES } from './constants';
 
@@ -6,7 +7,6 @@ const Preference = (): HTMLDivElement => {
   const preferencesDiv = createDiv() as HTMLDivElement;
   preferencesDiv.classList.add('formScreen');
   preferencesDiv.id = 'preferences';
-  preferencesDiv.style.display = 'none';
 
   // automated rebalancing div
   const automatedRebalancingDiv = createDiv() as HTMLDivElement;
@@ -23,6 +23,26 @@ const Preference = (): HTMLDivElement => {
     PREFERENCES.AUTOMATED_REBALANCING.CLASS,
     PREFERENCES.AUTOMATED_REBALANCING.HIDDEN
   ) as HTMLDivElement;
+
+  const automatedRebalancingRadios =
+    automatedRebalancingRadio.querySelectorAll('input[type="radio"]');
+  automatedRebalancingRadios.forEach((radio) => {
+    const radioInput = radio as HTMLInputElement;
+    const radioLabel = radio.nextElementSibling?.textContent || '';
+
+    if (state.form.automatedRebalancing && state.form.automatedRebalancing === radioLabel) {
+      radioInput.checked = true;
+    }
+
+    radioInput.addEventListener('change', (event) => {
+      const target = event.target as HTMLInputElement;
+      if (target.checked) {
+        const radioLabel = target.nextElementSibling?.textContent || '';
+        state.form.automatedRebalancing = radioLabel;
+      }
+    });
+  });
+
   automatedRebalancingDiv.append(automatedRebalancingTitle, automatedRebalancingRadio);
 
   // tax saving preference div
@@ -40,6 +60,26 @@ const Preference = (): HTMLDivElement => {
     PREFERENCES.TAX_SAVING_PREF.CLASS,
     PREFERENCES.TAX_SAVING_PREF.HIDDEN
   ) as HTMLDivElement;
+
+  const taxSavingPreferenceRadios =
+    taxSavingPreferenceRadio.querySelectorAll('input[type="radio"]');
+  taxSavingPreferenceRadios.forEach((radio) => {
+    const radioInput = radio as HTMLInputElement;
+    const radioLabel = radio.nextElementSibling?.textContent || '';
+
+    if (state.form.taxSavingPrefernce && state.form.taxSavingPrefernce === radioLabel) {
+      radioInput.checked = true;
+    }
+
+    radioInput.addEventListener('change', (event) => {
+      const target = event.target as HTMLInputElement;
+      if (target.checked) {
+        const radioLabel = target.nextElementSibling?.textContent || '';
+        state.form.taxSavingPrefernce = radioLabel;
+      }
+    });
+  });
+
   taxSavingPreferenceDiv.append(taxSavingPreferenceTitle, taxSavingPreferenceRadio);
 
   const automatedBalancingTaxSavingDiv = createDiv() as HTMLDivElement;
@@ -58,6 +98,12 @@ const Preference = (): HTMLDivElement => {
     PREFERENCES.FINANCIAL_GOALS.ROWS,
     PREFERENCES.FINANCIAL_GOALS.NAME
   ) as HTMLTextAreaElement;
+
+  financialGoalsTextBox.value = state.form.financialGoals;
+  financialGoalsTextBox.addEventListener('input', (event) => {
+    state.form.financialGoals = (event.target as HTMLTextAreaElement).value;
+  });
+
   financialGoalsDiv.append(financialGoalsTitle, financialGoalsTextBox);
 
   // risk acknowledgement div
@@ -74,6 +120,18 @@ const Preference = (): HTMLDivElement => {
     PREFERENCES.RISK_ACKNOWLEDGEMENT.CLASS,
     PREFERENCES.RISK_ACKNOWLEDGEMENT.HIDDEN
   ) as HTMLDivElement;
+
+  const riskAckCheckbox = riskAcknowledgementCheckbox.querySelector(
+    'input[type="checkbox"]'
+  ) as HTMLInputElement;
+  if (riskAckCheckbox) {
+    riskAckCheckbox.checked = state.form.riskAcknowledgement;
+  }
+  riskAckCheckbox.addEventListener('change', (event) => {
+    const target = event.target as HTMLInputElement;
+    state.form.riskAcknowledgement = target.checked;
+  });
+
   const termsAndConditions = createDiv() as HTMLDivElement;
   termsAndConditions.textContent = PREFERENCES.RISK_ACKNOWLEDGEMENT.TEXT_CONTENT;
   const tickAcknowledgement = createDiv() as HTMLDivElement;

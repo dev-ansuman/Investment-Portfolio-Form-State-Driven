@@ -1,5 +1,17 @@
-import { nextPage, previousPage, formSubmit } from '../services/navigation';
 import { createButton, createDiv } from './input';
+import { state } from '../app.state';
+import { renderApp } from './App';
+import { saveToStorage } from '../app.storage';
+import {
+  validatePart1PortfolioName,
+  validatePart1PortfolioType,
+  validatePart1InvestmentGoal,
+  validatePart1InvestmentHorizon,
+  validatePart1RiskTolerance,
+  validatePart2AnnualInvestmentCapacity,
+  validatePart3AutomatedRebalancing,
+  validatePart3AckCheckBox,
+} from '../services/validations';
 
 const Navigation = (): HTMLDivElement => {
   const navigationButtonDiv = createDiv() as HTMLDivElement;
@@ -7,31 +19,73 @@ const Navigation = (): HTMLDivElement => {
 
   const previousButton = createButton() as HTMLButtonElement;
   previousButton.textContent = 'Previous';
-  previousButton.classList.add('navigationButton');
+  previousButton.className = 'navigationButton';
   previousButton.id = 'previousButton';
-  previousButton.disabled = true;
+  // previousButton.disabled = true;
+  previousButton.disabled = state.currentStep === 1;
 
   const continueButton = createButton() as HTMLButtonElement;
   continueButton.textContent = 'Continue';
-  continueButton.classList.add('navigationButton');
+  continueButton.className = 'navigationButton';
   continueButton.id = 'continueButton';
 
   const submitButton = createButton() as HTMLButtonElement;
   submitButton.textContent = 'Submit';
-  submitButton.classList.add('navigationButton');
+  submitButton.className = 'navigationButton';
   submitButton.id = 'submitButton';
-  submitButton.style.display = 'none';
+  // submitButton.style.display = 'none';
+
+  if (state.currentStep === 3) {
+    continueButton.style.display = 'none';
+    submitButton.style.display = '';
+  } else {
+    continueButton.style.display = '';
+    submitButton.style.display = 'none';
+  }
 
   previousButton.addEventListener('click', () => {
-    previousPage();
+    if (state.currentStep > 1) {
+      state.currentStep -= 1;
+      saveToStorage();
+      renderApp();
+    }
   });
 
   continueButton.addEventListener('click', () => {
-    nextPage();
+    let isValid = false;
+
+    if (state.currentStep === 1) {
+      validatePart1PortfolioName();
+      validatePart1PortfolioType();
+      validatePart1InvestmentGoal();
+      validatePart1InvestmentHorizon();
+      validatePart1RiskTolerance();
+
+      isValid =
+        validatePart1PortfolioName() &&
+        validatePart1PortfolioType() &&
+        validatePart1InvestmentGoal() &&
+        validatePart1InvestmentHorizon() &&
+        validatePart1RiskTolerance();
+    } else if (state.currentStep === 2) {
+      isValid = validatePart2AnnualInvestmentCapacity();
+    }
+
+    if (isValid && state.currentStep < 3) {
+      state.currentStep += 1;
+      saveToStorage();
+      renderApp();
+    }
   });
 
   submitButton.addEventListener('click', () => {
-    formSubmit();
+    const isValid = validatePart3AutomatedRebalancing() && validatePart3AckCheckBox();
+
+    if (isValid) {
+      alert('Form Submitted Successfully');
+    } else {
+      alert('Please fill all required fields');
+    }
   });
   // submitButton;
 

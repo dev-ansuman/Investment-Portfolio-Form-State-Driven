@@ -1,20 +1,28 @@
-import type { PortfolioFormRecords } from './app.types.ts';
+import { state } from './app.state.ts';
 
-const setLocalStorage = (data: PortfolioFormRecords[]): void => {
-  const localStorageString: string = JSON.stringify(data);
+const STORAGE_KEY = 'portfolioFormData';
 
-  localStorage.setItem('portfolioFormData', localStorageString);
-};
+const loadFromStorage = (): void => {
+  const stored = localStorage.getItem(STORAGE_KEY);
 
-const getLocalStorage = (): PortfolioFormRecords[] => {
-  const localStorageString: string | null = localStorage.getItem('portfolioFormData');
-
-  if (localStorageString) {
-    const localStorageData = JSON.parse(localStorageString);
-    return localStorageData;
-  } else {
-    return [];
+  if (stored) {
+    try {
+      const data = JSON.parse(stored);
+      // Merge saved data directly into state
+      Object.assign(state, data);
+    } catch (error) {
+      console.error('Failed to Load from storage:', error);
+    }
   }
 };
 
-export { setLocalStorage, getLocalStorage };
+const saveToStorage = (): void => {
+  try {
+    // Save entire state to localStorage
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (error) {
+    console.error('Failed to save to storage:', error);
+  }
+};
+
+export { loadFromStorage, saveToStorage };
