@@ -10,6 +10,8 @@ const INVESTMENT_DETAILS = {
     OPTIONS: ['Income', 'Growth', 'Value', 'Speculative', 'Aggressive'],
     NAME: 'portfolioType',
     TYPE: 'radio',
+    HIDDEN: true,
+    CLASS: 'radioCheckboxText',
   },
   INVESTMENT_GOAL: {
     LABEL: 'Investment Goal',
@@ -38,6 +40,8 @@ const INVESTMENT_DETAILS = {
     OPTIONS: ['Aggressive', 'Moderate', 'Considerate', 'Flexible', 'Adjustable'],
     NAME: 'riskTolerance',
     TYPE: 'radio',
+    HIDDEN: true,
+    CLASS: 'radioCheckboxText',
   },
 };
 
@@ -94,6 +98,8 @@ const ASSET_ALLOCATION = {
     OPTIONS: ['Large-Cap', 'Mid-Cap', 'Small-Cap'],
     NAME: 'investmentStyle',
     TYPE: 'checkbox',
+    HIDDEN: true,
+    CLASS: 'radioCheckboxText',
   },
 };
 
