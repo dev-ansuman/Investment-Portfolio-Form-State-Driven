@@ -1,5 +1,17 @@
 import '../style.css';
-// import { validatePart1PortfolioName, validatePart1PortfolioType, validatePart1InvestmentGoal, validatePart1InvestmentHorizon, validatePart1RiskTolerance, validatePart2AnnualInvestmentCapacity, validatePart2AssetClass, validatePart2percentageAllocation } from './validations.ts';
+import {
+  validatePart1PortfolioName,
+  validatePart1PortfolioType,
+  validatePart1InvestmentGoal,
+  validatePart1InvestmentHorizon,
+  validatePart1RiskTolerance,
+  validatePart2AnnualInvestmentCapacity,
+  validatePart3AutomatedRebalancing,
+  validatePart3AckCheckBox,
+} from './validations.ts';
+
+// validatePart2AssetClass
+// validatePart2percentageAllocation
 
 const formParts = (): HTMLDivElement[] => {
   const investmentDetails = document.getElementById('investment-details') as HTMLDivElement;
@@ -83,72 +95,91 @@ const nextPage = (): void => {
     assetAllocation.style.display === 'none' &&
     preference.style.display === 'none'
   ) {
-    // validatePart1PortfolioName()
-    // validatePart1PortfolioType()
-    // validatePart1InvestmentGoal()
-    // validatePart1InvestmentHorizon()
-    // validatePart1RiskTolerance()
+    validatePart1PortfolioName();
+    validatePart1PortfolioType();
+    validatePart1InvestmentGoal();
+    validatePart1InvestmentHorizon();
+    validatePart1RiskTolerance();
 
-    // let moveToNextPage = validatePart1PortfolioName() &&
-    //     // nameTaken() &&
-    //     validatePart1PortfolioType() &&
-    //     validatePart1InvestmentGoal() &&
-    //     validatePart1InvestmentHorizon() &&
-    //     validatePart1RiskTolerance()
+    const moveToNextPage =
+      validatePart1PortfolioName() &&
+      // nameTaken() &&
+      validatePart1PortfolioType() &&
+      validatePart1InvestmentGoal() &&
+      validatePart1InvestmentHorizon() &&
+      validatePart1RiskTolerance();
 
-    // if (moveToNextPage) {
+    console.log('move to next page', moveToNextPage);
+    console.log(validatePart1PortfolioName());
+    console.log(validatePart1PortfolioType());
+    console.log(validatePart1InvestmentGoal());
+    console.log(validatePart1InvestmentHorizon());
+    console.log(validatePart1RiskTolerance());
 
-    investmentDetails.style.display = 'none';
-    assetAllocation.style.display = 'block';
+    if (moveToNextPage) {
+      investmentDetails.style.display = 'none';
+      assetAllocation.style.display = 'block';
 
-    console.log((assetAllocation.style.display = ''));
+      console.log((assetAllocation.style.display = ''));
 
-    // investmentDetailLogo.src = './images/tick.svg'
-    // progressBar1.style.backgroundColor = '#42e0ae'
-    // assetAllocationLogo.style.backgroundColor = '#42e0ae'
-    // assetAllocationProgresstext.style.color = '#127656'
-    // assetAllocationLogo.style.border = 'none'
-    previousButton.disabled = false;
+      // investmentDetailLogo.src = './images/tick.svg'
+      // progressBar1.style.backgroundColor = '#42e0ae'
+      // assetAllocationLogo.style.backgroundColor = '#42e0ae'
+      // assetAllocationProgresstext.style.color = '#127656'
+      // assetAllocationLogo.style.border = 'none'
+      previousButton.disabled = false;
 
-    console.log('in page 2');
-
-    // }
+      console.log('in page 2');
+    }
   } else if (
     investmentDetails.style.display === 'none' &&
     assetAllocation.style.display === '' &&
     preference.style.display === 'none'
   ) {
-    // validatePart2AnnualInvestmentCapacity()
+    validatePart2AnnualInvestmentCapacity();
     // validatePart2AssetClass()
     // validatePart2percentageAllocation()
 
-    // let moveToNextPage = validatePart2AnnualInvestmentCapacity() &&
-    //     validatePart2AssetClass() &&
-    //     validatePart2percentageAllocation()
+    const moveToNextPage = validatePart2AnnualInvestmentCapacity();
+    // validatePart2AssetClass() &&
+    // validatePart2percentageAllocation()
 
     // console.log('validatePart2AnnualInvestmentCapacity', validatePart2AnnualInvestmentCapacity())
     // console.log('validatePart2AssetClass', validatePart2AssetClass())
     // console.log('validatePart2percentageAllocation', validatePart2percentageAllocation())
     // console.log('page 2 to 3', moveToNextPage)
 
-    // if (moveToNextPage) {
-    assetAllocation.style.display = 'none';
-    preference.style.display = '';
+    if (moveToNextPage) {
+      assetAllocation.style.display = 'none';
+      preference.style.display = '';
 
-    // assetAllocationLogo.src = './images/tick.svg'
-    // progressBar2.style.backgroundColor = '#42e0ae'
-    // preferenceLogo.style.backgroundColor = '#42e0ae'
-    // preferenceProgressText.style.color = ''
+      // assetAllocationLogo.src = './images/tick.svg'
+      // progressBar2.style.backgroundColor = '#42e0ae'
+      // preferenceLogo.style.backgroundColor = '#42e0ae'
+      // preferenceProgressText.style.color = ''
 
-    continueButton.style.display = 'none';
+      continueButton.style.display = 'none';
 
-    submitButton.style.backgroundColor = '#42e0ae';
-    submitButton.style.border = 'none';
-    submitButton.style.display = '';
+      submitButton.style.backgroundColor = '#42e0ae';
+      submitButton.style.border = 'none';
+      submitButton.style.display = '';
 
-    console.log('in page 3');
-    // }
+      console.log('in page 3');
+    }
   }
 };
 
-export { previousPage, nextPage };
+const formSubmit = (): void => {
+  validatePart3AutomatedRebalancing();
+  validatePart3AckCheckBox();
+
+  const submitForm = validatePart3AutomatedRebalancing() && validatePart3AckCheckBox();
+
+  if (submitForm) {
+    alert('Form submitted successfully');
+  } else {
+    alert('Please fill all required fields');
+  }
+};
+
+export { previousPage, nextPage, formSubmit };

@@ -11,6 +11,7 @@ const InvestmentDetail = (): HTMLDivElement => {
   // portfolio name div
   const portfolioNameDiv = createDiv() as HTMLDivElement;
   portfolioNameDiv.classList.add('fieldDiv');
+  portfolioNameDiv.id = INVESTMENT_DETAILS.PORTFOLIO_NAME.ID;
   const portfolioNameTitle = createDiv() as HTMLDivElement;
   portfolioNameTitle.classList.add('fieldTitle');
   portfolioNameTitle.textContent = INVESTMENT_DETAILS.PORTFOLIO_NAME.LABEL;
@@ -24,6 +25,7 @@ const InvestmentDetail = (): HTMLDivElement => {
   // portfolio type div
   const portfolioTypeDiv = createDiv() as HTMLDivElement;
   portfolioTypeDiv.classList.add('fieldDiv');
+  portfolioTypeDiv.id = INVESTMENT_DETAILS.PORTFOLIO_TYPE.ID;
   const portfolioTypeTitle = createDiv() as HTMLDivElement;
   portfolioTypeTitle.classList.add('fieldTitle');
   portfolioTypeTitle.textContent = INVESTMENT_DETAILS.PORTFOLIO_TYPE.LABEL;
@@ -34,17 +36,18 @@ const InvestmentDetail = (): HTMLDivElement => {
     INVESTMENT_DETAILS.PORTFOLIO_TYPE.CLASS,
     INVESTMENT_DETAILS.PORTFOLIO_TYPE.HIDDEN
   ) as HTMLDivElement;
-  // portfolioTypeRadio.classList.add('fieldInput');
   portfolioTypeDiv.append(portfolioTypeTitle, portfolioTypeRadio);
 
   // investment goal div
   const investmentGoalDiv = createDiv() as HTMLDivElement;
   investmentGoalDiv.classList.add('fieldDiv');
+  investmentGoalDiv.id = INVESTMENT_DETAILS.INVESTMENT_GOAL.ID;
   const investmentGoalTitle = createDiv() as HTMLDivElement;
   investmentGoalTitle.classList.add('fieldTitle');
   investmentGoalTitle.textContent = INVESTMENT_DETAILS.INVESTMENT_GOAL.LABEL;
   const investmentGoalDropdown = createDropdown(
     INVESTMENT_DETAILS.INVESTMENT_GOAL.OPTIONS,
+    INVESTMENT_DETAILS.INVESTMENT_GOAL.VALUES,
     INVESTMENT_DETAILS.INVESTMENT_GOAL.NAME
   ) as HTMLSelectElement;
   investmentGoalDropdown.classList.add('fieldInput');
@@ -53,11 +56,13 @@ const InvestmentDetail = (): HTMLDivElement => {
   // investment horizon div
   const investmentHorizonDiv = createDiv() as HTMLDivElement;
   investmentHorizonDiv.classList.add('fieldDiv');
+  investmentHorizonDiv.id = INVESTMENT_DETAILS.INVESTMENT_HORIZON.ID;
   const investmentHorizonTitle = createDiv() as HTMLDivElement;
   investmentHorizonTitle.classList.add('fieldTitle');
   investmentHorizonTitle.textContent = INVESTMENT_DETAILS.INVESTMENT_HORIZON.LABEL;
   const investmentHorizonDropdown = createDropdown(
     INVESTMENT_DETAILS.INVESTMENT_HORIZON.OPTIONS,
+    INVESTMENT_DETAILS.INVESTMENT_HORIZON.VALUES,
     INVESTMENT_DETAILS.INVESTMENT_HORIZON.NAME
   ) as HTMLSelectElement;
   investmentHorizonDropdown.classList.add('fieldInput');
@@ -71,6 +76,7 @@ const InvestmentDetail = (): HTMLDivElement => {
   // risk tolerance div
   const riskToleranceDiv = createDiv() as HTMLDivElement;
   riskToleranceDiv.classList.add('fieldDiv');
+  riskToleranceDiv.id = INVESTMENT_DETAILS.RISK_TOLERANCE.ID;
   const riskToleranceTitle = createDiv() as HTMLDivElement;
   riskToleranceTitle.classList.add('fieldTitle');
   riskToleranceTitle.textContent = INVESTMENT_DETAILS.RISK_TOLERANCE.LABEL;

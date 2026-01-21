@@ -11,7 +11,8 @@ const Preference = (): HTMLDivElement => {
   // automated rebalancing div
   const automatedRebalancingDiv = createDiv() as HTMLDivElement;
   automatedRebalancingDiv.classList.add('fieldDiv');
-  automatedRebalancingDiv.classList.add('alignPreferences');
+  automatedRebalancingDiv.id = PREFERENCES.AUTOMATED_REBALANCING.ID;
+  // automatedRebalancingDiv.classList.add('alignPreferences');
   const automatedRebalancingTitle = createDiv() as HTMLDivElement;
   automatedRebalancingTitle.classList.add('fieldTitle');
   automatedRebalancingTitle.textContent = PREFERENCES.AUTOMATED_REBALANCING.LABEL;
@@ -27,7 +28,8 @@ const Preference = (): HTMLDivElement => {
   // tax saving preference div
   const taxSavingPreferenceDiv = createDiv() as HTMLDivElement;
   taxSavingPreferenceDiv.classList.add('fieldDiv');
-  taxSavingPreferenceDiv.classList.add('alignPreferences');
+  taxSavingPreferenceDiv.id = PREFERENCES.TAX_SAVING_PREF.ID;
+  // taxSavingPreferenceDiv.classList.add('alignPreferences');
   const taxSavingPreferenceTitle = createDiv() as HTMLDivElement;
   taxSavingPreferenceTitle.classList.add('fieldTitle');
   taxSavingPreferenceTitle.textContent = PREFERENCES.TAX_SAVING_PREF.LABEL;
@@ -47,6 +49,7 @@ const Preference = (): HTMLDivElement => {
   // financial goals div
   const financialGoalsDiv = createDiv() as HTMLDivElement;
   financialGoalsDiv.classList.add('fieldDiv');
+  financialGoalsDiv.id = PREFERENCES.FINANCIAL_GOALS.ID;
   const financialGoalsTitle = createDiv() as HTMLDivElement;
   financialGoalsTitle.classList.add('fieldTitle');
   financialGoalsTitle.textContent = PREFERENCES.FINANCIAL_GOALS.LABEL;
@@ -60,6 +63,7 @@ const Preference = (): HTMLDivElement => {
   // risk acknowledgement div
   const riskAcknowledgementDiv = createDiv() as HTMLDivElement;
   riskAcknowledgementDiv.classList.add('fieldDiv');
+  riskAcknowledgementDiv.id = PREFERENCES.RISK_ACKNOWLEDGEMENT.ID;
   const riskAcknowledgementTitle = createDiv() as HTMLDivElement;
   riskAcknowledgementTitle.classList.add('fieldTitle');
   riskAcknowledgementTitle.textContent = PREFERENCES.RISK_ACKNOWLEDGEMENT.LABEL;
@@ -76,7 +80,7 @@ const Preference = (): HTMLDivElement => {
   tickAcknowledgement.append(riskAcknowledgementCheckbox, riskAcknowledgementTitle);
   tickAcknowledgement.classList.add('alignPreferences');
   riskAcknowledgementDiv.append(tickAcknowledgement, termsAndConditions);
-  riskAcknowledgementDiv.classList.add('alignPreferences');
+  // riskAcknowledgementDiv.classList.add('alignPreferences');
 
   preferencesDiv.append(
     automatedRebalancingDiv,

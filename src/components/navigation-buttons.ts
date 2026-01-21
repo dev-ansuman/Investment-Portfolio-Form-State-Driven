@@ -1,4 +1,4 @@
-import { nextPage, previousPage } from '../services/navigation';
+import { nextPage, previousPage, formSubmit } from '../services/navigation';
 import { createButton, createDiv } from './input';
 
 const Navigation = (): HTMLDivElement => {
@@ -30,6 +30,9 @@ const Navigation = (): HTMLDivElement => {
     nextPage();
   });
 
+  submitButton.addEventListener('click', () => {
+    formSubmit();
+  });
   // submitButton;
 
   navigationButtonDiv.append(previousButton, continueButton, submitButton);

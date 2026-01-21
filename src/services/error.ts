@@ -1,12 +1,13 @@
 export const showError = (
   errorClass: string,
-  parentClass: string,
+  parentId: string,
   addAt: string,
   fontSize: string,
   ERROR_MESSAGE: string
 ): void => {
   // , extra: string
-  const parentElement: HTMLDivElement | null = document.querySelector(`.${parentClass}`);
+  // const parentElement: HTMLDivElement | null = document.querySelector(`.${parentClass}`);
+  const parentElement = document.getElementById(parentId) as HTMLDivElement;
   checkExistingError(errorClass);
 
   const errorMessage = document.createElement('div') as HTMLDivElement | null;

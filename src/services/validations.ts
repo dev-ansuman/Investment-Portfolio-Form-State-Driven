@@ -1,9 +1,9 @@
 import { checkName, checkNumber } from '../utils/checker.js';
 import { showError, checkExistingError } from '../services/error.js';
 import { MESSAGE } from '../services/messages.js';
+import { ASSET_ALLOCATION, INVESTMENT_DETAILS, PREFERENCES } from '../components/Form/constants.js';
 
 // Validations for part 1 of the form
-const parentClass = 'fieldDiv';
 
 // validate the portfolio name (input, required field)
 export const validatePart1PortfolioName = (): boolean => {
@@ -15,17 +15,35 @@ export const validatePart1PortfolioName = (): boolean => {
 
   if (portfolioNameInput) {
     if (portfolioNameInput[0].value.trim().length === 0) {
-      showError(errorClass, parentClass, 'append', '13.65px', MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD);
+      showError(
+        errorClass,
+        INVESTMENT_DETAILS.PORTFOLIO_NAME.ID,
+        'append',
+        '13.65px',
+        MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
+      );
       return false;
     }
 
     if (!checkName(portfolioNameInput[0].value.trim())) {
-      showError(errorClass, parentClass, 'append', '13.65px', MESSAGE.ERROR_MESSAGE.INVALID_NAME);
+      showError(
+        errorClass,
+        INVESTMENT_DETAILS.PORTFOLIO_NAME.ID,
+        'append',
+        '13.65px',
+        MESSAGE.ERROR_MESSAGE.INVALID_NAME
+      );
       return false;
     }
 
     if (portfolioNameInput[0].value.trim().length <= 2) {
-      showError(errorClass, parentClass, 'append', '13.65px', MESSAGE.ERROR_MESSAGE.MIN_CHARACTER);
+      showError(
+        errorClass,
+        INVESTMENT_DETAILS.PORTFOLIO_NAME.ID,
+        'append',
+        '13.65px',
+        MESSAGE.ERROR_MESSAGE.MIN_CHARACTER
+      );
       return false;
     }
   }
@@ -78,7 +96,13 @@ export const validatePart1PortfolioType = (): boolean => {
   }
 
   if (!isValid) {
-    showError(errorClass, parentClass, 'append', '13.65px', MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD);
+    showError(
+      errorClass,
+      INVESTMENT_DETAILS.PORTFOLIO_TYPE.ID,
+      'append',
+      '13.65px',
+      MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
+    );
   }
 
   return isValid;
@@ -93,7 +117,13 @@ export const validatePart1InvestmentGoal = () => {
   checkExistingError(errorClass);
 
   if (selectedField[0].value === '') {
-    showError(errorClass, parentClass, 'append', '13.65px', MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD);
+    showError(
+      errorClass,
+      INVESTMENT_DETAILS.INVESTMENT_GOAL.ID,
+      'append',
+      '13.65px',
+      MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
+    );
     return false;
   }
 
@@ -110,7 +140,13 @@ export const validatePart1InvestmentHorizon = () => {
   checkExistingError(errorClass);
 
   if (selectedField[0].value === '') {
-    showError(errorClass, parentClass, 'append', '13.65px', MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD);
+    showError(
+      errorClass,
+      INVESTMENT_DETAILS.INVESTMENT_HORIZON.ID,
+      'append',
+      '13.65px',
+      MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
+    );
     return false;
   }
 
@@ -140,8 +176,8 @@ export const validatePart1RiskTolerance = () => {
 
   if (!presence) {
     showError(
-      'errorRiskTolerance',
-      'riskTolerance',
+      errorClass,
+      INVESTMENT_DETAILS.RISK_TOLERANCE.ID,
       'append',
       '13.65px',
       MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
@@ -163,7 +199,13 @@ export const validatePart2AnnualInvestmentCapacity = () => {
   checkExistingError(errorClass);
 
   if (annualInvestmentCapacityInput[0]?.value === '') {
-    showError(errorClass, parentClass, 'after', '13.65px', MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD);
+    showError(
+      errorClass,
+      ASSET_ALLOCATION.ANNUAL_INVESTMENT_CAPACITY.ID,
+      'after',
+      '13.65px',
+      MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
+    );
 
     isValid = false;
   }
@@ -175,8 +217,8 @@ export const validatePart2AnnualInvestmentCapacity = () => {
     ) {
       showError(
         errorClass,
-        parentClass,
-        'after',
+        ASSET_ALLOCATION.ANNUAL_INVESTMENT_CAPACITY.ID,
+        'append',
         '13.65px',
         MESSAGE.ERROR_MESSAGE.INVALID_NUMBER_INPUT
       );
@@ -192,7 +234,7 @@ export const validatePart2AnnualInvestmentCapacity = () => {
 export const validatePart2AssetClass = () => {
   let presence = true;
 
-  const assets: NodeListOf<HTMLDivElement> | null = document.querySelectorAll('.assets');
+  const assets: NodeListOf<HTMLDivElement> | null = document.querySelectorAll('.asset');
 
   assets.forEach((row) => {
     const assetClass: HTMLSelectElement | null = row.querySelector('.assetClassDropdown');
@@ -284,7 +326,13 @@ export const validatePart3AutomatedRebalancing = () => {
   }
 
   if (!isValid) {
-    showError(errorClass, parentClass, 'append', '13.65px', MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD);
+    showError(
+      errorClass,
+      PREFERENCES.AUTOMATED_REBALANCING.ID,
+      'append',
+      '13.65px',
+      MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
+    );
   }
 
   return isValid;
@@ -302,7 +350,13 @@ export const validatePart3AckCheckBox = () => {
   checkExistingError(errorClass);
 
   if (checkBoxElement[0]?.checked == false) {
-    showError(errorClass, parentClass, 'after', '13.65px', MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD);
+    showError(
+      errorClass,
+      PREFERENCES.RISK_ACKNOWLEDGEMENT.ID,
+      'append',
+      '13.65px',
+      MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
+    );
 
     return false;
   }
