@@ -15,11 +15,11 @@ export function renderApp(): void {
   const formContainer = createDiv() as HTMLDivElement;
   formContainer.className = 'formContainer';
 
-  const tableContainer = createDiv() as HTMLDivElement;
-  tableContainer.className = 'tableContainer';
-
   formContainer.appendChild(formScreen());
   formContainer.appendChild(Navigation());
+
+  const tableContainer = createDiv() as HTMLDivElement;
+  tableContainer.className = 'tableContainer';
   tableContainer.appendChild(TableWrapper());
 
   root.append(formContainer, tableContainer);

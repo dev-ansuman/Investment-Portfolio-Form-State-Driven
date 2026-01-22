@@ -39,9 +39,9 @@ const TableWrapper = (): HTMLDivElement => {
       if (key === 'assets') {
         tableCell.textContent = record[key].length.toString();
       }
-      // else {
-      //     tableCell.textContent = (record as any)[key]
-      // }
+      //   else {
+      //       tableCell.textContent = (record as any)[key]
+      //   }
       tableRow.appendChild(tableCell);
     });
     table.appendChild(tableRow);

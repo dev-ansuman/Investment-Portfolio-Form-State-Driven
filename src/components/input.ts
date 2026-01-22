@@ -41,6 +41,16 @@ const createInput = (inputType: string = 'text', nameAttribute: string): HTMLInp
   return input;
 };
 
+const createNav = (): HTMLElement => {
+  const newNav = document.createElement('nav') as HTMLElement;
+  return newNav;
+};
+
+const createImg = (): HTMLImageElement => {
+  const newImg = document.createElement('img') as HTMLImageElement;
+  return newImg;
+};
+
 const createTextarea = (
   textareaPlaceholder: string,
   textareaRows: number,
@@ -117,6 +127,8 @@ export {
   createTableCell,
   createTextarea,
   createInput,
+  createNav,
+  createImg,
   createDropdown,
   createRadioORCheckbox,
 };
