@@ -1,6 +1,7 @@
 import { formScreen } from './Form/Form.ts';
 import { createDiv } from './input.ts';
 import { Navigation } from './navigation-buttons.ts';
+import { TableWrapper } from './table.ts';
 
 export function renderApp(): void {
   const root = document.getElementById('app') as HTMLDivElement;
@@ -11,11 +12,16 @@ export function renderApp(): void {
 
   root.innerHTML = '';
 
-  const container = createDiv() as HTMLDivElement;
-  container.className = 'formContainer';
+  const formContainer = createDiv() as HTMLDivElement;
+  formContainer.className = 'formContainer';
 
-  container.appendChild(formScreen());
-  container.appendChild(Navigation());
+  const tableContainer = createDiv() as HTMLDivElement;
+  tableContainer.className = 'tableContainer';
 
-  root.appendChild(container);
+  formContainer.appendChild(formScreen());
+  formContainer.appendChild(Navigation());
+  tableContainer.appendChild(TableWrapper());
+
+  root.append(formContainer, tableContainer);
+  root.style.display = 'flex';
 }

@@ -22,7 +22,6 @@ const Navigation = (): HTMLDivElement => {
   previousButton.textContent = 'Previous';
   previousButton.className = 'navigationButton';
   previousButton.id = 'previousButton';
-  // previousButton.disabled = true;
   previousButton.disabled = state.currentStep === 1;
 
   const continueButton = createButton() as HTMLButtonElement;
@@ -34,7 +33,6 @@ const Navigation = (): HTMLDivElement => {
   submitButton.textContent = 'Submit';
   submitButton.className = 'navigationButton';
   submitButton.id = 'submitButton';
-  // submitButton.style.display = 'none';
 
   if (state.currentStep === 3) {
     continueButton.style.display = 'none';
@@ -87,19 +85,13 @@ const Navigation = (): HTMLDivElement => {
     const isValid = validatePart3AutomatedRebalancing() && validatePart3AckCheckBox();
 
     if (isValid) {
-      // alert('Form Submitted Successfully');
-      // state.form.id =
       state.records.push({ id: 'some', ...state.form, createdAt: Date.now.toString() });
-      saveToStorage();
       state.form = { ...initialFormState };
       state.currentStep = 1;
+      saveToStorage();
       renderApp();
     }
-    // else {
-    //   alert('Please fill all required fields');
-    // }
   });
-  // submitButton;
 
   navigationButtonDiv.append(previousButton, continueButton, submitButton);
   return navigationButtonDiv;

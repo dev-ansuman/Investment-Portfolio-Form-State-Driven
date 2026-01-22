@@ -1,16 +1,36 @@
-const createDiv = () => {
+const createDiv = (): HTMLDivElement => {
   const newDiv = document.createElement('div') as HTMLDivElement;
   return newDiv;
 };
 
-const createLabel = () => {
+const createLabel = (): HTMLLabelElement => {
   const newLabel = document.createElement('label') as HTMLLabelElement;
   return newLabel;
 };
 
-const createButton = () => {
+const createButton = (): HTMLButtonElement => {
   const newButton = document.createElement('button') as HTMLButtonElement;
   return newButton;
+};
+
+const createTable = (): HTMLTableElement => {
+  const newTable = document.createElement('table') as HTMLTableElement;
+  return newTable;
+};
+
+const createTableRow = (): HTMLTableRowElement => {
+  const newTableRow = document.createElement('tr') as HTMLTableRowElement;
+  return newTableRow;
+};
+
+const createTableHeader = (): HTMLTableCellElement => {
+  const newTableHeader = document.createElement('th') as HTMLTableCellElement;
+  return newTableHeader;
+};
+
+const createTableCell = (): HTMLTableCellElement => {
+  const newTableCell = document.createElement('td') as HTMLTableCellElement;
+  return newTableCell;
 };
 
 const createInput = (inputType: string = 'text', nameAttribute: string): HTMLInputElement => {
@@ -91,6 +111,10 @@ export {
   createLabel,
   createDiv,
   createButton,
+  createTable,
+  createTableRow,
+  createTableHeader,
+  createTableCell,
   createTextarea,
   createInput,
   createDropdown,

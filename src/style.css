@@ -157,14 +157,53 @@ body {
   background-color: #42e0ae;
 }
 
-/* #submitButton {
-  display: none;
+.tableWrapper {
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: auto;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 98%;
+    margin-bottom: 20px;
+    border: 1px solid black;
 }
 
-#asset-allocation {
-  display: none;
+.tableWrapper::-webkit-scrollbar {
+    display: none;
 }
 
-#preferences {
-  display: none;
-} */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0px;
+}
+
+th,
+td {
+    border: 1px solid grey;
+    text-align: center;
+    font-size: 13px;
+}
+
+th td{
+    background-color: #42e0ae;
+    color: black;
+    font-weight: 600;
+    padding: 3px;
+    font-size: 13px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+td {
+    /* background-color: #f7f7f7; */
+    color: #333;
+    padding: 0px 6px;
+    font-size: 11px;
+    text-align: center;
+    height: max-content;
+    height: 32px;
+}
