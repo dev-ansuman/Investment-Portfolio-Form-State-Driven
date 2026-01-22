@@ -1,4 +1,8 @@
 import { state } from '../../app.state.ts';
+import {
+  validatePart2AnnualInvestmentCapacity,
+  validatePart2Asset,
+} from '../../services/validations.ts';
 import { renderApp } from '../App.ts';
 import {
   createInput,
@@ -31,6 +35,7 @@ const AssetAllocation = (): HTMLDivElement => {
   annualInvestmentCapacityInput.value = state.form.annualInvestmentCapacity;
   annualInvestmentCapacityInput.addEventListener('input', (event) => {
     state.form.annualInvestmentCapacity = (event.target as HTMLInputElement).value;
+    validatePart2AnnualInvestmentCapacity();
   });
 
   annualInvestmentCapacityDiv.append(annualInvestmentCapacityTitle, annualInvestmentCapacityInput);
@@ -96,7 +101,7 @@ const AssetAllocation = (): HTMLDivElement => {
     // asset class div
     const assetClassDiv = createDiv() as HTMLDivElement;
     assetClassDiv.classList.add('fieldDiv');
-    assetClassDiv.id = ASSET_ALLOCATION.ASSET_CLASS.ID;
+    assetClassDiv.id = `asset-${index}-assetClass`;
     const assetClassTitle = createDiv() as HTMLDivElement;
     assetClassTitle.classList.add('subFieldTitle');
     assetClassTitle.textContent = ASSET_ALLOCATION.ASSET_CLASS.LABEL;
@@ -110,6 +115,7 @@ const AssetAllocation = (): HTMLDivElement => {
     assetClassDropdown.value = assetData.assetClass;
     assetClassDropdown.addEventListener('input', (event) => {
       state.form.assets[index].assetClass = (event.target as HTMLInputElement).value;
+      validatePart2Asset();
     });
 
     assetClassDiv.append(assetClassTitle, assetClassDropdown);
@@ -117,7 +123,7 @@ const AssetAllocation = (): HTMLDivElement => {
     // percentage allocation div
     const percentageAllocationDiv = createDiv() as HTMLDivElement;
     percentageAllocationDiv.classList.add('fieldDiv');
-    percentageAllocationDiv.id = ASSET_ALLOCATION.PERCENTAGE_ALLOCATION.ID;
+    percentageAllocationDiv.id = `asset-${index}-percentageAllocation`;
     const percentageAllocationTitle = createDiv() as HTMLDivElement;
     percentageAllocationTitle.classList.add('subFieldTitle');
     percentageAllocationTitle.textContent = ASSET_ALLOCATION.PERCENTAGE_ALLOCATION.LABEL;
@@ -129,6 +135,7 @@ const AssetAllocation = (): HTMLDivElement => {
     percentageAllocationInput.value = assetData.percentageAllocation;
     percentageAllocationInput.addEventListener('input', (event) => {
       state.form.assets[index].percentageAllocation = (event.target as HTMLInputElement).value;
+      validatePart2Asset();
     });
     percentageAllocationDiv.append(percentageAllocationTitle, percentageAllocationInput);
 

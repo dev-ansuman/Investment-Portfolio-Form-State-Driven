@@ -1,4 +1,8 @@
 import { state } from '../../app.state';
+import {
+  validatePart3AckCheckBox,
+  validatePart3AutomatedRebalancing,
+} from '../../services/validations';
 import { createDiv, createRadioORCheckbox, createTextarea } from '../input';
 import { PREFERENCES } from './constants';
 
@@ -40,6 +44,7 @@ const Preference = (): HTMLDivElement => {
         const radioLabel = target.nextElementSibling?.textContent || '';
         state.form.automatedRebalancing = radioLabel;
       }
+      validatePart3AutomatedRebalancing();
     });
   });
 
@@ -130,6 +135,7 @@ const Preference = (): HTMLDivElement => {
   riskAckCheckbox.addEventListener('change', (event) => {
     const target = event.target as HTMLInputElement;
     state.form.riskAcknowledgement = target.checked;
+    validatePart3AckCheckBox();
   });
 
   const termsAndConditions = createDiv() as HTMLDivElement;

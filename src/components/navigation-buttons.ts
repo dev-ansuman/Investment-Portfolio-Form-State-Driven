@@ -1,5 +1,5 @@
 import { createButton, createDiv } from './input';
-import { state } from '../app.state';
+import { initialFormState, state } from '../app.state';
 import { renderApp } from './App';
 import { saveToStorage } from '../app.storage';
 import {
@@ -9,6 +9,7 @@ import {
   validatePart1InvestmentHorizon,
   validatePart1RiskTolerance,
   validatePart2AnnualInvestmentCapacity,
+  validatePart2Asset,
   validatePart3AutomatedRebalancing,
   validatePart3AckCheckBox,
 } from '../services/validations';
@@ -68,7 +69,9 @@ const Navigation = (): HTMLDivElement => {
         validatePart1InvestmentHorizon() &&
         validatePart1RiskTolerance();
     } else if (state.currentStep === 2) {
-      isValid = validatePart2AnnualInvestmentCapacity();
+      validatePart2AnnualInvestmentCapacity();
+      validatePart2Asset();
+      isValid = validatePart2AnnualInvestmentCapacity() && validatePart2Asset();
     }
 
     if (isValid && state.currentStep < 3) {
@@ -79,13 +82,22 @@ const Navigation = (): HTMLDivElement => {
   });
 
   submitButton.addEventListener('click', () => {
+    validatePart3AutomatedRebalancing();
+    validatePart3AckCheckBox();
     const isValid = validatePart3AutomatedRebalancing() && validatePart3AckCheckBox();
 
     if (isValid) {
-      alert('Form Submitted Successfully');
-    } else {
-      alert('Please fill all required fields');
+      // alert('Form Submitted Successfully');
+      // state.form.id =
+      state.records.push({ id: 'some', ...state.form, createdAt: Date.now.toString() });
+      saveToStorage();
+      state.form = { ...initialFormState };
+      state.currentStep = 1;
+      renderApp();
     }
+    // else {
+    //   alert('Please fill all required fields');
+    // }
   });
   // submitButton;
 

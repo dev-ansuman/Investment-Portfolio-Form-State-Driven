@@ -1,3 +1,4 @@
+import { state } from '../app.state.js';
 import { checkName, checkNumber } from '../utils/checker.js';
 import { showError, checkExistingError } from '../services/error.js';
 import { MESSAGE } from '../services/messages.js';
@@ -230,79 +231,55 @@ export const validatePart2AnnualInvestmentCapacity = () => {
   return isValid;
 };
 
-// validate the Asset Class (select, required field)
-export const validatePart2AssetClass = () => {
-  let presence = true;
+// validate part 2 asset
+export const validatePart2Asset = () => {
+  const { assets } = state.form;
+  let allValid = true;
 
-  const assets: NodeListOf<HTMLDivElement> | null = document.querySelectorAll('.asset');
+  assets.forEach((asset, index) => {
+    const assetClassErrorClass = `errorAssetClass-${index}`;
+    checkExistingError(assetClassErrorClass);
 
-  assets.forEach((row) => {
-    const assetClass: HTMLSelectElement | null = row.querySelector('.assetClassDropdown');
-    const assetDropdownContainer: HTMLInputElement | null = row.querySelector('.assetDropdown');
-
-    const checkError: HTMLDivElement | null = row.querySelector('.errorAssetClass');
-    if (checkError) {
-      checkError.remove();
+    if (asset.assetClass === '') {
+      showError(
+        assetClassErrorClass,
+        `asset-${index}-assetClass`,
+        'append',
+        '13.65px',
+        MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
+      );
+      allValid = false;
     }
 
-    if (assetClass?.value == '') {
-      const errorMessage = document.createElement('div');
-      errorMessage.className = 'errorAssetClass';
-      errorMessage.innerText = 'This is a required field!';
-      errorMessage.style.color = 'red';
-      errorMessage.style.fontSize = '12px';
-      assetDropdownContainer?.append(errorMessage);
+    const percentageAllocationErrorClass = `errorPercentageAllocation-${index}`;
+    checkExistingError(percentageAllocationErrorClass);
 
-      presence = false;
-    }
-  });
-
-  return presence;
-};
-
-// validate the Percentage Allocation (input, required field)
-export const validatePart2percentageAllocation = () => {
-  let presence = true;
-
-  const assets: NodeListOf<HTMLDivElement> | null = document.querySelectorAll('.assets');
-
-  assets.forEach((row) => {
-    // const deleteButton = row.querySelector('.removeAsset')
-    const percentageAllocationInput = row.querySelector(
-      '.percentageAllocationInput'
-    ) as HTMLInputElement | null;
-    const percentageAllocation = row.querySelector(
-      '.percentageAllocation'
-    ) as HTMLDivElement | null;
-
-    const checkError = row.querySelector('.errorPercentageAllocation');
-    if (checkError) {
-      checkError.remove();
-    }
-
-    if (percentageAllocationInput?.value === '') {
-      const errorMessage = document.createElement('div');
-      errorMessage.className = 'errorPercentageAllocation';
-      errorMessage.innerText = 'This is a required Field!';
-      errorMessage.style.color = 'red';
-      errorMessage.style.fontSize = '12px';
-      percentageAllocation?.appendChild(errorMessage);
-      presence = false;
+    if (asset.percentageAllocation === '') {
+      showError(
+        percentageAllocationErrorClass,
+        `asset-${index}-percentageAllocation`,
+        'append',
+        '13.65px',
+        MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
+      );
+      allValid = false;
     } else if (
-      Number(percentageAllocationInput?.value) < 1 ||
-      Number(percentageAllocationInput?.value) > 100
+      !checkNumber(asset.percentageAllocation) ||
+      Number(asset.percentageAllocation) < 1 ||
+      Number(asset.percentageAllocation) > 100
     ) {
-      const errorMessage = document.createElement('div');
-      errorMessage.className = 'errorPercentageAllocation';
-      errorMessage.innerText = 'Invalid Percentage!';
-      errorMessage.style.color = 'red';
-      errorMessage.style.fontSize = '12px';
-      percentageAllocation?.appendChild(errorMessage);
-      presence = false;
+      showError(
+        percentageAllocationErrorClass,
+        `asset-${index}-percentageAllocation`,
+        'append',
+        '13.65px',
+        MESSAGE.ERROR_MESSAGE.INVALID_PERCENTAGE
+      );
+      allValid = false;
     }
   });
 
-  return presence;
+  return allValid;
 };
 
 // Validations for part 3 of the form
