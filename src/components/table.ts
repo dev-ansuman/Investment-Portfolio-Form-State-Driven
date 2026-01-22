@@ -34,14 +34,11 @@ const TableWrapper = (): HTMLDivElement => {
       console.log(key);
       console.log(typeof key);
       const tableCell = createTableCell() as HTMLTableCellElement;
-      // const title = (header[0].toLowerCase() + header.slice(1)).replaceAll(' ', '');
-      // console.log(title);
       if (key === 'assets') {
         tableCell.textContent = record[key].length.toString();
+      } else {
+        tableCell.textContent = String(record[key as keyof typeof record]);
       }
-      //   else {
-      //       tableCell.textContent = (record as any)[key]
-      //   }
       tableRow.appendChild(tableCell);
     });
     table.appendChild(tableRow);

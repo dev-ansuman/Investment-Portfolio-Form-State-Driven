@@ -85,7 +85,11 @@ const Navigation = (): HTMLDivElement => {
     const isValid = validatePart3AutomatedRebalancing() && validatePart3AckCheckBox();
 
     if (isValid) {
-      state.records.push({ id: 'some', ...state.form, createdAt: Date.now.toString() });
+      state.records.push({
+        id: Date.now().toString(),
+        ...state.form,
+        createdAt: new Date().toISOString(),
+      });
       state.form = { ...initialFormState };
       state.currentStep = 1;
       saveToStorage();
