@@ -1,12 +1,12 @@
 const INVESTMENT_DETAILS = {
   PORTFOLIO_NAME: {
-    LABEL: 'Portfolio Name*',
+    LABEL: 'Portfolio Name',
     PLACEHOLDER: 'Enter Portfolio Name',
     ID: 'portfolioName',
     NAME: 'portfolioName',
   },
   PORTFOLIO_TYPE: {
-    LABEL: 'Portfolio Type*',
+    LABEL: 'Portfolio Type',
     OPTIONS: ['Income', 'Growth', 'Value', 'Speculative', 'Aggressive'],
     ID: 'portfolioType',
     NAME: 'portfolioType',
@@ -15,7 +15,7 @@ const INVESTMENT_DETAILS = {
     CLASS: 'radioCheckboxText',
   },
   INVESTMENT_GOAL: {
-    LABEL: 'Investment Goal*',
+    LABEL: 'Investment Goal',
     OPTIONS: [
       'Income Generation',
       'Capital Preservation',
@@ -38,7 +38,7 @@ const INVESTMENT_DETAILS = {
     NAME: 'investmentGoal',
   },
   INVESTMENT_HORIZON: {
-    LABEL: 'Investment Horizon*',
+    LABEL: 'Investment Horizon',
     OPTIONS: [
       'Short-Term Investment Horizon',
       'Medium-Term Investment Horizon',
@@ -53,7 +53,7 @@ const INVESTMENT_DETAILS = {
     NAME: 'investmentHorizon',
   },
   RISK_TOLERANCE: {
-    LABEL: 'Risk Tolerance*',
+    LABEL: 'Risk Tolerance',
     OPTIONS: ['Aggressive', 'Moderate', 'Considerate', 'Flexible', 'Adjustable'],
     ID: 'riskTolerance',
     NAME: 'riskTolerance',
@@ -65,7 +65,7 @@ const INVESTMENT_DETAILS = {
 
 const ASSET_ALLOCATION = {
   ANNUAL_INVESTMENT_CAPACITY: {
-    LABEL: 'Annual Investment Capacity*',
+    LABEL: 'Annual Investment Capacity',
     PLACEHOLDER: 'Enter a amount, greater than 1',
     ID: 'annualInvestmentCapacity',
     NAME: 'annualInvestmentCapacity',
@@ -73,6 +73,7 @@ const ASSET_ALLOCATION = {
   CURRENCY: {
     OPTIONS: ['₹', '$'],
     ID: 'curreny',
+    VALUE: ['INR', 'Dollar'],
     NAME: 'curreny',
   },
   LUMP_SUM_AMOUNT: {
@@ -93,14 +94,14 @@ const ASSET_ALLOCATION = {
     TITLE: 'Assets',
   },
   ASSET_CLASS: {
-    LABEL: 'Asset Class*',
+    LABEL: 'Asset Class',
     OPTIONS: ['Stock', 'Bond', 'Cash', 'Real Estate', 'Forex'],
     VALUES: ['Equity', 'Fixed Income', 'Cash Equivalent', 'REITs', 'Foreign Exchange'],
     ID: 'assetClass',
     NAME: 'assetClass',
   },
   PERCENTAGE_ALLOCATION: {
-    LABEL: 'Percentage Allocation(%)*',
+    LABEL: 'Percentage Allocation(%)',
     TYPE: 'number',
     ID: 'percentageAllocation',
     NAME: 'percentageAllocation',
@@ -122,7 +123,7 @@ const ASSET_ALLOCATION = {
   },
   INVESTMENT_STYLE: {
     LABEL: 'Investment Style',
-    OPTIONS: ['Large-Cap', 'Mid-Cap', 'Small-Cap'],
+    OPTIONS: ['Large', 'Medium', 'Small'],
     ID: 'investmentStyle',
     NAME: 'investmentStyle',
     TYPE: 'checkbox',
@@ -133,7 +134,7 @@ const ASSET_ALLOCATION = {
 
 const PREFERENCES = {
   AUTOMATED_REBALANCING: {
-    LABEL: 'Opt for Automated Rebalancing?*',
+    LABEL: 'Opt for Automated Rebalancing?',
     OPTIONS: ['Yes', 'No'],
     ID: 'automatedRebalancing',
     NAME: 'automatedRebalancing',
@@ -158,7 +159,7 @@ const PREFERENCES = {
     ROWS: 12,
   },
   RISK_ACKNOWLEDGEMENT: {
-    LABEL: 'Risk Acknowledgement*',
+    LABEL: 'Risk Acknowledgement',
     OPTIONS: [''],
     ID: 'riskAcknowledgement',
     NAME: 'riskAcknowledgement',

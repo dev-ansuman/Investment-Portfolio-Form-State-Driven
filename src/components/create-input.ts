@@ -3,6 +3,11 @@ const createDiv = (): HTMLDivElement => {
   return newDiv;
 };
 
+const createSpan = (): HTMLSpanElement => {
+  const newSpan = document.createElement('span');
+  return newSpan;
+};
+
 const createHeader = (): HTMLHeadElement => {
   const header = document.createElement('header') as HTMLHeadElement;
   return header;
@@ -38,11 +43,15 @@ const createTableCell = (): HTMLTableCellElement => {
   return newTableCell;
 };
 
-const createInput = (inputType: string = 'text', nameAttribute: string): HTMLInputElement => {
+const createInput = (
+  inputType: string = 'text',
+  nameAttribute: string,
+  PLACEHOLDER: string
+): HTMLInputElement => {
   const input = document.createElement('input') as HTMLInputElement;
   input.type = inputType;
   input.name = nameAttribute;
-
+  input.placeholder = PLACEHOLDER;
   return input;
 };
 
@@ -102,7 +111,7 @@ const createRadioORCheckbox = (
   radioContainer.classList.add('radioContainer');
 
   for (let i = 0; i < options.length; i++) {
-    const radioInput = createInput(inputType, '') as HTMLInputElement;
+    const radioInput = createInput(inputType, '', '') as HTMLInputElement;
     radioInput.classList.add('radioCheckbox');
     radioInput.setAttribute('id', options[i] + `${inputName}`);
     radioInput.name = inputName;
@@ -125,6 +134,7 @@ const createRadioORCheckbox = (
 export {
   createLabel,
   createDiv,
+  createSpan,
   createHeader,
   createButton,
   createTable,

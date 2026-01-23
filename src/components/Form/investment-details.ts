@@ -8,13 +8,13 @@ import {
 } from '../../services/validations.ts';
 import { createInput, createDropdown, createRadioORCheckbox, createDiv } from '../create-input.ts';
 import { INVESTMENT_DETAILS } from './constants.ts';
+import { createRequired } from '../../utils/required.ts';
 
 const InvestmentDetail = (): HTMLDivElement => {
   // parent div for investment details
   const investmentDetail = createDiv() as HTMLDivElement;
   investmentDetail.classList.add('formScreen');
   investmentDetail.id = 'investment-details';
-  // investmentDetail.style.display = '';
 
   // portfolio name div
   const portfolioNameDiv = createDiv() as HTMLDivElement;
@@ -23,9 +23,11 @@ const InvestmentDetail = (): HTMLDivElement => {
   const portfolioNameTitle = createDiv() as HTMLDivElement;
   portfolioNameTitle.classList.add('fieldTitle');
   portfolioNameTitle.textContent = INVESTMENT_DETAILS.PORTFOLIO_NAME.LABEL;
+  portfolioNameTitle.append(createRequired());
   const portfolioNameInput = createInput(
     '',
-    INVESTMENT_DETAILS.PORTFOLIO_NAME.NAME
+    INVESTMENT_DETAILS.PORTFOLIO_NAME.NAME,
+    ''
   ) as HTMLInputElement;
   portfolioNameInput.classList.add('fieldInput');
 
@@ -44,6 +46,7 @@ const InvestmentDetail = (): HTMLDivElement => {
   const portfolioTypeTitle = createDiv() as HTMLDivElement;
   portfolioTypeTitle.classList.add('fieldTitle');
   portfolioTypeTitle.textContent = INVESTMENT_DETAILS.PORTFOLIO_TYPE.LABEL;
+  portfolioTypeTitle.append(createRequired());
   const portfolioTypeRadio = createRadioORCheckbox(
     INVESTMENT_DETAILS.PORTFOLIO_TYPE.OPTIONS,
     INVESTMENT_DETAILS.PORTFOLIO_TYPE.NAME,
@@ -80,6 +83,7 @@ const InvestmentDetail = (): HTMLDivElement => {
   const investmentGoalTitle = createDiv() as HTMLDivElement;
   investmentGoalTitle.classList.add('fieldTitle');
   investmentGoalTitle.textContent = INVESTMENT_DETAILS.INVESTMENT_GOAL.LABEL;
+  investmentGoalTitle.append(createRequired());
   const investmentGoalDropdown = createDropdown(
     INVESTMENT_DETAILS.INVESTMENT_GOAL.OPTIONS,
     INVESTMENT_DETAILS.INVESTMENT_GOAL.VALUES,
@@ -102,6 +106,7 @@ const InvestmentDetail = (): HTMLDivElement => {
   const investmentHorizonTitle = createDiv() as HTMLDivElement;
   investmentHorizonTitle.classList.add('fieldTitle');
   investmentHorizonTitle.textContent = INVESTMENT_DETAILS.INVESTMENT_HORIZON.LABEL;
+  investmentHorizonTitle.append(createRequired());
   const investmentHorizonDropdown = createDropdown(
     INVESTMENT_DETAILS.INVESTMENT_HORIZON.OPTIONS,
     INVESTMENT_DETAILS.INVESTMENT_HORIZON.VALUES,
@@ -129,6 +134,7 @@ const InvestmentDetail = (): HTMLDivElement => {
   const riskToleranceTitle = createDiv() as HTMLDivElement;
   riskToleranceTitle.classList.add('fieldTitle');
   riskToleranceTitle.textContent = INVESTMENT_DETAILS.RISK_TOLERANCE.LABEL;
+  riskToleranceTitle.append(createRequired());
   const riskToleranceRadio = createRadioORCheckbox(
     INVESTMENT_DETAILS.RISK_TOLERANCE.OPTIONS,
     INVESTMENT_DETAILS.RISK_TOLERANCE.NAME,

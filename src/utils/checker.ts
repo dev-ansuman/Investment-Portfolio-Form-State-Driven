@@ -6,8 +6,10 @@ export const checkName = (str: string): boolean => {
 };
 
 export const checkNumber = (str: string): boolean => {
-  const num = Number(str);
-  return !isNaN(num);
+  const regex = /^\d+(\.\d+)?$/;
+  // const num = Number(str);
+  // return !isNaN(num);
+  return regex.test(str.trim());
 };
 
 // export const checkExistingPorfolioName = (portfolioName: string, recordId: number | null = null): boolean => {

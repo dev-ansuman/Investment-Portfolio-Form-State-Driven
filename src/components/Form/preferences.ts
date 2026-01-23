@@ -3,6 +3,7 @@ import {
   validatePart3AckCheckBox,
   validatePart3AutomatedRebalancing,
 } from '../../services/validations';
+import { createRequired } from '../../utils/required';
 import { createDiv, createRadioORCheckbox, createTextarea } from '../create-input';
 import { PREFERENCES } from './constants';
 
@@ -20,6 +21,7 @@ const Preference = (): HTMLDivElement => {
   const automatedRebalancingTitle = createDiv() as HTMLDivElement;
   automatedRebalancingTitle.classList.add('fieldTitle');
   automatedRebalancingTitle.textContent = PREFERENCES.AUTOMATED_REBALANCING.LABEL;
+  automatedRebalancingTitle.append(createRequired());
   const automatedRebalancingRadio = createRadioORCheckbox(
     PREFERENCES.AUTOMATED_REBALANCING.OPTIONS,
     PREFERENCES.AUTOMATED_REBALANCING.NAME,
@@ -118,6 +120,7 @@ const Preference = (): HTMLDivElement => {
   const riskAcknowledgementTitle = createDiv() as HTMLDivElement;
   riskAcknowledgementTitle.classList.add('fieldTitle');
   riskAcknowledgementTitle.textContent = PREFERENCES.RISK_ACKNOWLEDGEMENT.LABEL;
+  riskAcknowledgementTitle.append(createRequired());
   const riskAcknowledgementCheckbox = createRadioORCheckbox(
     PREFERENCES.RISK_ACKNOWLEDGEMENT.OPTIONS,
     PREFERENCES.RISK_ACKNOWLEDGEMENT.NAME,

@@ -104,13 +104,7 @@ const Navigation = (): HTMLDivElement => {
           createdAt: new Date().toISOString(),
         });
       }
-      state.form = { ...initialFormState };
-      state.currentStep = 1;
-      state.completedSteps = [];
-      state.selectedRecordId = null;
-      state.editingRecordId = null;
-      saveToStorage();
-      renderApp();
+      resetForm();
     }
   });
 
@@ -118,4 +112,14 @@ const Navigation = (): HTMLDivElement => {
   return navigationButtonDiv;
 };
 
-export { Navigation };
+const resetForm = (): void => {
+  state.form = { ...initialFormState };
+  state.currentStep = 1;
+  state.completedSteps = [];
+  state.selectedRecordId = null;
+  state.editingRecordId = null;
+  saveToStorage();
+  renderApp();
+};
+
+export { Navigation, resetForm };

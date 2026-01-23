@@ -10,6 +10,7 @@ import { TABLE } from './Form/constants';
 import { loadFromStorage, saveToStorage } from '../app.storage';
 import { state } from '../app.state';
 import { renderApp } from './App';
+import { resetForm } from './Form/navigation-buttons';
 
 const TableContainer = (): HTMLDivElement => {
   const tableContainer = createDiv() as HTMLDivElement;
@@ -28,6 +29,11 @@ const TableContainer = (): HTMLDivElement => {
   deleteButton.textContent = 'Delete';
   deleteButton.className = 'tableActionButton deleteActionButton';
   deleteButton.disabled = !state.selectedRecordId;
+
+  const resetFormButton = createButton() as HTMLButtonElement;
+  resetFormButton.textContent = 'Clear Form';
+  resetFormButton.className = 'tableActionButton clearFormActionButton';
+  // resetFormButton.disabled = !state.selectedRecordId;
 
   editButton.addEventListener('click', () => {
     if (state.selectedRecordId) {
@@ -56,7 +62,11 @@ const TableContainer = (): HTMLDivElement => {
     }
   });
 
-  actionButtonContainer.append(editButton, deleteButton);
+  resetFormButton.addEventListener('click', () => {
+    resetForm();
+  });
+
+  actionButtonContainer.append(resetFormButton, editButton, deleteButton);
 
   // Table
   const tableWrapper = createDiv() as HTMLDivElement;

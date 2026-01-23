@@ -8,7 +8,7 @@ import type { Asset } from '../app.types.js';
 // Validations for part 1 of the form
 
 // validate the portfolio name (input, required field)
-export const validatePart1PortfolioName = (): boolean => {
+const validatePart1PortfolioName = (): boolean => {
   const portfolioNameInput = document.getElementsByName(
     'portfolioName'
   ) as NodeListOf<HTMLInputElement>;
@@ -75,7 +75,7 @@ export const validatePart1PortfolioName = (): boolean => {
 // }
 
 // validate the portfolio type (radio, required field)
-export const validatePart1PortfolioType = (): boolean => {
+const validatePart1PortfolioType = (): boolean => {
   const portfolioTypeInput = document.getElementsByName(
     'portfolioType'
   ) as NodeListOf<HTMLInputElement>;
@@ -111,7 +111,7 @@ export const validatePart1PortfolioType = (): boolean => {
 };
 
 // validate the Investment Goal (dropdown, required field)
-export const validatePart1InvestmentGoal = () => {
+const validatePart1InvestmentGoal = () => {
   const selectedField = document.getElementsByName(
     'investmentGoal'
   ) as NodeListOf<HTMLSelectElement>;
@@ -133,7 +133,7 @@ export const validatePart1InvestmentGoal = () => {
 };
 
 // validate the portfolio type (dropdown, required field)
-export const validatePart1InvestmentHorizon = () => {
+const validatePart1InvestmentHorizon = () => {
   const selectedField = document.getElementsByName(
     'investmentHorizon'
   ) as NodeListOf<HTMLSelectElement>;
@@ -156,7 +156,7 @@ export const validatePart1InvestmentHorizon = () => {
 };
 
 // validate the portfolio type (radio, required field)
-export const validatePart1RiskTolerance = () => {
+const validatePart1RiskTolerance = () => {
   const riskToleranceInput = document.getElementsByName(
     'riskTolerance'
   ) as NodeListOf<HTMLInputElement>;
@@ -191,7 +191,7 @@ export const validatePart1RiskTolerance = () => {
 
 // Validations for part 2 of the form
 // validate the Annual Investment Capacity (input, required field)
-export const validatePart2AnnualInvestmentCapacity = () => {
+const validatePart2AnnualInvestmentCapacity = () => {
   const annualInvestmentCapacityInput = document.getElementsByName(
     'annualInvestmentCapacity'
   ) as NodeListOf<HTMLInputElement>;
@@ -233,7 +233,7 @@ export const validatePart2AnnualInvestmentCapacity = () => {
 };
 
 // validate part 2 asset
-export const validatePart2Asset = () => {
+const validatePart2Asset = () => {
   const { assets } = state.form;
   let allValid = true;
 
@@ -265,9 +265,8 @@ export const validatePart2Asset = () => {
       );
       allValid = false;
     } else if (
-      !checkNumber(asset.percentageAllocation) ||
-      Number(asset.percentageAllocation) < 0 ||
-      Number(asset.percentageAllocation) > 100
+      !checkNumber(asset.percentageAllocation) &&
+      (Number(asset.percentageAllocation) <= 0 || Number(asset.percentageAllocation) > 100)
     ) {
       showError(
         percentageAllocationErrorClass,
@@ -283,7 +282,7 @@ export const validatePart2Asset = () => {
   return allValid;
 };
 
-export const validatePart2AssetIndividual = (
+const validatePart2AssetIndividual = (
   index: number,
   field: 'assetClass' | 'percentageAlloacation'
 ) => {
@@ -320,9 +319,8 @@ export const validatePart2AssetIndividual = (
       );
       return false;
     } else if (
-      !checkNumber(asset.percentageAllocation) ||
-      Number(asset.percentageAllocation) < 0 ||
-      Number(asset.percentageAllocation) > 100
+      !checkNumber(asset.percentageAllocation) &&
+      (Number(asset.percentageAllocation) <= 0 || Number(asset.percentageAllocation) > 100)
     ) {
       showError(
         errorClass,
@@ -340,7 +338,7 @@ export const validatePart2AssetIndividual = (
 
 // Validations for part 3 of the form
 // validate the automatic rebalancing (radio, required field)
-export const validatePart3AutomatedRebalancing = () => {
+const validatePart3AutomatedRebalancing = () => {
   const automatedRebalancing = document.getElementsByName(
     'automatedRebalancing'
   ) as NodeListOf<HTMLInputElement>;
@@ -372,7 +370,7 @@ export const validatePart3AutomatedRebalancing = () => {
 };
 
 // validate the Acknowledgement (checkbox, required field)
-export const validatePart3AckCheckBox = () => {
+const validatePart3AckCheckBox = () => {
   const checkBoxElement = document.getElementsByName(
     'riskAcknowledgement'
   ) as NodeListOf<HTMLInputElement>;
@@ -395,4 +393,17 @@ export const validatePart3AckCheckBox = () => {
   }
 
   return true;
+};
+
+export {
+  validatePart1PortfolioName,
+  validatePart1PortfolioType,
+  validatePart1InvestmentGoal,
+  validatePart1RiskTolerance,
+  validatePart1InvestmentHorizon,
+  validatePart2AnnualInvestmentCapacity,
+  validatePart2Asset,
+  validatePart2AssetIndividual,
+  validatePart3AckCheckBox,
+  validatePart3AutomatedRebalancing,
 };

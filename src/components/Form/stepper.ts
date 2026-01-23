@@ -67,6 +67,13 @@ const Stepper = () => {
     'progressText'
   );
 
+  // const investmentDetailPage = document.getElementById('investmentDetailLogo') as HTMLDivElement;
+  // investmentDetailPage?.addEventListener('click', () => {
+  //   state.currentStep = 1;
+  //   saveToStorage();
+  //   renderApp();
+  // })
+
   // progress box 2
   const progressAssetAllocation = createProgressBox(
     2,
