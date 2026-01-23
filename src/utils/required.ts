@@ -1,4 +1,4 @@
-import { createSpan } from './create-input';
+import { createSpan } from '../components/Ui/span';
 
 const createRequired = () => {
   const requiredText = createSpan() as HTMLSpanElement;

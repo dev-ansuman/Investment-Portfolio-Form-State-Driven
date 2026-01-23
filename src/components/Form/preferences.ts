@@ -4,7 +4,9 @@ import {
   validatePart3AutomatedRebalancing,
 } from '../../services/validations';
 import { createRequired } from '../../utils/required';
-import { createDiv, createRadioORCheckbox, createTextarea } from '../../utils/create-input';
+import { createDiv } from '../Ui/div';
+import { createTextarea } from '../Ui/text-area';
+import { createRadioORCheckbox } from '../Ui/radioCheckbox';
 import { PREFERENCES } from '../../constants/form-constants';
 
 const Preference = (): HTMLDivElement => {

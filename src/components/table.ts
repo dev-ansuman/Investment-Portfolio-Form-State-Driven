@@ -1,16 +1,12 @@
-import {
-  createDiv,
-  createTable,
-  createTableCell,
-  createTableRow,
-  createTableHeader,
-  createButton,
-} from '../utils/create-input';
+import { createTable, createTableRow, createTableHeader, createTableCell } from './Ui/table';
+import { createDiv } from './Ui/div';
+import { createButton } from './Ui/button';
 import { TABLE } from '../constants/form-constants';
 import { loadFromStorage, saveToStorage } from '../app.storage';
 import { state } from '../app.state';
 import { renderApp } from './App';
 import { resetForm } from './Form/navigation-buttons';
+import type { PortfolioFormRecords } from '../types/PortfolioFormRecords';
 
 const TableContainer = (): HTMLDivElement => {
   const tableContainer = createDiv() as HTMLDivElement;
@@ -37,7 +33,9 @@ const TableContainer = (): HTMLDivElement => {
 
   editButton.addEventListener('click', () => {
     if (state.selectedRecordId) {
-      const record = state.records.find((r) => r.id === state.selectedRecordId);
+      const record = state.records.find(
+        (r: PortfolioFormRecords) => r.id === state.selectedRecordId
+      );
       if (record) {
         const { ...formData } = record;
         state.form = { ...formData };
@@ -54,7 +52,9 @@ const TableContainer = (): HTMLDivElement => {
   deleteButton.addEventListener('click', () => {
     if (state.selectedRecordId) {
       if (confirm('Are you sure you want to delete this record ?')) {
-        state.records = state.records.filter((r) => r.id !== state.selectedRecordId);
+        state.records = state.records.filter(
+          (r: PortfolioFormRecords) => r.id !== state.selectedRecordId
+        );
         state.selectedRecordId = null;
         saveToStorage();
         renderApp();
@@ -85,7 +85,7 @@ const TableContainer = (): HTMLDivElement => {
   loadFromStorage();
   console.log(state.records);
 
-  state.records.forEach((record) => {
+  state.records.forEach((record: PortfolioFormRecords) => {
     const tableRow = createTableRow() as HTMLTableRowElement;
 
     if (state.selectedRecordId === record.id) {
@@ -107,8 +107,6 @@ const TableContainer = (): HTMLDivElement => {
     });
 
     tableRow.style.cursor = 'pointer';
-    // console.log(record);
-    // console.log(TABLE.KEYS)
     TABLE.KEYS.forEach((key) => {
       console.log(key);
       console.log(typeof key);

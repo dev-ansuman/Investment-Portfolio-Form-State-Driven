@@ -1,5 +1,5 @@
 import { formScreen } from './Form/Form.ts';
-import { createDiv } from '../utils/create-input.ts';
+import { createDiv } from './Ui/div.ts';
 import { Navigation } from './Form/navigation-buttons.ts';
 import { TableContainer } from './table.ts';
 import { ProjectHeading } from './heading.ts';

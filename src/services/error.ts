@@ -1,12 +1,10 @@
-export const showError = (
+const showError = (
   errorClass: string,
   parentId: string,
   addAt: string,
   fontSize: string,
   ERROR_MESSAGE: string
 ): void => {
-  // , extra: string
-  // const parentElement: HTMLDivElement | null = document.querySelector(`.${parentClass}`);
   const parentElement = document.getElementById(parentId) as HTMLDivElement;
   checkExistingError(errorClass);
 
@@ -20,15 +18,13 @@ export const showError = (
   } else if (addAt === 'after') {
     parentElement?.after(errorMessage!);
   }
-
-  // if (extra) {
-  //     errorMessage!.style.marginLeft = extra
-  // }
 };
 
-export const checkExistingError = (errorClass: string): void => {
+const checkExistingError = (errorClass: string): void => {
   const checkError: HTMLDivElement | null = document.querySelector(`.${errorClass}`);
   if (checkError) {
     checkError.remove();
   }
 };
+
+export { showError, checkExistingError };

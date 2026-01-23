@@ -1,4 +1,5 @@
-import { createButton, createDiv } from '../../utils/create-input';
+import { createButton } from '../Ui/button';
+import { createDiv } from '../Ui/div';
 import { initialFormState, state } from '../../app.state';
 import { renderApp } from '../App';
 import { saveToStorage } from '../../app.storage';
@@ -13,6 +14,7 @@ import {
   validatePart3AutomatedRebalancing,
   validatePart3AckCheckBox,
 } from '../../services/validations';
+import type { PortfolioFormRecords } from '../../types/PortfolioFormRecords';
 
 const Navigation = (): HTMLDivElement => {
   const navigationButtonDiv = createDiv() as HTMLDivElement;
@@ -89,7 +91,9 @@ const Navigation = (): HTMLDivElement => {
 
     if (isValid) {
       if (state.selectedRecordId) {
-        const index = state.records.findIndex((r) => r.id === state.editingRecordId);
+        const index: number = state.records.findIndex(
+          (r: PortfolioFormRecords) => r.id === state.editingRecordId
+        );
         if (index !== -1) {
           state.records[index] = {
             id: String(state.editingRecordId),

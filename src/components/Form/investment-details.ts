@@ -6,12 +6,10 @@ import {
   validatePart1PortfolioType,
   validatePart1RiskTolerance,
 } from '../../services/validations.ts';
-import {
-  createInput,
-  createDropdown,
-  createRadioORCheckbox,
-  createDiv,
-} from '../../utils/create-input.ts';
+import { createInput } from '../Ui/input.ts';
+import { createDiv } from '../Ui/div.ts';
+import { createRadioORCheckbox } from '../Ui/radioCheckbox.ts';
+import { createDropdown } from '../Ui/dropdown.ts';
 import { INVESTMENT_DETAILS } from '../../constants/form-constants.ts';
 import { createRequired } from '../../utils/required.ts';
 

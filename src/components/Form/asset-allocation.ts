@@ -5,16 +5,15 @@ import {
   validatePart2AssetIndividual,
 } from '../../services/validations.ts';
 import { renderApp } from '../App.ts';
-import {
-  createInput,
-  createDropdown,
-  createDiv,
-  createRadioORCheckbox,
-  createButton,
-} from '../../utils/create-input.ts';
+import { createInput } from '../Ui/input.ts';
+import { createDiv } from '../Ui/div.ts';
+import { createDropdown } from '../Ui/dropdown.ts';
+import { createButton } from '../Ui/button.ts';
+import { createRadioORCheckbox } from '../Ui/radioCheckbox.ts';
 import { ASSET_ALLOCATION } from '../../constants/form-constants.ts';
 import { saveToStorage } from '../../app.storage.ts';
 import { createRequired } from '../../utils/required.ts';
+import type { Asset } from '../../types/Asset.ts';
 
 const AssetAllocation = (): HTMLDivElement => {
   // parent div for asset allocation
@@ -273,7 +272,7 @@ const AssetAllocation = (): HTMLDivElement => {
 
   // add asset-div to asset container
   assetContainer.append(assetsTitle);
-  state.form.assets.forEach((_, index) => {
+  state.form.assets.forEach((_: Asset, index: number) => {
     assetContainer.appendChild(createAsset(index));
   });
 
@@ -328,7 +327,9 @@ const AssetAllocation = (): HTMLDivElement => {
           state.form.investmentStyle.push(label);
         }
       } else {
-        state.form.investmentStyle = state.form.investmentStyle.filter((item) => item != label);
+        state.form.investmentStyle = state.form.investmentStyle.filter(
+          (item: string) => item != label
+        );
       }
 
       saveToStorage();

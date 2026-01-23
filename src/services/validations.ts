@@ -3,7 +3,7 @@ import { checkName, checkNumber } from '../utils/checker.js';
 import { showError, checkExistingError } from '../services/error.js';
 import { MESSAGE } from '../constants/error-message-constants.js';
 import { ASSET_ALLOCATION, INVESTMENT_DETAILS, PREFERENCES } from '../constants/form-constants.js';
-import type { Asset } from '../app.types.js';
+import type { Asset } from '../types/Asset.js';
 
 // Validations for part 1 of the form
 
