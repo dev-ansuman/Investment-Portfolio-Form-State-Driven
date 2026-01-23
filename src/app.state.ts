@@ -1,5 +1,5 @@
-import type { AppState, FormState } from './types/app.types';
-
+import type { AppState } from './types/AppState';
+import type { FormState } from './types/FormState';
 const initialFormState: FormState = {
   portfolioName: '',
   portfolioType: '',
