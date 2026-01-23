@@ -1,7 +1,7 @@
 import { state } from '../../app.state.ts';
 import {
   validatePart2AnnualInvestmentCapacity,
-  validatePart2Asset,
+  validatePart2AssetIndividual,
 } from '../../services/validations.ts';
 import { renderApp } from '../App.ts';
 import {
@@ -12,6 +12,7 @@ import {
   createButton,
 } from '../input.ts';
 import { ASSET_ALLOCATION } from './constants.ts';
+import { saveToStorage } from '../../app.storage.ts';
 
 const AssetAllocation = (): HTMLDivElement => {
   // parent div for asset allocation
@@ -113,9 +114,9 @@ const AssetAllocation = (): HTMLDivElement => {
     assetClassDropdown.classList.add('fieldInput');
 
     assetClassDropdown.value = assetData.assetClass;
-    assetClassDropdown.addEventListener('input', (event) => {
-      state.form.assets[index].assetClass = (event.target as HTMLInputElement).value;
-      validatePart2Asset();
+    assetClassDropdown.addEventListener('change', (event) => {
+      state.form.assets[index].assetClass = (event.target as HTMLSelectElement).value;
+      validatePart2AssetIndividual(index, 'assetClass');
     });
 
     assetClassDiv.append(assetClassTitle, assetClassDropdown);
@@ -135,7 +136,7 @@ const AssetAllocation = (): HTMLDivElement => {
     percentageAllocationInput.value = assetData.percentageAllocation;
     percentageAllocationInput.addEventListener('input', (event) => {
       state.form.assets[index].percentageAllocation = (event.target as HTMLInputElement).value;
-      validatePart2Asset();
+      validatePart2AssetIndividual(index, 'percentageAlloacation');
     });
     percentageAllocationDiv.append(percentageAllocationTitle, percentageAllocationInput);
 
@@ -190,6 +191,7 @@ const AssetAllocation = (): HTMLDivElement => {
         return;
       }
       state.form.assets.splice(index, 1);
+      saveToStorage();
       renderApp();
     });
 
@@ -222,6 +224,7 @@ const AssetAllocation = (): HTMLDivElement => {
       specificFund: '',
       currentValue: '',
     });
+    saveToStorage();
     renderApp();
   });
 

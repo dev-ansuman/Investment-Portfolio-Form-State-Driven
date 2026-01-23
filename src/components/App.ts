@@ -1,7 +1,7 @@
 import { formScreen } from './Form/Form.ts';
 import { createDiv } from './input.ts';
 import { Navigation } from './navigation-buttons.ts';
-import { TableWrapper } from './table.ts';
+import { TableContainer } from './table.ts';
 
 export function renderApp(): void {
   const root = document.getElementById('app') as HTMLDivElement;
@@ -18,9 +18,7 @@ export function renderApp(): void {
   formContainer.appendChild(formScreen());
   formContainer.appendChild(Navigation());
 
-  const tableContainer = createDiv() as HTMLDivElement;
-  tableContainer.className = 'tableContainer';
-  tableContainer.appendChild(TableWrapper());
+  const tableContainer = TableContainer();
 
   root.append(formContainer, tableContainer);
   root.style.display = 'flex';

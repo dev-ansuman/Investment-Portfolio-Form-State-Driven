@@ -4,12 +4,61 @@ import {
   createTableCell,
   createTableRow,
   createTableHeader,
+  createButton,
 } from './input';
 import { TABLE } from './Form/constants';
-import { loadFromStorage } from '../app.storage';
+import { loadFromStorage, saveToStorage } from '../app.storage';
 import { state } from '../app.state';
+import { renderApp } from './App';
 
-const TableWrapper = (): HTMLDivElement => {
+const TableContainer = (): HTMLDivElement => {
+  const tableContainer = createDiv() as HTMLDivElement;
+  tableContainer.className = 'tableContainer';
+
+  // Action buttons
+  const actionButtonContainer = createDiv() as HTMLDivElement;
+  actionButtonContainer.className = 'tableActionButtons';
+
+  const editButton = createButton() as HTMLButtonElement;
+  editButton.textContent = 'Edit';
+  editButton.className = 'tableActionButton editActionButton';
+  editButton.disabled = !state.selectedRecordId;
+
+  const deleteButton = createButton() as HTMLButtonElement;
+  deleteButton.textContent = 'Delete';
+  deleteButton.className = 'tableActionButton deleteActionButton';
+  deleteButton.disabled = !state.selectedRecordId;
+
+  editButton.addEventListener('click', () => {
+    if (state.selectedRecordId) {
+      const record = state.records.find((r) => r.id === state.selectedRecordId);
+      if (record) {
+        const { ...formData } = record;
+        state.form = { ...formData };
+        state.editingRecordId = record.id;
+        state.currentStep = 1;
+        state.completedSteps = [];
+        // state.selectedRecordId = null;
+        saveToStorage();
+        renderApp();
+      }
+    }
+  });
+
+  deleteButton.addEventListener('click', () => {
+    if (state.selectedRecordId) {
+      if (confirm('Are you sure you want to delete this record ?')) {
+        state.records = state.records.filter((r) => r.id === state.selectedRecordId);
+        state.selectedRecordId = null;
+        saveToStorage();
+        renderApp();
+      }
+    }
+  });
+
+  actionButtonContainer.append(editButton, deleteButton);
+
+  // Table
   const tableWrapper = createDiv() as HTMLDivElement;
   tableWrapper.className = 'tableWrapper';
   const table = createTable() as HTMLTableElement;
@@ -28,7 +77,27 @@ const TableWrapper = (): HTMLDivElement => {
 
   state.records.forEach((record) => {
     const tableRow = createTableRow() as HTMLTableRowElement;
-    console.log(record);
+
+    if (state.selectedRecordId === record.id) {
+      tableRow.classList.add('selected');
+    }
+
+    if (state.editingRecordId === record.id) {
+      tableRow.classList.add('editing');
+    }
+
+    tableRow.addEventListener('click', () => {
+      if (state.selectedRecordId === record.id) {
+        state.selectedRecordId = null;
+      } else {
+        state.selectedRecordId = record.id;
+      }
+      saveToStorage();
+      renderApp();
+    });
+
+    tableRow.style.cursor = 'pointer';
+    // console.log(record);
     // console.log(TABLE.KEYS)
     TABLE.KEYS.forEach((key) => {
       console.log(key);
@@ -45,8 +114,9 @@ const TableWrapper = (): HTMLDivElement => {
   });
 
   tableWrapper.appendChild(table);
+  tableContainer.append(actionButtonContainer, tableWrapper);
 
-  return tableWrapper;
+  return tableContainer;
 };
 
-export { TableWrapper };
+export { TableContainer };

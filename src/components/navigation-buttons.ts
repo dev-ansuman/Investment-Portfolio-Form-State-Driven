@@ -30,7 +30,7 @@ const Navigation = (): HTMLDivElement => {
   continueButton.id = 'continueButton';
 
   const submitButton = createButton() as HTMLButtonElement;
-  submitButton.textContent = 'Submit';
+  submitButton.textContent = state.editingRecordId ? 'Update' : 'Submit';
   submitButton.className = 'navigationButton';
   submitButton.id = 'submitButton';
 
@@ -73,6 +73,9 @@ const Navigation = (): HTMLDivElement => {
     }
 
     if (isValid && state.currentStep < 3) {
+      if (!state.completedSteps.includes(state.currentStep)) {
+        state.completedSteps.push(state.currentStep);
+      }
       state.currentStep += 1;
       saveToStorage();
       renderApp();
@@ -85,13 +88,26 @@ const Navigation = (): HTMLDivElement => {
     const isValid = validatePart3AutomatedRebalancing() && validatePart3AckCheckBox();
 
     if (isValid) {
-      state.records.push({
-        id: Date.now().toString(),
-        ...state.form,
-        createdAt: new Date().toISOString(),
-      });
+      if (state.selectedRecordId) {
+        const index = state.records.findIndex((r) => r.id === state.editingRecordId);
+        if (index !== -1) {
+          state.records[index] = {
+            id: String(state.editingRecordId),
+            ...state.form,
+            createdAt: state.records[index].createdAt,
+          };
+        }
+      } else {
+        state.records.push({
+          id: Date.now().toString(),
+          ...state.form,
+          createdAt: new Date().toISOString(),
+        });
+      }
       state.form = { ...initialFormState };
       state.currentStep = 1;
+      state.completedSteps = [];
+      state.selectedRecordId = null;
       saveToStorage();
       renderApp();
     }

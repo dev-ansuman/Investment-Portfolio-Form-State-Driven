@@ -51,6 +51,9 @@ interface FormState {
 
 interface AppState {
   currentStep: number;
+  completedSteps: number[];
+  selectedRecordId: string | null;
+  editingRecordId: string | null;
   records: PortfolioFormRecords[];
   form: FormState;
 }

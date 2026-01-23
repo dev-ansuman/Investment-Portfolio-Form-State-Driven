@@ -13,11 +13,13 @@ body {
 #app {
   display: flex;
   justify-content: space-evenly;
+  height: fit-content;
   /* height: 100%; */
 }
 
 .formContainer {
   width: 48%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   /* gap: 6%; */
@@ -27,54 +29,78 @@ body {
 }
 
 .progressBar {
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    gap: 9px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    align-items: center;
-    color: rgb(63, 61, 61);
-    /* padding-top: ; */
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  align-items: center;
+  color: rgb(63, 61, 61);
+  /* padding-top: ; */
 }
 
 .progress {
-    height: 27px;
-    width: 27px;
+  height: 27px;
+  width: 27px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    flex-direction: column;
-    gap: 5px;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .progress img {
-    height: 34px;
-    width: 34px;
-    /* border: 1.3px solid black; */
-    background-color: rgb(203, 230, 217);
-    padding: 8px;
-    border-radius: 7px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  height: 34px;
+  width: 34px;
+  /* border: 1.3px solid black; */
+  background-color: rgb(203, 230, 217);
+  padding: 8px;
+  border-radius: 7px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 
 .progress .progressText {
-    font-size: 9px;
-    text-align: center;
+  font-size: 9px;
+  text-align: center;
+}
+
+.progress.completed img {
+  background-color: #42e0ae;
+  border: none;
+}
+
+.progress.completed .progressText {
+  color: #127656;
+  font-weight: 600;
+}
+
+.progress.active img {
+  background-color: #42e0ae;
+  border: 2px solid #127656
+}
+
+.progress.active .progressText {
+  color: #127656;
+  font-weight: 600;
 }
 
 .progressLine {
-    background-color: black;
-    height: 1.5px;
-    width: 50px;
-    align-self: flex-start;
-    margin-top: 13px;
-    /* padding-top: 12px; */
+  background-color: black;
+  height: 1.5px;
+  width: 50px;
+  align-self: flex-start;
+  margin-top: 13px;
+  /* padding-top: 12px; */
 }
 
+.progressLine.completed {
+  background-color: #42e0ae;
+  height: 2px
+}
 
 .formParent {
   width: 100%;
@@ -136,18 +162,18 @@ body {
 
 
 .radioCheckboxText {
-    font-size: 12px;
-    border: 1px solid rgb(97, 95, 95);
-    color: rgb(97, 95, 95);
-    /* padding: 5px 9px; */
-    border-radius: 10px;
-    cursor: pointer;
-    width: 18%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 7px 12px;
-    /* background-color: green; */
+  font-size: 12px;
+  border: 1px solid rgb(97, 95, 95);
+  color: rgb(97, 95, 95);
+  /* padding: 5px 9px; */
+  border-radius: 10px;
+  cursor: pointer;
+  width: 18%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px 12px;
+  /* background-color: green; */
 }
 
 /* .portfolioTypeDiv input:checked+.radioCheckboxText {
@@ -197,20 +223,20 @@ body {
 }
 
 .navigationButton {
-    padding: 8px 15px;
-    font-size: large;
-    font-weight: 600;
-    border-radius: 16px;
-    margin-bottom: 8px;
+  padding: 8px 15px;
+  font-size: large;
+  font-weight: 600;
+  border-radius: 16px;
+  margin-bottom: 8px;
 }
 
 .buttonContainer {
-    display: flex;
-    /* background-color: red; */
-    width: 54%;
-    justify-content: space-between;
-    /* margin: auto; */
-    align-self: center;
+  display: flex;
+  /* background-color: red; */
+  width: 54%;
+  justify-content: space-between;
+  /* margin: auto; */
+  align-self: center;
 }
 
 #previousButton {
@@ -224,69 +250,130 @@ body {
 
 .tableContainer {
   width: 48%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   /* margin: auto; */
 }
 
+.tableActionButtons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.tableActionButton {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tableActionButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.editActionButton {
+  background-color: #42e0ae;
+  border: none;
+  color: black;
+}
+
+.editActionButton:hover:not(:disabled) {
+  background-color: #35c999;
+}
+
+.deleteActionButton {
+  background-color: #ff4444;
+  border: none;
+  color: white;
+}
+
+.deleteActionButton:hover:not(:disabled) {
+  background-color: #cc0000;
+}
+
 .tableWrapper {
-    height: 72%;
-    overflow-y: auto;
-    overflow-x: auto;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    margin-bottom: 20px;
-    border: 1px solid black;
+  height: 50%;
+  /* max-height: 600px; */
+  overflow-y: auto;
+  overflow-x: auto;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  /* margin-bottom: 20px; */
+  border: 1px solid black;
 }
 
 .tableWrapper::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 0px;
-    margin: auto;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0px;
+  margin: auto;
 }
 
 th,
 td {
-    border: 1px solid grey;
-    text-align: center;
-    font-size: 13px;
+  border: 1px solid grey;
+  text-align: center;
+  font-size: 13px;
 }
 
-th td{
-    background-color: #42e0ae;
-    color: black;
-    font-weight: 600;
-    padding: 3px;
-    font-size: 13px;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 2;
+th td {
+  background-color: #42e0ae;
+  color: black;
+  font-weight: 600;
+  padding: 3px;
+  font-size: 13px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 td {
-    /* background-color: #f7f7f7; */
-    color: #333;
-    padding: 0px 6px;
-    font-size: 11px;
-    text-align: center;
-    height: max-content;
-    height: 32px;
+  /* background-color: #f7f7f7; */
+  color: #333;
+  padding: 0px 6px;
+  font-size: 11px;
+  text-align: center;
+  height: max-content;
+  height: 32px;
+}
+
+table tr.selected {
+  background-color: #d0f4e6;
+}
+
+table tr.selected td {
+  font-weight: 600;
+}
+
+table tr.editing {
+  background-color: #fff3cd;
+}
+
+table tr.editing td {
+  font-weight: 600;
 }
 
 th {
-    background-color: #42e0ae;
-    color: black;
-    font-weight: 600;
-    padding: 3px;
-    font-size: 13px;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 2;
+  background-color: #42e0ae;
+  color: black;
+  font-weight: 600;
+  padding: 3px;
+  font-size: 13px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }

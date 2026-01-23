@@ -3,6 +3,7 @@ import { checkName, checkNumber } from '../utils/checker.js';
 import { showError, checkExistingError } from '../services/error.js';
 import { MESSAGE } from '../services/messages.js';
 import { ASSET_ALLOCATION, INVESTMENT_DETAILS, PREFERENCES } from '../components/Form/constants.js';
+import type { Asset } from '../app.types.js';
 
 // Validations for part 1 of the form
 
@@ -280,6 +281,61 @@ export const validatePart2Asset = () => {
   });
 
   return allValid;
+};
+
+export const validatePart2AssetIndividual = (
+  index: number,
+  field: 'assetClass' | 'percentageAlloacation'
+) => {
+  const asset: Asset = state.form.assets[index];
+
+  if (field === 'assetClass') {
+    const errorClass = `errorAssetClass-${index}`;
+    checkExistingError(errorClass);
+
+    if (asset.assetClass === '') {
+      showError(
+        errorClass,
+        `asset-${index}-assetClass`,
+        'append',
+        '13.65px',
+        MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
+      );
+      return false;
+    }
+    return true;
+  }
+
+  if (field === 'percentageAlloacation') {
+    const errorClass = `errorPercentageAllocation-${index}`;
+    checkExistingError(errorClass);
+
+    if (asset.percentageAllocation === '') {
+      showError(
+        errorClass,
+        `asset-${index}-percentageAllocation`,
+        'append',
+        '13.65px',
+        MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
+      );
+      return false;
+    } else if (
+      !checkNumber(asset.percentageAllocation) ||
+      Number(asset.percentageAllocation) < 1 ||
+      Number(asset.percentageAllocation) > 100
+    ) {
+      showError(
+        errorClass,
+        `asset-${index}-percentageAllocation`,
+        'append',
+        '13.65px',
+        MESSAGE.ERROR_MESSAGE.INVALID_PERCENTAGE
+      );
+      return false;
+    }
+    return true;
+  }
+  return true;
 };
 
 // Validations for part 3 of the form
