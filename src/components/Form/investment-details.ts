@@ -6,8 +6,13 @@ import {
   validatePart1PortfolioType,
   validatePart1RiskTolerance,
 } from '../../services/validations.ts';
-import { createInput, createDropdown, createRadioORCheckbox, createDiv } from '../create-input.ts';
-import { INVESTMENT_DETAILS } from './constants.ts';
+import {
+  createInput,
+  createDropdown,
+  createRadioORCheckbox,
+  createDiv,
+} from '../../utils/create-input.ts';
+import { INVESTMENT_DETAILS } from '../../constants/form-constants.ts';
 import { createRequired } from '../../utils/required.ts';
 
 const InvestmentDetail = (): HTMLDivElement => {

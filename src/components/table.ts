@@ -5,8 +5,8 @@ import {
   createTableRow,
   createTableHeader,
   createButton,
-} from './create-input';
-import { TABLE } from './Form/constants';
+} from '../utils/create-input';
+import { TABLE } from '../constants/form-constants';
 import { loadFromStorage, saveToStorage } from '../app.storage';
 import { state } from '../app.state';
 import { renderApp } from './App';

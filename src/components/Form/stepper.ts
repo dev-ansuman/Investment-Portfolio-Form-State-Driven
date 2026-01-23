@@ -1,4 +1,4 @@
-import { createDiv, createImg, createNav } from '../create-input';
+import { createDiv, createImg, createNav } from '../../utils/create-input';
 import { state } from '../../app.state';
 
 const Stepper = () => {
@@ -23,6 +23,7 @@ const Stepper = () => {
     if (isCompleted) {
       progressDiv.classList.add('completed');
     }
+
     if (isActive) {
       progressDiv.classList.add('active');
     }

@@ -11,8 +11,8 @@ import {
   createDiv,
   createRadioORCheckbox,
   createButton,
-} from '../create-input.ts';
-import { ASSET_ALLOCATION } from './constants.ts';
+} from '../../utils/create-input.ts';
+import { ASSET_ALLOCATION } from '../../constants/form-constants.ts';
 import { saveToStorage } from '../../app.storage.ts';
 import { createRequired } from '../../utils/required.ts';
 

@@ -1,4 +1,4 @@
-import { createDiv, createHeader } from './create-input';
+import { createDiv, createHeader } from '../utils/create-input';
 
 const ProjectHeading = () => {
   const header = createHeader() as HTMLHeadElement;

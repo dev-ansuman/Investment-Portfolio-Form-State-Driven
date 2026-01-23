@@ -7,11 +7,9 @@
 
 body {
   background-color: #eefdf5;
-  /* background-color: rebeccapurple; */
 }
 
 header {
-  /* background-color: rebeccapurple; */
   height: 14vh;
   display: flex;
 }
@@ -21,7 +19,6 @@ header {
   font-weight: 700;
   color: #01462f;
   width: fit-content;
-  /* background-color: green; */
   margin: auto;
 }
 
@@ -38,10 +35,8 @@ header {
   height: fit-content;
   display: flex;
   flex-direction: column;
-  /* gap: 6%; */
   gap: 20px;
   padding: 20px 0;
-  /* margin: auto; */
 }
 
 .progressBar {
@@ -53,7 +48,6 @@ header {
   margin-top: 20px;
   align-items: center;
   color: rgb(63, 61, 61);
-  /* padding-top: ; */
 }
 
 .progress {
@@ -71,7 +65,6 @@ header {
 .progress img {
   height: 34px;
   width: 34px;
-  /* border: 1.3px solid black; */
   background-color: rgb(203, 230, 217);
   padding: 8px;
   border-radius: 7px;
@@ -110,7 +103,6 @@ header {
   width: 50px;
   align-self: flex-start;
   margin-top: 13px;
-  /* padding-top: 12px; */
 }
 
 .progressLine.completed {
@@ -124,17 +116,12 @@ header {
 
 .formScreen {
   background-color: white;
-  /* height: 100%; */
-  /* width: 48%; */
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-evenly; */
   border-radius: 20px;
   border: 1px solid #00bc7d(28, 27, 27);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  /* background-color: green; */
-  /* padding: 24px; */
   padding: 2.3% 3%;
   padding: 4% 4%;
   align-items: flex-start;
@@ -146,7 +133,6 @@ header {
   flex-direction: column;
   gap: 2.5px;
   width: 100%;
-  /* background-color: red; */
 }
 
 .fieldTitle {
@@ -161,19 +147,16 @@ header {
   background-color: rgb(248, 248, 248);
   height: 29px;
   width: 100%;
-  /* background-color: green; */
 }
 
 .goalHorizon {
   display: flex;
-  /* background-color: red; */
   width: 100%;
   gap: 10px;
 }
 
 .radioContainer {
   display: flex;
-  /* gap: 12px; */
   gap: 2.5%;
 }
 
@@ -182,7 +165,6 @@ header {
   font-size: 12px;
   border: 1px solid rgb(97, 95, 95);
   color: rgb(97, 95, 95);
-  /* padding: 5px 9px; */
   border-radius: 10px;
   cursor: pointer;
   width: 18%;
@@ -190,7 +172,6 @@ header {
   justify-content: center;
   align-items: center;
   padding: 7px 26px;
-  /* background-color: green; */
 }
 
 input[type="radio"]:checked+.radioCheckboxText,
@@ -200,11 +181,6 @@ input[type="checkbox"]:checked+.radioCheckboxText {
   color: black;
   font-weight: 600;
 }
-
-.required {
-  color: red;
-}
-
 
 /* part 2 */
 
@@ -229,7 +205,6 @@ input[type="checkbox"]:checked+.radioCheckboxText {
   display: flex;
   gap: 3px;
   width: 100%;
-  /* background-color: red; */
 }
 
 .subFieldTitle {
@@ -258,14 +233,10 @@ input[type="checkbox"]:checked+.radioCheckboxText {
 /* part 3 */
 .alignPreferences {
   display: flex;
-  /* flex-direction: row; */
 }
 
-/* #riskAcknowledgement {
-  display: flex;
-} */
-
-#automatedRebalancing, #taxSavingPreference {
+#automatedRebalancing,
+#taxSavingPreference {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -281,10 +252,8 @@ input[type="checkbox"]:checked+.radioCheckboxText {
 
 .buttonContainer {
   display: flex;
-  /* background-color: red; */
   width: 54%;
   justify-content: space-between;
-  /* margin: auto; */
   align-self: center;
 }
 
@@ -318,11 +287,9 @@ input[type="checkbox"]:checked+.radioCheckboxText {
 .tableContainer {
   padding-top: 63px;
   width: 48%;
-  /* height: fit-content; */
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /* margin: auto; */
   margin-bottom: 15px;
 }
 
@@ -370,15 +337,12 @@ input[type="checkbox"]:checked+.radioCheckboxText {
 
 .tableWrapper {
   height: 448px;
-  /* max-height: 448px; */
-  /* max-height: 600px; */
   overflow-y: auto;
   overflow-x: auto;
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   width: 100%;
-  /* margin-bottom: 20px; */
   border: 1px solid black;
 }
 
@@ -413,7 +377,6 @@ th td {
 }
 
 td {
-  /* background-color: #f7f7f7; */
   color: #333;
   padding: 0px 6px;
   font-size: 11px;
@@ -457,4 +420,67 @@ input {
 textarea {
   padding-left: 6px;
   padding-top: 6px;
+}
+
+.required {
+  color: red;
+}
+
+@media screen and (max-width: 1027px) {
+  .content {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .formContainer,
+  .tableContainer {
+    width: 96%;
+  }
+
+  .subFieldTitle {
+    font-size: 7px;
+  }
+}
+
+@media screen and (max-width: 1103px) {
+  .subFieldTitle {
+    font-size: 10.5px;
+  }
+}
+
+@media screen and (max-width: 1053px) {
+  .subFieldTitle {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 502px) {
+  .subFieldTitle {
+    font-size: 9px;
+  }
+}
+
+@media screen and (max-width: 454px) {
+  .subFieldTitle {
+    font-size: 8px;
+  }
+}
+
+@media screen and (max-width: 404px) {
+  .subFieldTitle {
+    font-size: 7.5px;
+  }
+}
+
+@media screen and (max-width: 379px) {
+  .subFieldTitle {
+    font-size: 7px;
+  }
+}
+
+@media screen and (max-width: 355px) {
+  .subFieldTitle {
+    font-size: 6.5px;
+  }
 }
