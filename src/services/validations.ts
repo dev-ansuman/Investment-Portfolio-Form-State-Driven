@@ -237,7 +237,7 @@ const validatePart2Asset = () => {
   const { assets } = state.form;
   let allValid = true;
 
-  assets.forEach((asset, index) => {
+  assets.forEach((asset: Asset, index: number) => {
     const assetClassErrorClass = `errorAssetClass-${index}`;
     checkExistingError(assetClassErrorClass);
 
