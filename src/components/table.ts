@@ -5,7 +5,7 @@ import {
   createTableRow,
   createTableHeader,
   createButton,
-} from './input';
+} from './create-input';
 import { TABLE } from './Form/constants';
 import { loadFromStorage, saveToStorage } from '../app.storage';
 import { state } from '../app.state';
@@ -48,7 +48,7 @@ const TableContainer = (): HTMLDivElement => {
   deleteButton.addEventListener('click', () => {
     if (state.selectedRecordId) {
       if (confirm('Are you sure you want to delete this record ?')) {
-        state.records = state.records.filter((r) => r.id === state.selectedRecordId);
+        state.records = state.records.filter((r) => r.id !== state.selectedRecordId);
         state.selectedRecordId = null;
         saveToStorage();
         renderApp();

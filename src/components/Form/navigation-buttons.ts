@@ -1,7 +1,7 @@
-import { createButton, createDiv } from './input';
-import { initialFormState, state } from '../app.state';
-import { renderApp } from './App';
-import { saveToStorage } from '../app.storage';
+import { createButton, createDiv } from '../create-input';
+import { initialFormState, state } from '../../app.state';
+import { renderApp } from '../App';
+import { saveToStorage } from '../../app.storage';
 import {
   validatePart1PortfolioName,
   validatePart1PortfolioType,
@@ -12,7 +12,7 @@ import {
   validatePart2Asset,
   validatePart3AutomatedRebalancing,
   validatePart3AckCheckBox,
-} from '../services/validations';
+} from '../../services/validations';
 
 const Navigation = (): HTMLDivElement => {
   const navigationButtonDiv = createDiv() as HTMLDivElement;
@@ -108,6 +108,7 @@ const Navigation = (): HTMLDivElement => {
       state.currentStep = 1;
       state.completedSteps = [];
       state.selectedRecordId = null;
+      state.editingRecordId = null;
       saveToStorage();
       renderApp();
     }

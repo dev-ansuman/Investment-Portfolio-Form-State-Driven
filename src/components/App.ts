@@ -1,7 +1,8 @@
 import { formScreen } from './Form/Form.ts';
-import { createDiv } from './input.ts';
-import { Navigation } from './navigation-buttons.ts';
+import { createDiv } from './create-input.ts';
+import { Navigation } from './Form/navigation-buttons.ts';
 import { TableContainer } from './table.ts';
+import { ProjectHeading } from './heading.ts';
 
 export function renderApp(): void {
   const root = document.getElementById('app') as HTMLDivElement;
@@ -12,14 +13,20 @@ export function renderApp(): void {
 
   root.innerHTML = '';
 
+  const projectHeading = ProjectHeading() as HTMLHeadElement;
+
   const formContainer = createDiv() as HTMLDivElement;
   formContainer.className = 'formContainer';
-
   formContainer.appendChild(formScreen());
   formContainer.appendChild(Navigation());
 
   const tableContainer = TableContainer();
 
-  root.append(formContainer, tableContainer);
-  root.style.display = 'flex';
+  const content = createDiv() as HTMLDivElement;
+  content.className = 'content';
+  content.append(formContainer, tableContainer);
+  content.style.display = 'flex';
+
+  root.append(projectHeading, content);
+  // root.style.display = 'flex';
 }

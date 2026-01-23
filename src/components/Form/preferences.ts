@@ -3,7 +3,7 @@ import {
   validatePart3AckCheckBox,
   validatePart3AutomatedRebalancing,
 } from '../../services/validations';
-import { createDiv, createRadioORCheckbox, createTextarea } from '../input';
+import { createDiv, createRadioORCheckbox, createTextarea } from '../create-input';
 import { PREFERENCES } from './constants';
 
 const Preference = (): HTMLDivElement => {

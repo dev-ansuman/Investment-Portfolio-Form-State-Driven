@@ -1,6 +1,7 @@
 import { state } from '../../app.state.ts';
 import {
   validatePart2AnnualInvestmentCapacity,
+  validatePart2Asset,
   validatePart2AssetIndividual,
 } from '../../services/validations.ts';
 import { renderApp } from '../App.ts';
@@ -10,7 +11,7 @@ import {
   createDiv,
   createRadioORCheckbox,
   createButton,
-} from '../input.ts';
+} from '../create-input.ts';
 import { ASSET_ALLOCATION } from './constants.ts';
 import { saveToStorage } from '../../app.storage.ts';
 
@@ -193,6 +194,8 @@ const AssetAllocation = (): HTMLDivElement => {
       state.form.assets.splice(index, 1);
       saveToStorage();
       renderApp();
+      validatePart2AnnualInvestmentCapacity();
+      validatePart2Asset();
     });
 
     const inputDelete = createDiv() as HTMLDivElement;
@@ -216,6 +219,7 @@ const AssetAllocation = (): HTMLDivElement => {
 
   // add asset Button
   const addAssetButton = createButton() as HTMLButtonElement;
+  addAssetButton.className = 'addAssetButton';
   addAssetButton.textContent = ASSET_ALLOCATION.ADD_ASSET.LABEL;
   addAssetButton.addEventListener('click', () => {
     state.form.assets.push({
@@ -226,6 +230,8 @@ const AssetAllocation = (): HTMLDivElement => {
     });
     saveToStorage();
     renderApp();
+    validatePart2AnnualInvestmentCapacity();
+    validatePart2Asset();
   });
 
   // investment style div

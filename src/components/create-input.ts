@@ -3,6 +3,11 @@ const createDiv = (): HTMLDivElement => {
   return newDiv;
 };
 
+const createHeader = (): HTMLHeadElement => {
+  const header = document.createElement('header') as HTMLHeadElement;
+  return header;
+};
+
 const createLabel = (): HTMLLabelElement => {
   const newLabel = document.createElement('label') as HTMLLabelElement;
   return newLabel;
@@ -120,6 +125,7 @@ const createRadioORCheckbox = (
 export {
   createLabel,
   createDiv,
+  createHeader,
   createButton,
   createTable,
   createTableRow,

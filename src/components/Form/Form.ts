@@ -3,7 +3,7 @@ import { InvestmentDetail } from './investment-details.ts';
 import { AssetAllocation } from './asset-allocation.ts';
 import { Preference } from './preferences.ts';
 import { Stepper } from './stepper.ts';
-import { createDiv } from '../input.ts';
+import { createDiv } from '../create-input.ts';
 
 const formScreen = (): HTMLDivElement => {
   const container = createDiv() as HTMLDivElement;

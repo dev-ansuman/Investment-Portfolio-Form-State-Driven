@@ -266,7 +266,7 @@ export const validatePart2Asset = () => {
       allValid = false;
     } else if (
       !checkNumber(asset.percentageAllocation) ||
-      Number(asset.percentageAllocation) < 1 ||
+      Number(asset.percentageAllocation) < 0 ||
       Number(asset.percentageAllocation) > 100
     ) {
       showError(
@@ -321,7 +321,7 @@ export const validatePart2AssetIndividual = (
       return false;
     } else if (
       !checkNumber(asset.percentageAllocation) ||
-      Number(asset.percentageAllocation) < 1 ||
+      Number(asset.percentageAllocation) < 0 ||
       Number(asset.percentageAllocation) > 100
     ) {
       showError(

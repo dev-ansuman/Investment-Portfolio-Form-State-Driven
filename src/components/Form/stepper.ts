@@ -1,4 +1,4 @@
-import { createDiv, createImg, createNav } from '../input';
+import { createDiv, createImg, createNav } from '../create-input';
 import { state } from '../../app.state';
 
 const Stepper = () => {

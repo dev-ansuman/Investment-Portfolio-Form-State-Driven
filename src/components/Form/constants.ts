@@ -118,7 +118,7 @@ const ASSET_ALLOCATION = {
     NAME: 'currentValue',
   },
   ADD_ASSET: {
-    LABEL: 'Add Asset',
+    LABEL: 'Add Asset +',
   },
   INVESTMENT_STYLE: {
     LABEL: 'Investment Style',
