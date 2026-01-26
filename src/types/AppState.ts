@@ -8,4 +8,5 @@ export interface AppState {
   editingRecordId: string | null;
   records: PortfolioFormRecords[];
   form: FormState;
+  theme: 'light' | 'dark';
 }

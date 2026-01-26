@@ -15,6 +15,7 @@ import {
   validatePart3AckCheckBox,
 } from '../../services/validations';
 import type { PortfolioFormRecords } from '../../types/PortfolioFormRecords';
+import { showModal } from '../modal';
 
 const Navigation = (): HTMLDivElement => {
   const navigationButtonDiv = createDiv() as HTMLDivElement;
@@ -90,7 +91,8 @@ const Navigation = (): HTMLDivElement => {
     const isValid = validatePart3AutomatedRebalancing() && validatePart3AckCheckBox();
 
     if (isValid) {
-      if (state.selectedRecordId) {
+      const updateRecord = state.selectedRecordId;
+      if (updateRecord) {
         const index: number = state.records.findIndex(
           (r: PortfolioFormRecords) => r.id === state.editingRecordId
         );
@@ -109,6 +111,15 @@ const Navigation = (): HTMLDivElement => {
         });
       }
       resetForm();
+
+      showModal(
+        updateRecord ? 'Record Updated' : 'Record Submitted',
+        updateRecord
+          ? 'Your portfolio record has been successfully updated!'
+          : 'Your portfolio record has been successfully submittted!',
+        'alert',
+        () => {}
+      );
     }
   });
 

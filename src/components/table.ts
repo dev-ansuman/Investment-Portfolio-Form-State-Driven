@@ -7,6 +7,7 @@ import { state } from '../app.state';
 import { renderApp } from './App';
 import { resetForm } from './Form/navigation-buttons';
 import type { PortfolioFormRecords } from '../types/PortfolioFormRecords';
+import { showModal } from './modal';
 
 const TableContainer = (): HTMLDivElement => {
   const tableContainer = createDiv() as HTMLDivElement;
@@ -51,14 +52,22 @@ const TableContainer = (): HTMLDivElement => {
 
   deleteButton.addEventListener('click', () => {
     if (state.selectedRecordId) {
-      if (confirm('Are you sure you want to delete this record ?')) {
-        state.records = state.records.filter(
-          (r: PortfolioFormRecords) => r.id !== state.selectedRecordId
-        );
+      const confirmDelete = (confirmation: boolean): void => {
+        if (confirmation) {
+          state.records = state.records.filter(
+            (r: PortfolioFormRecords) => r.id !== state.selectedRecordId
+          );
+        }
         state.selectedRecordId = null;
         saveToStorage();
         renderApp();
-      }
+      };
+      showModal(
+        'Delete Record',
+        'Are you sure you want to delete this record? This action cannot be undone.',
+        'confirm',
+        confirmDelete
+      );
     }
   });
 
