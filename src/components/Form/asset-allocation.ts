@@ -1,7 +1,6 @@
 import { state } from '../../app.state.ts';
 import {
   validatePart2AnnualInvestmentCapacity,
-  validatePart2Asset,
   validatePart2AssetIndividual,
 } from '../../services/validations.ts';
 import { renderApp } from '../App.ts';
@@ -153,13 +152,6 @@ const AssetAllocation = (): HTMLDivElement => {
     assetClassDropdown.classList.add('fieldInput');
 
     assetClassDropdown.value = assetData.assetClass;
-    assetClassDropdown.addEventListener('change', (event) => {
-      state.form.assets[index].assetClass = (event.target as HTMLSelectElement).value;
-      state.form.assets[index].specificFund = (event.target as HTMLSelectElement).value;
-      validatePart2AssetIndividual(index, 'assetClass');
-      saveToStorage();
-      renderApp();
-    });
 
     assetClassDiv.append(assetClassTitle, assetClassDropdown);
 
@@ -182,7 +174,7 @@ const AssetAllocation = (): HTMLDivElement => {
     percentageAllocationInput.value = assetData.percentageAllocation;
     percentageAllocationInput.addEventListener('input', (event) => {
       state.form.assets[index].percentageAllocation = (event.target as HTMLInputElement).value;
-      validatePart2AssetIndividual(index, 'percentageAlloacation');
+      validatePart2AssetIndividual(index, 'percentageAllocation');
       saveToStorage();
     });
 
@@ -212,6 +204,17 @@ const AssetAllocation = (): HTMLDivElement => {
     });
 
     specificFundDiv.append(specificFundTitle, specificFundInput);
+
+    assetClassDropdown.addEventListener('change', (event) => {
+      const selectedValue = (event.target as HTMLSelectElement).value;
+      state.form.assets[index].assetClass = selectedValue;
+      state.form.assets[index].specificFund = selectedValue;
+
+      specificFundInput.value = state.form.assets[index].specificFund;
+
+      validatePart2AssetIndividual(index, 'assetClass');
+      saveToStorage();
+    });
 
     // current value div
     const currentValueDiv = createDiv() as HTMLDivElement;
@@ -253,8 +256,6 @@ const AssetAllocation = (): HTMLDivElement => {
       state.form.assets.splice(index, 1);
       saveToStorage();
       renderApp();
-      validatePart2AnnualInvestmentCapacity();
-      validatePart2Asset();
     });
 
     const inputDelete = createDiv() as HTMLDivElement;
@@ -289,8 +290,6 @@ const AssetAllocation = (): HTMLDivElement => {
     });
     saveToStorage();
     renderApp();
-    validatePart2AnnualInvestmentCapacity();
-    validatePart2Asset();
   });
 
   // investment style div

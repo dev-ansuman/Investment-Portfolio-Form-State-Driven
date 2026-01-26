@@ -8,7 +8,7 @@ const initialFormState: FormState = {
   riskTolerance: '',
 
   annualInvestmentCapacity: '',
-  currency: '',
+  currency: 'INR',
   lumpSumAmount: '',
   monthlyContribution: '',
   assets: [
@@ -36,6 +36,7 @@ const state: AppState = {
   form: {
     ...initialFormState,
   },
+  theme: 'light',
 };
 
 export { state, initialFormState };

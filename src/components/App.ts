@@ -3,6 +3,8 @@ import { createDiv } from './Ui/div.ts';
 import { Navigation } from './Form/navigation-buttons.ts';
 import { TableContainer } from './table.ts';
 import { ProjectHeading } from './heading.ts';
+import { createHeader } from './Ui/header.ts';
+import { toggleTheme } from './theme.ts';
 
 export function renderApp(): void {
   const root = document.getElementById('app') as HTMLDivElement;
@@ -13,7 +15,11 @@ export function renderApp(): void {
 
   root.innerHTML = '';
 
+  const header = createHeader() as HTMLHeadElement;
   const projectHeading = ProjectHeading() as HTMLHeadElement;
+  const themeToggle = toggleTheme();
+
+  header.append(projectHeading, themeToggle);
 
   const formContainer = createDiv() as HTMLDivElement;
   formContainer.className = 'formContainer';
@@ -26,5 +32,5 @@ export function renderApp(): void {
   content.className = 'content';
   content.append(formContainer, tableContainer);
 
-  root.append(projectHeading, content);
+  root.append(header, content);
 }

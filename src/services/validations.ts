@@ -284,7 +284,7 @@ const validatePart2Asset = () => {
 
 const validatePart2AssetIndividual = (
   index: number,
-  field: 'assetClass' | 'percentageAlloacation'
+  field: 'assetClass' | 'percentageAllocation'
 ) => {
   const asset: Asset = state.form.assets[index];
 
@@ -305,11 +305,11 @@ const validatePart2AssetIndividual = (
     return true;
   }
 
-  if (field === 'percentageAlloacation') {
+  if (field === 'percentageAllocation') {
     const errorClass = `errorPercentageAllocation-${index}`;
     checkExistingError(errorClass);
 
-    if (asset.percentageAllocation === '') {
+    if (asset.percentageAllocation.trim() === '') {
       showError(
         errorClass,
         `asset-${index}-percentageAllocation`,
@@ -318,9 +318,11 @@ const validatePart2AssetIndividual = (
         MESSAGE.ERROR_MESSAGE.REQUIRED_FIELD
       );
       return false;
-    } else if (
-      !checkNumber(asset.percentageAllocation) &&
-      (Number(asset.percentageAllocation) <= 0 || Number(asset.percentageAllocation) > 100)
+    }
+    if (
+      !checkNumber(asset.percentageAllocation) ||
+      Number(asset.percentageAllocation) <= 0 ||
+      Number(asset.percentageAllocation) > 100
     ) {
       showError(
         errorClass,
