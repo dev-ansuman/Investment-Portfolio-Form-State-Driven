@@ -52,13 +52,19 @@ const Preference = (): HTMLDivElement => {
     });
   });
 
-  automatedRebalancingDiv.append(automatedRebalancingTitle, automatedRebalancingRadio);
+  const automatedRebalancingUserInputContainer = createDiv() as HTMLDivElement;
+  automatedRebalancingUserInputContainer.className = 'automatedRebalancingInputContainer';
+  automatedRebalancingUserInputContainer.append(
+    automatedRebalancingTitle,
+    automatedRebalancingRadio
+  );
+
+  automatedRebalancingDiv.appendChild(automatedRebalancingUserInputContainer);
 
   // tax saving preference div
   const taxSavingPreferenceDiv = createDiv() as HTMLDivElement;
   taxSavingPreferenceDiv.classList.add('fieldDiv');
   taxSavingPreferenceDiv.id = PREFERENCES.TAX_SAVING_PREF.ID;
-  // taxSavingPreferenceDiv.classList.add('alignPreferences');
   const taxSavingPreferenceTitle = createDiv() as HTMLDivElement;
   taxSavingPreferenceTitle.classList.add('fieldTitle');
   taxSavingPreferenceTitle.textContent = PREFERENCES.TAX_SAVING_PREF.LABEL;

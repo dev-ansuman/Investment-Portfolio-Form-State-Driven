@@ -310,7 +310,12 @@ input[type="checkbox"]:checked+.radioCheckboxText {
   display: flex;
 }
 
-#automatedRebalancing,
+.automatedRebalancingInputContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+} 
+
 #taxSavingPreference {
   display: flex;
   flex-direction: row;
