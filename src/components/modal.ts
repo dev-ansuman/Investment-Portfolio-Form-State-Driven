@@ -51,7 +51,9 @@ export const showModal = (
     const acknowledgeButton = createButton() as HTMLButtonElement;
     acknowledgeButton.className = 'modalButton modalAcknowledgeButton';
     acknowledgeButton.textContent = 'Okay';
-    acknowledgeButton.addEventListener('click', () => {});
+    acknowledgeButton.addEventListener('click', () => {
+      closeModal(true);
+    });
 
     modalButtonContainer.appendChild(acknowledgeButton);
   }
