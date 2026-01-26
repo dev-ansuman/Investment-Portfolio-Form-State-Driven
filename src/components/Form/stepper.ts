@@ -63,8 +63,8 @@ const Stepper = () => {
   // progress box 1
   const progressInvestmentDetails = createProgressBox(
     1,
-    './public/images/details.svg',
-    './public/images/tick.svg',
+    './images/details.svg',
+    './images/tick.svg',
     'investmentDetailLogo',
     'Investment Details',
     'progressText'
@@ -73,8 +73,8 @@ const Stepper = () => {
   // progress box 2
   const progressAssetAllocation = createProgressBox(
     2,
-    './public/images/asset.svg',
-    './public/images/tick.svg',
+    './images/asset.svg',
+    './images/tick.svg',
     'assetAllocationLogo',
     'Asset Allocation',
     'progressText'
@@ -83,8 +83,8 @@ const Stepper = () => {
   // progress box 3
   const progressPreferences = createProgressBox(
     3,
-    './public/images/preference.svg',
-    './public/images/tick.svg',
+    './images/preference.svg',
+    './images/tick.svg',
     'preferencesLogo',
     'Preferences and Ack.',
     'progressText'
