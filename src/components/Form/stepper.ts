@@ -63,25 +63,18 @@ const Stepper = () => {
   // progress box 1
   const progressInvestmentDetails = createProgressBox(
     1,
-    './src/images/details.svg',
-    './src/images/tick.svg',
+    './public/images/details.svg',
+    './public/images/tick.svg',
     'investmentDetailLogo',
     'Investment Details',
     'progressText'
   );
 
-  // const investmentDetailPage = document.getElementById('investmentDetailLogo') as HTMLDivElement;
-  // investmentDetailPage?.addEventListener('click', () => {
-  //   state.currentStep = 1;
-  //   saveToStorage();
-  //   renderApp();
-  // })
-
   // progress box 2
   const progressAssetAllocation = createProgressBox(
     2,
-    './src/images/asset.svg',
-    './src/images/tick.svg',
+    './public/images/asset.svg',
+    './public/images/tick.svg',
     'assetAllocationLogo',
     'Asset Allocation',
     'progressText'
@@ -90,8 +83,8 @@ const Stepper = () => {
   // progress box 3
   const progressPreferences = createProgressBox(
     3,
-    './src/images/preference.svg',
-    './src/images/tick.svg',
+    './public/images/preference.svg',
+    './public/images/tick.svg',
     'preferencesLogo',
     'Preferences and Ack.',
     'progressText'
