@@ -1,5 +1,7 @@
 import type { AppState } from './types/AppState';
 import type { FormState } from './types/FormState';
+import { StateManager } from './core/state-manager';
+
 const initialFormState: FormState = {
   portfolioName: '',
   portfolioType: '',
@@ -27,7 +29,7 @@ const initialFormState: FormState = {
   riskAcknowledgement: false,
 };
 
-const state: AppState = {
+const initialState: AppState = {
   currentStep: 1,
   completedSteps: [],
   selectedRecordId: null,
@@ -39,4 +41,6 @@ const state: AppState = {
   theme: 'light',
 };
 
-export { state, initialFormState };
+const stateManager = new StateManager(initialState);
+
+export { stateManager, initialFormState };

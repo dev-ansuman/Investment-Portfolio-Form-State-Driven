@@ -1,24 +1,38 @@
-import { state } from '../../app.state.ts';
+import { stateManager } from '../../app.state.ts';
+import { StateManager } from '../../core/state-manager.ts';
 import { InvestmentDetail } from './investment-details.ts';
 import { AssetAllocation } from './asset-allocation.ts';
 import { Preference } from './preferences.ts';
 import { Stepper } from './stepper.ts';
 import { createDiv } from '../Ui/div.ts';
 
-const formScreen = (): HTMLDivElement => {
-  const container = createDiv() as HTMLDivElement;
-  container.className = 'formParent';
-  container.appendChild(Stepper());
+class FormComponent {
+  private stateManager: StateManager;
 
-  if (state.currentStep === 1) {
-    container.appendChild(InvestmentDetail());
-  } else if (state.currentStep === 2) {
-    container.appendChild(AssetAllocation());
-  } else if (state.currentStep === 3) {
-    container.appendChild(Preference());
+  constructor(stateManager: StateManager) {
+    this.stateManager = stateManager;
   }
 
-  return container;
+  render(): HTMLDivElement {
+    const container = createDiv() as HTMLDivElement;
+    container.className = 'formParent';
+    container.appendChild(Stepper());
+
+    if (this.stateManager.getCurrentStep() === 1) {
+      container.appendChild(InvestmentDetail());
+    } else if (this.stateManager.getCurrentStep() === 2) {
+      container.appendChild(AssetAllocation());
+    } else if (this.stateManager.getCurrentStep() === 3) {
+      container.appendChild(Preference());
+    }
+
+    return container;
+  }
+}
+
+const formComponent = new FormComponent(stateManager);
+const FormScreen = (): HTMLDivElement => {
+  return formComponent.render();
 };
 
-export { formScreen };
+export { FormScreen };

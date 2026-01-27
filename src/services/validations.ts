@@ -1,6 +1,6 @@
-import { state } from '../app.state.js';
+import { stateManager } from '../app.state.js';
 import { checkName, checkNumber } from '../utils/checker.js';
-import { showError, checkExistingError } from '../services/error.js';
+import { showError, checkExistingError } from '../components/Ui/error.js';
 import { MESSAGE } from '../constants/error-message-constants.js';
 import { ASSET_ALLOCATION, INVESTMENT_DETAILS, PREFERENCES } from '../constants/form-constants.js';
 import type { Asset } from '../types/Asset.js';
@@ -234,7 +234,7 @@ const validatePart2AnnualInvestmentCapacity = () => {
 
 // validate part 2 asset
 const validatePart2Asset = () => {
-  const { assets } = state.form;
+  const { assets } = stateManager.getForm();
   let allValid = true;
 
   assets.forEach((asset: Asset, index: number) => {
@@ -286,7 +286,7 @@ const validatePart2AssetIndividual = (
   index: number,
   field: 'assetClass' | 'percentageAllocation'
 ) => {
-  const asset: Asset = state.form.assets[index];
+  const asset: Asset = stateManager.getForm().assets[index];
 
   if (field === 'assetClass') {
     const errorClass = `errorAssetClass-${index}`;

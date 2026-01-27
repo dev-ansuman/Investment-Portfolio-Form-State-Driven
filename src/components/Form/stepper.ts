@@ -1,110 +1,125 @@
 import { createDiv } from '../Ui/div';
 import { createNav } from '../Ui/nav';
 import { createImg } from '../Ui/image';
-import { state } from '../../app.state';
+import { stateManager } from '../../app.state';
+import { StateManager } from '../../core/state-manager';
 
-const Stepper = () => {
-  const stepperNav = createNav() as HTMLElement;
-  stepperNav.className = 'progressBar';
+class StepperComponent {
+  private stateManager: StateManager;
 
-  // create progress box (div)
-  const createProgressBox = (
-    stepNumber: number,
-    logoSrc: string,
-    completedLogoSrc: string,
-    logoId: string,
-    progressTextContent: string,
-    progressTextClass: string
-  ): HTMLDivElement => {
-    const progressDiv = createDiv() as HTMLDivElement;
-    progressDiv.className = 'progress';
+  constructor(stateManager: StateManager) {
+    this.stateManager = stateManager;
+  }
 
-    const isActive = state.currentStep === stepNumber;
-    const isCompleted = stepNumber < state.currentStep;
+  render(): HTMLElement {
+    const stepperNav = createNav() as HTMLElement;
+    stepperNav.className = 'progressBar';
 
-    if (isCompleted) {
-      progressDiv.classList.add('completed');
-    }
+    // create progress box (div)
+    const createProgressBox = (
+      stepNumber: number,
+      logoSrc: string,
+      completedLogoSrc: string,
+      logoId: string,
+      progressTextContent: string,
+      progressTextClass: string
+    ): HTMLDivElement => {
+      const progressDiv = createDiv() as HTMLDivElement;
+      progressDiv.className = 'progress';
 
-    if (isActive) {
-      progressDiv.classList.add('active');
-    }
+      const isActive = this.stateManager.getCurrentStep() === stepNumber;
+      const isCompleted = stepNumber < this.stateManager.getCurrentStep();
 
-    const progressLogo = createImg() as HTMLImageElement;
-    progressLogo.src = isCompleted ? completedLogoSrc : logoSrc;
-    progressLogo.id = logoId;
+      if (isCompleted) {
+        progressDiv.classList.add('completed');
+      }
 
-    const progresstext = createDiv() as HTMLDivElement;
-    progresstext.textContent = progressTextContent;
-    progresstext.className = progressTextClass;
+      if (isActive) {
+        progressDiv.classList.add('active');
+      }
 
-    progressDiv.append(progressLogo, progresstext);
+      const progressLogo = createImg() as HTMLImageElement;
+      progressLogo.src = isCompleted ? completedLogoSrc : logoSrc;
+      progressLogo.id = logoId;
 
-    return progressDiv;
-  };
+      const progresstext = createDiv() as HTMLDivElement;
+      progresstext.textContent = progressTextContent;
+      progresstext.className = progressTextClass;
 
-  // create progress line (div)
-  const createProgressLine = (
-    stepNumber: number,
-    progressLineClass: string,
-    progressLineId: string
-  ): HTMLDivElement => {
-    const progressLine = createDiv() as HTMLDivElement;
-    progressLine.className = progressLineClass;
-    progressLine.id = progressLineId;
+      progressDiv.append(progressLogo, progresstext);
 
-    if (stepNumber < state.currentStep) {
-      progressLine.classList.add('completed');
-    }
+      return progressDiv;
+    };
 
-    return progressLine;
-  };
+    // create progress line (div)
+    const createProgressLine = (
+      stepNumber: number,
+      progressLineClass: string,
+      progressLineId: string
+    ): HTMLDivElement => {
+      const progressLine = createDiv() as HTMLDivElement;
+      progressLine.className = progressLineClass;
+      progressLine.id = progressLineId;
 
-  // progress box 1
-  const progressInvestmentDetails = createProgressBox(
-    1,
-    './images/details.svg',
-    './images/tick.svg',
-    'investmentDetailLogo',
-    'Investment Details',
-    'progressText'
-  );
+      if (stepNumber < this.stateManager.getCurrentStep()) {
+        progressLine.classList.add('completed');
+      }
 
-  // progress box 2
-  const progressAssetAllocation = createProgressBox(
-    2,
-    './images/asset.svg',
-    './images/tick.svg',
-    'assetAllocationLogo',
-    'Asset Allocation',
-    'progressText'
-  );
+      return progressLine;
+    };
 
-  // progress box 3
-  const progressPreferences = createProgressBox(
-    3,
-    './images/preference.svg',
-    './images/tick.svg',
-    'preferencesLogo',
-    'Preferences and Ack.',
-    'progressText'
-  );
+    // progress box 1
+    const progressInvestmentDetails = createProgressBox(
+      1,
+      './images/details.svg',
+      './images/tick.svg',
+      'investmentDetailLogo',
+      'Investment Details',
+      'progressText'
+    );
 
-  // progress line 1
-  const progressLine1 = createProgressLine(1, 'progressLine', 'progressBar1');
+    // progress box 2
+    const progressAssetAllocation = createProgressBox(
+      2,
+      './images/asset.svg',
+      './images/tick.svg',
+      'assetAllocationLogo',
+      'Asset Allocation',
+      'progressText'
+    );
 
-  // progress line 2
-  const progressLine2 = createProgressLine(2, 'progressLine', 'progressBar2');
+    // progress box 3
+    const progressPreferences = createProgressBox(
+      3,
+      './images/preference.svg',
+      './images/tick.svg',
+      'preferencesLogo',
+      'Preferences and Ack.',
+      'progressText'
+    );
 
-  stepperNav.append(
-    progressInvestmentDetails,
-    progressLine1,
-    progressAssetAllocation,
-    progressLine2,
-    progressPreferences
-  );
+    // progress line 1
+    const progressLine1 = createProgressLine(1, 'progressLine', 'progressBar1');
 
-  return stepperNav;
+    // progress line 2
+    const progressLine2 = createProgressLine(2, 'progressLine', 'progressBar2');
+
+    stepperNav.append(
+      progressInvestmentDetails,
+      progressLine1,
+      progressAssetAllocation,
+      progressLine2,
+      progressPreferences
+    );
+
+    return stepperNav;
+  }
+}
+
+const stepperComponent = new StepperComponent(stateManager);
+
+const Stepper = (): HTMLElement => {
+  return stepperComponent.render();
 };
 
 export { Stepper };
