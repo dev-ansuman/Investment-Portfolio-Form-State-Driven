@@ -112,7 +112,7 @@ class TableComponent {
         if (this.stateManager.getSelectedRecordId() === record.id) {
           this.stateManager.setSelectedRecordId(null);
         } else {
-          this.stateManager.setSelectedRecordId(null);
+          this.stateManager.setSelectedRecordId(record.id);
         }
         saveToStorage();
         renderApp();
