@@ -4,7 +4,7 @@ import Navigation from './navigation';
 import { INITIAL_FORM_DATA, INITIAL_STEP } from '../../constants/form-initial-state';
 import AssetAllocation from './asset-allocation';
 import Preferences from './preferences';
-// import Navigation from './navigation';
+import Stepper from './Stepper';
 
 // const STEPS = ['Investment Details', 'Asset Allocation', 'Preferences'];
 
@@ -21,6 +21,7 @@ const Form: React.FC = () => {
   const [showInvestmentDetailsErrors, setShowInvestmentDetailsErrors] = useState(false);
   const [showAssetAllocationErrors, setShowAssetAllocationErrors] = useState(false);
   const [showPreferencesError, setShowPreferencesError] = useState(false);
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
   const updateField = (field: string, value: string | boolean | assets[]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -75,6 +76,9 @@ const Form: React.FC = () => {
         return;
       }
       setShowInvestmentDetailsErrors(false);
+      if (!completedSteps.includes(1)) {
+        setCompletedSteps((prev) => [...prev, 1]);
+      }
     }
 
     if (currentStep === 2) {
@@ -83,6 +87,9 @@ const Form: React.FC = () => {
         return;
       }
       setShowAssetAllocationErrors(false);
+      if (!completedSteps.includes(2)) {
+        setCompletedSteps((prev) => [...prev, 2]);
+      }
     }
 
     setCurrentStep((prev) => Math.min(prev + 1, 3));
@@ -131,7 +138,11 @@ const Form: React.FC = () => {
 
   return (
     <div className="formContainer">
-      <div className="formParent">{renderCurrentStep()}</div>
+      <div className="formParent">
+        <Stepper currentStep={currentStep} completedSteps={completedSteps} />
+        {renderCurrentStep()}
+      </div>
+
       <Navigation
         previousStep={previousStep}
         nextStep={nextStep}
