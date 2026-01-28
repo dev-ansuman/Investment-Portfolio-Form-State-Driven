@@ -16,7 +16,7 @@ const Dropdown: React.FC<dropdownProps> = ({ options, name, id }) => {
   };
 
   return (
-    <select name={name} id={id}>
+    <select name={name} id={id} className="fieldInput">
       {options.map((option: string) => createOptions(option))}
     </select>
   );

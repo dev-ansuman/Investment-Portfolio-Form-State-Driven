@@ -6,12 +6,19 @@ interface CreateInputProps {
   type: string;
   placeholder: string;
   id: string;
+  fieldClass: string;
 }
 
-const CreateInput: React.FC<CreateInputProps> = ({ fieldTitle, type, placeholder, id }) => {
+const CreateInput: React.FC<CreateInputProps> = ({
+  fieldTitle,
+  type,
+  placeholder,
+  id,
+  fieldClass,
+}) => {
   return (
     <>
-      <div>{fieldTitle}</div>
+      <div className={fieldClass}>{fieldTitle}</div>
       <Input type={type} placeholder={placeholder} id={id} />
     </>
   );

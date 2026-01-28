@@ -8,6 +8,7 @@ interface createRadioCheckboxProps {
   name: string;
   id: string;
   hidden: boolean;
+  inputClass: string;
 }
 
 const CreateRadioCheckbox: React.FC<createRadioCheckboxProps> = ({
@@ -17,11 +18,21 @@ const CreateRadioCheckbox: React.FC<createRadioCheckboxProps> = ({
   name,
   id,
   hidden,
+  inputClass,
 }) => {
   return (
     <>
-      <div>{fieldTitle}</div>
-      <RadioCheckbox type={type} options={options} name={name} id={id} hidden={hidden} />
+      <div className="fieldTitle">{fieldTitle}</div>
+      <div>
+        <RadioCheckbox
+          type={type}
+          options={options}
+          name={name}
+          id={id}
+          hidden={hidden}
+          inputClass={inputClass}
+        />
+      </div>
     </>
   );
 };

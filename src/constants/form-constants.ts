@@ -5,6 +5,7 @@ const INVESTMENT_DETAILS = {
     ID: 'portfolioName',
     NAME: 'portfolioName',
     TYPE: 'text',
+    CLASS: ['fieldTitle'],
   },
   PORTFOLIO_TYPE: {
     LABEL: 'Portfolio Type',
@@ -14,7 +15,7 @@ const INVESTMENT_DETAILS = {
     NAME: 'portfolioType',
     TYPE: 'radio',
     HIDDEN: true,
-    CLASS: 'radioCheckboxText',
+    CLASS: ['fieldTitle', 'radioCheckboxText'],
   },
   INVESTMENT_GOAL: {
     LABEL: 'Investment Goal',
@@ -40,6 +41,7 @@ const INVESTMENT_DETAILS = {
     ],
     ID: 'investmentGoal',
     NAME: 'investmentGoal',
+    CLASS: ['fieldTitle'],
   },
   INVESTMENT_HORIZON: {
     LABEL: 'Investment Horizon',
@@ -57,6 +59,7 @@ const INVESTMENT_DETAILS = {
     ],
     ID: 'investmentHorizon',
     NAME: 'investmentHorizon',
+    CLASS: ['fieldTitle'],
   },
   RISK_TOLERANCE: {
     LABEL: 'Risk Tolerance',
@@ -65,7 +68,7 @@ const INVESTMENT_DETAILS = {
     NAME: 'riskTolerance',
     TYPE: 'radio',
     HIDDEN: true,
-    CLASS: 'radioCheckboxText',
+    CLASS: ['fieldTitle', 'radioCheckboxText'],
   },
 };
 
@@ -77,6 +80,7 @@ const ASSET_ALLOCATION = {
     ID: 'annualInvestmentCapacity',
     NAME: 'annualInvestmentCapacity',
     TYPE: 'text',
+    CLASS: ['fieldTitle'],
   },
   CURRENCY: {
     OPTIONS: ['₹', '$'],
@@ -90,6 +94,7 @@ const ASSET_ALLOCATION = {
     TYPE: 'number',
     ID: 'lumpSumAmount',
     NAME: 'lumpSumAmount',
+    CLASS: ['fieldTitle'],
   },
   MONTHLY_CONTRIBUTION: {
     LABEL: 'Monthly Contribution',
@@ -97,9 +102,11 @@ const ASSET_ALLOCATION = {
     TYPE: 'number',
     ID: 'monthlyContribution',
     NAME: 'monthlyContribution',
+    CLASS: ['fieldTitle'],
   },
   ASSETS: {
     TITLE: 'Assets',
+    CLASS: ['fieldTitle'],
   },
   ASSET_CLASS: {
     LABEL: 'Asset Class',
@@ -107,18 +114,21 @@ const ASSET_ALLOCATION = {
     VALUES: ['', 'Equity', 'Fixed Income', 'Cash Equivalent', 'REITs', 'Foreign Exchange'],
     ID: 'assetClass',
     NAME: 'assetClass',
+    CLASS: ['subFieldTitle'],
   },
   PERCENTAGE_ALLOCATION: {
     LABEL: 'Percentage Allocation(%)',
     TYPE: 'number',
     ID: 'percentageAllocation',
     NAME: 'percentageAllocation',
+    CLASS: ['subFieldTitle'],
   },
   SPECIFIC_FUND: {
     LABEL: 'Specific Fund',
     TYPE: 'text',
     ID: 'specificFund',
     NAME: 'specificFund',
+    CLASS: ['subFieldTitle'],
   },
   CURRENT_VALUE: {
     LABEL: 'Current Value',
@@ -126,6 +136,7 @@ const ASSET_ALLOCATION = {
     TYPE: 'number',
     ID: 'currentValue',
     NAME: 'currentValue',
+    CLASS: ['subFieldTitle'],
   },
   ADD_ASSET: {
     LABEL: 'Add Asset +',
@@ -137,7 +148,7 @@ const ASSET_ALLOCATION = {
     NAME: 'investmentStyle',
     TYPE: 'checkbox',
     HIDDEN: true,
-    CLASS: 'radioCheckboxText',
+    CLASS: ['fieldTitle', 'radioCheckboxText'],
   },
 };
 
@@ -149,7 +160,7 @@ const PREFERENCES = {
     NAME: 'automatedRebalancing',
     TYPE: 'radio',
     HIDDEN: true,
-    CLASS: 'radioCheckboxText',
+    CLASS: ['fieldTitle', 'radioCheckboxText'],
   },
   TAX_SAVING_PREF: {
     LABEL: 'Tax Saving Preference',
@@ -158,7 +169,7 @@ const PREFERENCES = {
     NAME: 'taxSavingPreference',
     TYPE: 'radio',
     HIDDEN: true,
-    CLASS: 'radioCheckboxText',
+    CLASS: ['fieldTitle', 'radioCheckboxText'],
   },
   FINANCIAL_GOALS: {
     LABEL: 'Future Finalcial Goals',
@@ -166,6 +177,7 @@ const PREFERENCES = {
     ID: 'financialGoal',
     NAME: 'financialGoal',
     ROWS: 12,
+    CLASS: ['fieldTitle'],
   },
   RISK_ACKNOWLEDGEMENT: {
     LABEL: 'Risk Acknowledgement',
@@ -176,7 +188,7 @@ const PREFERENCES = {
     TEXT_CONTENT:
       'All investments are subject to market risks. Please read all scheme-related documents carefully before investing.',
     HIDDEN: false,
-    CLASS: '',
+    CLASS: [''],
   },
 };
 

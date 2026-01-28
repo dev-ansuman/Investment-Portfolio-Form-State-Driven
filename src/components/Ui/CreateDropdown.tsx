@@ -6,13 +6,22 @@ interface CreateDropdownProps {
   options: string[];
   name: string;
   id: string;
+  fieldClass: string;
 }
 
-const CreateDropdown: React.FC<CreateDropdownProps> = ({ fieldTitle, options, name, id }) => {
+const CreateDropdown: React.FC<CreateDropdownProps> = ({
+  fieldTitle,
+  options,
+  name,
+  id,
+  fieldClass,
+}) => {
   return (
     <>
-      <div>{fieldTitle}</div>
-      <Dropdown options={options} name={name} id={id} />
+      <div className={fieldClass}>{fieldTitle}</div>
+      <div>
+        <Dropdown options={options} name={name} id={id} />
+      </div>
     </>
   );
 };
