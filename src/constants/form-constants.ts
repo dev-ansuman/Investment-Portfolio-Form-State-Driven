@@ -72,9 +72,11 @@ const INVESTMENT_DETAILS = {
 const ASSET_ALLOCATION = {
   ANNUAL_INVESTMENT_CAPACITY: {
     LABEL: 'Annual Investment Capacity',
-    PLACEHOLDER: 'Enter a amount, greater than 1',
+    // PLACEHOLDER: 'Enter a amount, greater than 1',
+    PLACEHOLDER: 'INR',
     ID: 'annualInvestmentCapacity',
     NAME: 'annualInvestmentCapacity',
+    TYPE: 'text',
   },
   CURRENCY: {
     OPTIONS: ['₹', '$'],
@@ -101,8 +103,8 @@ const ASSET_ALLOCATION = {
   },
   ASSET_CLASS: {
     LABEL: 'Asset Class',
-    OPTIONS: ['Stock', 'Bond', 'Cash', 'Real Estate', 'Forex'],
-    VALUES: ['Equity', 'Fixed Income', 'Cash Equivalent', 'REITs', 'Foreign Exchange'],
+    OPTIONS: ['-- Select --', 'Stock', 'Bond', 'Cash', 'Real Estate', 'Forex'],
+    VALUES: ['', 'Equity', 'Fixed Income', 'Cash Equivalent', 'REITs', 'Foreign Exchange'],
     ID: 'assetClass',
     NAME: 'assetClass',
   },
@@ -114,6 +116,7 @@ const ASSET_ALLOCATION = {
   },
   SPECIFIC_FUND: {
     LABEL: 'Specific Fund',
+    TYPE: 'text',
     ID: 'specificFund',
     NAME: 'specificFund',
   },
