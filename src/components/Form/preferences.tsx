@@ -10,12 +10,12 @@ interface preferencesProps {
     taxSavingPreference: string;
     financialGoals: string;
     riskAcknowledgement: boolean;
-    // [key: string]: any
   };
   updateField: (field: string, value: string | boolean) => void;
+  showErrors?: boolean;
 }
 
-const Preferences: React.FC<preferencesProps> = ({ formData, updateField }) => {
+const Preferences: React.FC<preferencesProps> = ({ formData, updateField, showErrors = false }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (e.target.type === 'checkbox') {
       updateField(e.target.name || e.target.id, (e.target as HTMLInputElement).checked);
@@ -23,6 +23,24 @@ const Preferences: React.FC<preferencesProps> = ({ formData, updateField }) => {
       updateField(e.target.name || e.target.id, e.target.value);
     }
   };
+
+  const validateAutomatedRebalancing = (value: string) => {
+    if (!value || value.trim() === '') return 'This is a required field!';
+    return '';
+  };
+
+  const validateRiskAcknowledgement = (value: boolean) => {
+    if (!value) return 'This is a required field!';
+    return '';
+  };
+
+  const shouldShowError = (value: string | boolean) => {
+    if (typeof value === 'boolean') {
+      return showErrors || value === true;
+    }
+    return showErrors || value.length > 0;
+  };
+
   return (
     <div className="formScreen">
       {/* Automated Rebalancing Radio */}
@@ -41,6 +59,12 @@ const Preferences: React.FC<preferencesProps> = ({ formData, updateField }) => {
             required={PREFERENCES.AUTOMATED_REBALANCING.REQUIRED}
           />
         </div>
+        {shouldShowError(formData.automatedRebalancing) &&
+          validateAutomatedRebalancing(formData.automatedRebalancing) && (
+            <div style={{ color: 'red', fontSize: '13px' }}>
+              {validateAutomatedRebalancing(formData.automatedRebalancing)}
+            </div>
+          )}
       </div>
 
       {/* Tax Saving Preference Radio */}
@@ -91,6 +115,12 @@ const Preferences: React.FC<preferencesProps> = ({ formData, updateField }) => {
           </div>
         </div>
         <div>{PREFERENCES.RISK_ACKNOWLEDGEMENT.TEXT_CONTENT}</div>
+        {shouldShowError(formData.riskAcknowledgement) &&
+          validateRiskAcknowledgement(formData.riskAcknowledgement) && (
+            <div style={{ color: 'red', fontSize: '13px' }}>
+              {validateRiskAcknowledgement(formData.riskAcknowledgement)}
+            </div>
+          )}
       </div>
     </div>
   );

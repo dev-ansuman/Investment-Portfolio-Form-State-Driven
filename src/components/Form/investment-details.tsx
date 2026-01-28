@@ -14,9 +14,27 @@ interface investmentDetailsProps {
     // [key: string]: any
   };
   updateField: (field: string, value: string | boolean) => void;
+  showErrors?: boolean;
 }
 
-const InvestmentDetails: React.FC<investmentDetailsProps> = ({ formData, updateField }) => {
+const InvestmentDetails: React.FC<investmentDetailsProps> = ({
+  formData,
+  updateField,
+  showErrors = false,
+}) => {
+  const validateField = (name: string, value: string) => {
+    if (!value || value.trim() === '') return 'This is a required Field!';
+    if (name === 'portfolioName') {
+      if (!/^[a-zA-Z]+$/.test(value.trim())) return 'Name cannot contain Numbers or Symbols!';
+      if (value.trim().length < 3) return 'Atleast 3 characters required!';
+    }
+    return '';
+  };
+
+  const shouldShowError = (value: string) => {
+    return showErrors || value.length > 0;
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     updateField(e.target.name || e.target.id, e.target.value);
   };
@@ -35,6 +53,12 @@ const InvestmentDetails: React.FC<investmentDetailsProps> = ({ formData, updateF
           value={formData.portfolioName}
           onChange={handleInputChange}
         />
+        {shouldShowError(formData.portfolioName) &&
+          validateField('portfolioName', formData.portfolioName) && (
+            <div style={{ color: 'red', fontSize: '13px' }}>
+              {validateField('portfolioName', formData.portfolioName)}
+            </div>
+          )}
       </div>
 
       {/* Portfolio Type radio */}
@@ -51,6 +75,12 @@ const InvestmentDetails: React.FC<investmentDetailsProps> = ({ formData, updateF
           onChange={handleInputChange}
           required={INVESTMENT_DETAILS.PORTFOLIO_TYPE.REQUIRED}
         />
+        {shouldShowError(formData.portfolioType) &&
+          validateField('portfolioType', formData.portfolioType) && (
+            <div style={{ color: 'red', fontSize: '13px' }}>
+              {validateField('portfolioType', formData.portfolioType)}
+            </div>
+          )}
       </div>
 
       <div className="goalHorizon">
@@ -66,6 +96,12 @@ const InvestmentDetails: React.FC<investmentDetailsProps> = ({ formData, updateF
             onChange={handleInputChange}
             required={INVESTMENT_DETAILS.INVESTMENT_GOAL.REQUIRED}
           />
+          {shouldShowError(formData.investmentGoal) &&
+            validateField('investmentGoal', formData.investmentGoal) && (
+              <div style={{ color: 'red', fontSize: '13px' }}>
+                {validateField('investmentGoal', formData.investmentGoal)}
+              </div>
+            )}
         </div>
 
         {/* Investment Horizon Dropdown */}
@@ -80,6 +116,12 @@ const InvestmentDetails: React.FC<investmentDetailsProps> = ({ formData, updateF
             onChange={handleInputChange}
             required={INVESTMENT_DETAILS.INVESTMENT_HORIZON.REQUIRED}
           />
+          {shouldShowError(formData.investmentHorizon) &&
+            validateField('investmentHorizon', formData.investmentHorizon) && (
+              <div style={{ color: 'red', fontSize: '13px' }}>
+                {validateField('investmentHorizon', formData.investmentHorizon)}
+              </div>
+            )}
         </div>
       </div>
 
@@ -97,6 +139,12 @@ const InvestmentDetails: React.FC<investmentDetailsProps> = ({ formData, updateF
           onChange={handleInputChange}
           required={INVESTMENT_DETAILS.RISK_TOLERANCE.REQUIRED}
         />
+        {shouldShowError(formData.riskTolerance) &&
+          validateField('riskTolerance', formData.riskTolerance) && (
+            <div style={{ color: 'red', fontSize: '13px' }}>
+              {validateField('riskTolerance', formData.riskTolerance)}
+            </div>
+          )}
       </div>
     </div>
   );

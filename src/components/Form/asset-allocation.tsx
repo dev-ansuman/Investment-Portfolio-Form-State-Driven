@@ -13,12 +13,6 @@ interface assetAllocationProps {
     annualInvestmentCapacity: string;
     lumpSumAmount: string;
     monthlyContribution: string;
-    // assets: [{
-    //   assetClass: string;
-    //   percentageAllocation: string;
-    //   specificFund: string;
-    //   currentValue: string;
-    // }];
     assets: Array<{
       assetClass: string;
       percentageAllocation: string;
@@ -26,9 +20,10 @@ interface assetAllocationProps {
       currentValue: string;
     }>;
     investmentStyle: string;
-    // [key: string]: any
   };
   updateField: (field: string, value: string | assets[]) => void;
+  showErrors?: boolean;
+  resetErrors: () => void;
 }
 
 interface assets {
@@ -38,7 +33,12 @@ interface assets {
   currentValue: string;
 }
 
-const AssetAllocation: React.FC<assetAllocationProps> = ({ formData, updateField }) => {
+const AssetAllocation: React.FC<assetAllocationProps> = ({
+  formData,
+  updateField,
+  showErrors = false,
+  resetErrors,
+}) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     updateField(e.target.name || e.target.id, e.target.value);
   };
@@ -57,6 +57,10 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({ formData, updateField
       currentValue: '',
     };
     updateField('assets', [...formData.assets, newAsset]);
+
+    if (resetErrors) {
+      resetErrors();
+    }
   };
 
   const deleteAsset = (index: number) => {
@@ -64,6 +68,28 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({ formData, updateField
       const updatedAssets = formData.assets.filter((_, i) => i !== index);
       updateField('assets', updatedAssets);
     }
+  };
+
+  const validateAnnualInvestment = (value: string) => {
+    if (!value || value.trim() === '') return 'This is a required field!';
+    if (isNaN(Number(value)) || Number(value) <= 0) return 'Please enter a valid positive number!';
+    return '';
+  };
+
+  const validateAssetClass = (value: string) => {
+    if (!value || value.trim() === '') return 'This is a required field!';
+    return '';
+  };
+
+  const validatePercentageAllocation = (value: string) => {
+    if (!value || value.trim() === '') return 'This is a required field!';
+    if (isNaN(Number(value)) || Number(value) < 0 || Number(value) > 100)
+      return 'Invalid Percentage!';
+    return '';
+  };
+
+  const shouldShowError = (value: string) => {
+    return showErrors || value.length > 0;
   };
 
   return (
@@ -95,6 +121,12 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({ formData, updateField
             />
           </div>
         </div>
+        {shouldShowError(formData.annualInvestmentCapacity) &&
+          validateAnnualInvestment(formData.annualInvestmentCapacity) && (
+            <div style={{ color: 'red', fontSize: '13px' }}>
+              {validateAnnualInvestment(formData.annualInvestmentCapacity)}
+            </div>
+          )}
       </div>
 
       <div className="lumpMonthly">
@@ -149,6 +181,11 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({ formData, updateField
                 }}
                 required={ASSET_ALLOCATION.ASSET_CLASS.REQUIRED}
               />
+              {shouldShowError(asset.assetClass) && validateAssetClass(asset.assetClass) && (
+                <div style={{ color: 'red', fontSize: '13px' }}>
+                  {validateAssetClass(asset.assetClass)}
+                </div>
+              )}
             </div>
 
             {/* Percentage Allocation Input */}
@@ -166,6 +203,12 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({ formData, updateField
                   handleAssetChange(index, 'percentageAllocation', e.target.value);
                 }}
               />
+              {shouldShowError(asset.percentageAllocation) &&
+                validatePercentageAllocation(asset.percentageAllocation) && (
+                  <div style={{ color: 'red', fontSize: '13px' }}>
+                    {validatePercentageAllocation(asset.percentageAllocation)}
+                  </div>
+                )}
             </div>
 
             {/* Specific Fund Input */}
