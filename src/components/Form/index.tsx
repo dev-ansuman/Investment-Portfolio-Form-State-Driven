@@ -11,7 +11,7 @@
 // export default Form;
 
 import React from 'react';
-import InvestmentDetails from './InvestmentDetails';
+import InvestmentDetails from './investment-details';
 
 const Form: React.FC = () => {
   return (

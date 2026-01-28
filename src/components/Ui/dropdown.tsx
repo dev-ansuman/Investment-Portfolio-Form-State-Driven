@@ -2,11 +2,11 @@ import React from 'react';
 
 interface dropdownProps {
   options: string[];
-  nameAttribute: string;
+  name: string;
   id: string;
 }
 
-const Dropdown: React.FC<dropdownProps> = ({ options, nameAttribute, id }) => {
+const Dropdown: React.FC<dropdownProps> = ({ options, name, id }) => {
   const createOptions = (option: string) => {
     if (option !== '-- Select --') {
       return <option value={option}>{option}</option>;
@@ -16,11 +16,9 @@ const Dropdown: React.FC<dropdownProps> = ({ options, nameAttribute, id }) => {
   };
 
   return (
-    <>
-      <select name={nameAttribute} id={id}>
-        {options.map((option: string) => createOptions(option))}
-      </select>
-    </>
+    <select name={name} id={id}>
+      {options.map((option: string) => createOptions(option))}
+    </select>
   );
 };
 

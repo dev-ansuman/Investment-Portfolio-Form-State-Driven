@@ -3,21 +3,16 @@ import Input from './input';
 
 interface CreateInputProps {
   fieldTitle: string;
-  inputType: string;
-  inputPlaceholder: string;
+  type: string;
+  placeholder: string;
   id: string;
 }
 
-const CreateInput: React.FC<CreateInputProps> = ({
-  fieldTitle,
-  inputType,
-  inputPlaceholder,
-  id,
-}) => {
+const CreateInput: React.FC<CreateInputProps> = ({ fieldTitle, type, placeholder, id }) => {
   return (
     <>
       <div>{fieldTitle}</div>
-      <Input inputType={inputType} inputPlaceholder={inputPlaceholder} id={id} />
+      <Input type={type} placeholder={placeholder} id={id} />
     </>
   );
 };

@@ -8,8 +8,8 @@ const INVESTMENT_DETAILS = {
   },
   PORTFOLIO_TYPE: {
     LABEL: 'Portfolio Type',
-    OPTIONS: ['-- Select --', 'Income', 'Growth', 'Value', 'Speculative', 'Aggressive'],
-    VALUES: ['Income', 'Growth', 'Value', 'Speculative', 'Aggressive'],
+    OPTIONS: ['Income', 'Growth', 'Value', 'Speculative', 'Aggressive'],
+    VALUES: ['', 'Income', 'Growth', 'Value', 'Speculative', 'Aggressive'],
     ID: 'portfolioType',
     NAME: 'portfolioType',
     TYPE: 'radio',
@@ -19,6 +19,7 @@ const INVESTMENT_DETAILS = {
   INVESTMENT_GOAL: {
     LABEL: 'Investment Goal',
     OPTIONS: [
+      '-- Select --',
       'Income Generation',
       'Capital Preservation',
       'Tax Saving',
@@ -28,6 +29,7 @@ const INVESTMENT_DETAILS = {
       'Capital Appreciation',
     ],
     VALUES: [
+      '',
       'Income Generation',
       'Capital Preservation',
       'Tax Saving',
@@ -42,11 +44,13 @@ const INVESTMENT_DETAILS = {
   INVESTMENT_HORIZON: {
     LABEL: 'Investment Horizon',
     OPTIONS: [
+      '-- Select --',
       'Short-Term Investment Horizon',
       'Medium-Term Investment Horizon',
       'Long-Term Investment Horizon',
     ],
     VALUES: [
+      '',
       'Short-Term Investment Horizon',
       'Medium-Term Investment Horizon',
       'Long-Term Investment Horizon',

@@ -1,13 +1,13 @@
 import React from 'react';
 
-// import Title from "./components/Title/Title";
-import Form from './components/Form/Form';
+// import Navbar from './components/Navbar';
+import Form from './components/Form';
 // import Table from "./components/Table/Table";
 
 const App: React.FC = () => {
   return (
     <>
-      {/* <Title /> */}
+      {/* <Navbar /> */}
       <>
         <Form />
         {/* <Table /> */}

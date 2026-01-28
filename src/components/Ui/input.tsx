@@ -1,13 +1,13 @@
 import React from 'react';
 
 interface InputProps {
-  inputType: string;
-  inputPlaceholder: string;
+  type: string;
+  placeholder: string;
   id: string;
 }
 
-const Input: React.FC<InputProps> = ({ inputType, inputPlaceholder, id }) => {
-  return <input type={inputType} placeholder={inputPlaceholder} id={id} />;
+const Input: React.FC<InputProps> = ({ type, placeholder, id }) => {
+  return <input type={type} placeholder={placeholder} id={id} />;
 };
 
 export default Input;

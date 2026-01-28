@@ -4,20 +4,15 @@ import Dropdown from './dropdown';
 interface CreateDropdownProps {
   fieldTitle: string;
   options: string[];
-  nameAttribute: string;
+  name: string;
   id: string;
 }
 
-const CreateDropdown: React.FC<CreateDropdownProps> = ({
-  fieldTitle,
-  options,
-  nameAttribute,
-  id,
-}) => {
+const CreateDropdown: React.FC<CreateDropdownProps> = ({ fieldTitle, options, name, id }) => {
   return (
     <>
       <div>{fieldTitle}</div>
-      <Dropdown options={options} nameAttribute={nameAttribute} id={id} />
+      <Dropdown options={options} name={name} id={id} />
     </>
   );
 };
