@@ -6,6 +6,7 @@ const INVESTMENT_DETAILS = {
     NAME: 'portfolioName',
     TYPE: 'text',
     CLASS: ['fieldTitle'],
+    REQUIRED: true,
   },
   PORTFOLIO_TYPE: {
     LABEL: 'Portfolio Type',
@@ -16,6 +17,7 @@ const INVESTMENT_DETAILS = {
     TYPE: 'radio',
     HIDDEN: true,
     CLASS: ['fieldTitle', 'radioCheckboxText'],
+    REQUIRED: true,
   },
   INVESTMENT_GOAL: {
     LABEL: 'Investment Goal',
@@ -42,6 +44,7 @@ const INVESTMENT_DETAILS = {
     ID: 'investmentGoal',
     NAME: 'investmentGoal',
     CLASS: ['fieldTitle'],
+    REQUIRED: true,
   },
   INVESTMENT_HORIZON: {
     LABEL: 'Investment Horizon',
@@ -60,6 +63,7 @@ const INVESTMENT_DETAILS = {
     ID: 'investmentHorizon',
     NAME: 'investmentHorizon',
     CLASS: ['fieldTitle'],
+    REQUIRED: true,
   },
   RISK_TOLERANCE: {
     LABEL: 'Risk Tolerance',
@@ -69,6 +73,7 @@ const INVESTMENT_DETAILS = {
     TYPE: 'radio',
     HIDDEN: true,
     CLASS: ['fieldTitle', 'radioCheckboxText'],
+    REQUIRED: true,
   },
 };
 
@@ -81,12 +86,14 @@ const ASSET_ALLOCATION = {
     NAME: 'annualInvestmentCapacity',
     TYPE: 'text',
     CLASS: ['fieldTitle'],
+    REQUIRED: true,
   },
   CURRENCY: {
     OPTIONS: ['₹', '$'],
     ID: 'curreny',
     VALUE: ['INR', 'Dollar'],
     NAME: 'curreny',
+    REQUIRED: false,
   },
   LUMP_SUM_AMOUNT: {
     LABEL: 'Lump Sum Amount',
@@ -95,6 +102,7 @@ const ASSET_ALLOCATION = {
     ID: 'lumpSumAmount',
     NAME: 'lumpSumAmount',
     CLASS: ['fieldTitle'],
+    REQUIRED: false,
   },
   MONTHLY_CONTRIBUTION: {
     LABEL: 'Monthly Contribution',
@@ -103,6 +111,7 @@ const ASSET_ALLOCATION = {
     ID: 'monthlyContribution',
     NAME: 'monthlyContribution',
     CLASS: ['fieldTitle'],
+    REQUIRED: false,
   },
   ASSETS: {
     TITLE: 'Assets',
@@ -115,6 +124,7 @@ const ASSET_ALLOCATION = {
     ID: 'assetClass',
     NAME: 'assetClass',
     CLASS: ['subFieldTitle'],
+    REQUIRED: true,
   },
   PERCENTAGE_ALLOCATION: {
     LABEL: 'Percentage Allocation(%)',
@@ -122,6 +132,7 @@ const ASSET_ALLOCATION = {
     ID: 'percentageAllocation',
     NAME: 'percentageAllocation',
     CLASS: ['subFieldTitle'],
+    REQUIRED: true,
   },
   SPECIFIC_FUND: {
     LABEL: 'Specific Fund',
@@ -129,6 +140,7 @@ const ASSET_ALLOCATION = {
     ID: 'specificFund',
     NAME: 'specificFund',
     CLASS: ['subFieldTitle'],
+    REQUIRED: false,
   },
   CURRENT_VALUE: {
     LABEL: 'Current Value',
@@ -137,9 +149,11 @@ const ASSET_ALLOCATION = {
     ID: 'currentValue',
     NAME: 'currentValue',
     CLASS: ['subFieldTitle'],
+    REQUIRED: false,
   },
   ADD_ASSET: {
     LABEL: 'Add Asset +',
+    ID: 'addAssetButton',
   },
   INVESTMENT_STYLE: {
     LABEL: 'Investment Style',
@@ -149,6 +163,7 @@ const ASSET_ALLOCATION = {
     TYPE: 'checkbox',
     HIDDEN: true,
     CLASS: ['fieldTitle', 'radioCheckboxText'],
+    REQUIRED: false,
   },
 };
 
@@ -161,6 +176,7 @@ const PREFERENCES = {
     TYPE: 'radio',
     HIDDEN: true,
     CLASS: ['fieldTitle', 'radioCheckboxText'],
+    REQUIRED: true,
   },
   TAX_SAVING_PREF: {
     LABEL: 'Tax Saving Preference',
@@ -170,6 +186,7 @@ const PREFERENCES = {
     TYPE: 'radio',
     HIDDEN: true,
     CLASS: ['fieldTitle', 'radioCheckboxText'],
+    REQUIRED: false,
   },
   FINANCIAL_GOALS: {
     LABEL: 'Future Finalcial Goals',
@@ -178,6 +195,7 @@ const PREFERENCES = {
     NAME: 'financialGoal',
     ROWS: 12,
     CLASS: ['fieldTitle'],
+    REQUIRED: false,
   },
   RISK_ACKNOWLEDGEMENT: {
     LABEL: 'Risk Acknowledgement',
@@ -189,6 +207,22 @@ const PREFERENCES = {
       'All investments are subject to market risks. Please read all scheme-related documents carefully before investing.',
     HIDDEN: false,
     CLASS: [''],
+    REQUIRED: true,
+  },
+};
+
+const NAVIGATION = {
+  PREVIOUS: {
+    LABEL: 'Previous',
+    ID: 'previousButton',
+  },
+  CONTINUE: {
+    LABEL: 'Continue',
+    ID: 'continueButton',
+  },
+  SUBMIT: {
+    LABEL: 'Submit',
+    ID: 'submitButton',
   },
 };
 
@@ -215,4 +249,4 @@ const TABLE = {
   ],
 };
 
-export { INVESTMENT_DETAILS, ASSET_ALLOCATION, PREFERENCES, TABLE };
+export { INVESTMENT_DETAILS, ASSET_ALLOCATION, PREFERENCES, NAVIGATION, TABLE };

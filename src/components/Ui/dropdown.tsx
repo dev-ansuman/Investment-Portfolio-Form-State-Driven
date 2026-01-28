@@ -4,20 +4,30 @@ interface dropdownProps {
   options: string[];
   name: string;
   id: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Dropdown: React.FC<dropdownProps> = ({ options, name, id }) => {
-  const createOptions = (option: string) => {
+const Dropdown: React.FC<dropdownProps> = ({ options, name, id, value, onChange }) => {
+  const createOptions = (option: string, index: number) => {
     if (option !== '-- Select --') {
-      return <option value={option}>{option}</option>;
+      return (
+        <option key={index} value={option}>
+          {option}
+        </option>
+      );
     } else {
-      return <option value="">{option}</option>;
+      return (
+        <option key={index} value="">
+          {option}
+        </option>
+      );
     }
   };
 
   return (
-    <select name={name} id={id} className="fieldInput">
-      {options.map((option: string) => createOptions(option))}
+    <select name={name} id={id} className="fieldInput" value={value || ''} onChange={onChange}>
+      {options.map((option: string, index: number) => createOptions(option, index))}
     </select>
   );
 };

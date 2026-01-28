@@ -7,6 +7,8 @@ interface CreateDropdownProps {
   name: string;
   id: string;
   fieldClass: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const CreateDropdown: React.FC<CreateDropdownProps> = ({
@@ -15,12 +17,14 @@ const CreateDropdown: React.FC<CreateDropdownProps> = ({
   name,
   id,
   fieldClass,
+  value,
+  onChange,
 }) => {
   return (
     <>
       <div className={fieldClass}>{fieldTitle}</div>
       <div>
-        <Dropdown options={options} name={name} id={id} />
+        <Dropdown options={options} name={name} id={id} value={value} onChange={onChange} />
       </div>
     </>
   );

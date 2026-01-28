@@ -220,8 +220,8 @@ header {
 }
 
 .formParent {
-  /* width: 100%; */
-  width: 48%;
+  width: 100%;
+  /* width: 48%; */
 }
 
 .formScreen {

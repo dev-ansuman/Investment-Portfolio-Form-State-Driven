@@ -7,6 +7,8 @@ interface radioCheckboxProps {
   id: string;
   hidden: boolean;
   inputClass: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface optionProps {
@@ -16,6 +18,8 @@ interface optionProps {
   id: string;
   hidden: boolean;
   inputClass: string;
+  checked: boolean;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const RadioCheckbox: React.FC<radioCheckboxProps> = ({
@@ -25,21 +29,51 @@ const RadioCheckbox: React.FC<radioCheckboxProps> = ({
   id,
   hidden,
   inputClass,
+  value,
+  onChange,
 }) => {
-  const createOptions = ({ type, option, name, id, hidden, inputClass }: optionProps) => {
+  const createOptions = ({
+    type,
+    option,
+    name,
+    id,
+    hidden,
+    inputClass,
+    checked,
+    onChange,
+  }: optionProps) => {
     return (
-      <>
-        <input type={type} id={option + id} name={name} value={option} hidden={hidden} />
+      <React.Fragment key={option + id}>
+        <input
+          type={type}
+          id={option + id}
+          name={name}
+          value={option}
+          hidden={hidden}
+          checked={checked}
+          onChange={onChange}
+        />
         <label htmlFor={option + id} className={inputClass}>
           {option}
         </label>
-      </>
+      </React.Fragment>
     );
   };
 
   return (
     <div className="radioContainer">
-      {options.map((option) => createOptions({ type, option, name, id, hidden, inputClass }))}
+      {options.map((option) =>
+        createOptions({
+          type,
+          option,
+          name,
+          id,
+          hidden,
+          inputClass,
+          checked: value === option,
+          onChange,
+        })
+      )}
     </div>
   );
 };

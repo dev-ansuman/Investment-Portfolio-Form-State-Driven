@@ -9,6 +9,8 @@ interface createRadioCheckboxProps {
   id: string;
   hidden: boolean;
   inputClass: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const CreateRadioCheckbox: React.FC<createRadioCheckboxProps> = ({
@@ -19,6 +21,8 @@ const CreateRadioCheckbox: React.FC<createRadioCheckboxProps> = ({
   id,
   hidden,
   inputClass,
+  value,
+  onChange,
 }) => {
   return (
     <>
@@ -31,6 +35,8 @@ const CreateRadioCheckbox: React.FC<createRadioCheckboxProps> = ({
           id={id}
           hidden={hidden}
           inputClass={inputClass}
+          value={value}
+          onChange={onChange}
         />
       </div>
     </>
