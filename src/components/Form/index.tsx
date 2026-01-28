@@ -12,13 +12,15 @@
 
 import React from 'react';
 // import InvestmentDetails from './investment-details';
-import AssetAllocation from './asset-allocation';
+// import AssetAllocation from './asset-allocation';
+import Preferences from './preferences';
 
 const Form: React.FC = () => {
   return (
     <div>
       {/* <InvestmentDetails /> */}
-      <AssetAllocation />
+      {/* <AssetAllocation /> */}
+      <Preferences />
     </div>
   );
 };
