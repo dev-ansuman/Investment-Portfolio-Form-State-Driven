@@ -9,6 +9,7 @@ interface CreateDropdownProps {
   fieldClass: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  required: boolean;
 }
 
 const CreateDropdown: React.FC<CreateDropdownProps> = ({
@@ -19,15 +20,30 @@ const CreateDropdown: React.FC<CreateDropdownProps> = ({
   fieldClass,
   value,
   onChange,
+  required,
 }) => {
-  return (
-    <>
-      <div className={fieldClass}>{fieldTitle}</div>
-      <div>
-        <Dropdown options={options} name={name} id={id} value={value} onChange={onChange} />
-      </div>
-    </>
-  );
+  if (!required) {
+    return (
+      <>
+        <div className={fieldClass}>{fieldTitle}</div>
+        <div>
+          <Dropdown options={options} name={name} id={id} value={value} onChange={onChange} />
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className={fieldClass}>
+          {fieldTitle}
+          <span className="required"> *</span>
+        </div>
+        <div>
+          <Dropdown options={options} name={name} id={id} value={value} onChange={onChange} />
+        </div>
+      </>
+    );
+  }
 };
 
 export default CreateDropdown;

@@ -90,9 +90,9 @@ const ASSET_ALLOCATION = {
   },
   CURRENCY: {
     OPTIONS: ['₹', '$'],
-    ID: 'curreny',
-    VALUE: ['INR', 'Dollar'],
-    NAME: 'curreny',
+    ID: 'currency',
+    VALUE: ['INR', 'USD'],
+    NAME: 'currency',
     REQUIRED: false,
   },
   LUMP_SUM_AMOUNT: {

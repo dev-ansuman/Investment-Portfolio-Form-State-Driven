@@ -11,6 +11,7 @@ interface createRadioCheckboxProps {
   inputClass: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  required: boolean;
 }
 
 const CreateRadioCheckbox: React.FC<createRadioCheckboxProps> = ({
@@ -23,24 +24,48 @@ const CreateRadioCheckbox: React.FC<createRadioCheckboxProps> = ({
   inputClass,
   value,
   onChange,
+  required,
 }) => {
-  return (
-    <>
-      <div className="fieldTitle">{fieldTitle}</div>
-      <div>
-        <RadioCheckbox
-          type={type}
-          options={options}
-          name={name}
-          id={id}
-          hidden={hidden}
-          inputClass={inputClass}
-          value={value}
-          onChange={onChange}
-        />
-      </div>
-    </>
-  );
+  if (!required) {
+    return (
+      <>
+        <div className="fieldTitle">{fieldTitle}</div>
+        <div>
+          <RadioCheckbox
+            type={type}
+            options={options}
+            name={name}
+            id={id}
+            hidden={hidden}
+            inputClass={inputClass}
+            value={value}
+            onChange={onChange}
+          />
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className="fieldTitle">
+          {fieldTitle}
+          <span className="required"> *</span>
+        </div>
+        <div>
+          <RadioCheckbox
+            type={type}
+            options={options}
+            name={name}
+            id={id}
+            hidden={hidden}
+            inputClass={inputClass}
+            value={value}
+            onChange={onChange}
+          />
+        </div>
+      </>
+    );
+  }
 };
 
 export default CreateRadioCheckbox;

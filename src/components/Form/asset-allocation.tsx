@@ -59,11 +59,21 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({ formData, updateField
     updateField('assets', [...formData.assets, newAsset]);
   };
 
+  const deleteAsset = (index: number) => {
+    if (formData.assets.length > 1) {
+      const updatedAssets = formData.assets.filter((_, i) => i !== index);
+      updateField('assets', updatedAssets);
+    }
+  };
+
   return (
     <div className="formScreen">
       {/* Annual Investment Capacity Input */}
       <div className="fieldDiv">
-        <div className="fieldTitle">{ASSET_ALLOCATION.ANNUAL_INVESTMENT_CAPACITY.LABEL}</div>
+        <div className="fieldTitle">
+          {ASSET_ALLOCATION.ANNUAL_INVESTMENT_CAPACITY.LABEL}
+          <span className="required"> *</span>
+        </div>
         <div className="inputCapacity">
           <div>
             <Dropdown
@@ -137,6 +147,7 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({ formData, updateField
                 onChange={(e) => {
                   handleAssetChange(index, 'assetClass', e.target.value);
                 }}
+                required={ASSET_ALLOCATION.ASSET_CLASS.REQUIRED}
               />
             </div>
 
@@ -176,19 +187,26 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({ formData, updateField
 
             {/* Current Value Input */}
             <div className="fieldDiv">
-              <CreateInput
-                name={`currentValue-${index}`}
-                fieldTitle={ASSET_ALLOCATION.CURRENT_VALUE.LABEL}
-                type={ASSET_ALLOCATION.CURRENT_VALUE.TYPE}
-                placeholder={ASSET_ALLOCATION.CURRENT_VALUE.PLACEHOLDER}
-                id={`currentValue-${index}`}
-                fieldClass={ASSET_ALLOCATION.CURRENT_VALUE.CLASS[0]}
-                required={ASSET_ALLOCATION.CURRENT_VALUE.REQUIRED}
-                value={asset.currentValue}
-                onChange={(e) => {
-                  handleAssetChange(index, 'currentValue', e.target.value);
-                }}
-              />
+              <div className="subFieldTitle">{ASSET_ALLOCATION.CURRENT_VALUE.LABEL}</div>
+              <div className="deleteAssetContainer">
+                <Input
+                  name={`currentValue-${index}`}
+                  type={ASSET_ALLOCATION.CURRENT_VALUE.TYPE}
+                  placeholder={ASSET_ALLOCATION.CURRENT_VALUE.PLACEHOLDER}
+                  id={`currentValue-${index}`}
+                  value={asset.currentValue}
+                  onChange={(e) => {
+                    handleAssetChange(index, 'currentValue', e.target.value);
+                  }}
+                />
+                <Button
+                  text="🗑️"
+                  id={`deleteButton-${index}`}
+                  buttonClass="deleteButton"
+                  action={() => deleteAsset(index)}
+                  disabled={formData.assets.length == 1}
+                />
+              </div>
             </div>
           </div>
         ))}
@@ -214,6 +232,7 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({ formData, updateField
           inputClass={ASSET_ALLOCATION.INVESTMENT_STYLE.CLASS[1]}
           value={formData.investmentStyle}
           onChange={handleInputChange}
+          required={ASSET_ALLOCATION.INVESTMENT_STYLE.REQUIRED}
         />
       </div>
     </div>

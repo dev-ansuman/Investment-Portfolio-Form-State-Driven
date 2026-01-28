@@ -22,7 +22,7 @@ const INITIAL_FORM_DATA = {
   automatedRebalancing: '',
   taxSavingPreference: '',
   financialGoals: '',
-  riskAcknowledgement: '',
+  riskAcknowledgement: false,
 };
 
 const INITIAL_STEP = 1;

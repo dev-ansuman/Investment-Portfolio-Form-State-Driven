@@ -9,7 +9,7 @@ interface preferencesProps {
     automatedRebalancing: string;
     taxSavingPreference: string;
     financialGoals: string;
-    riskAcknowledgement: string;
+    riskAcknowledgement: boolean;
     // [key: string]: any
   };
   updateField: (field: string, value: string | boolean) => void;
@@ -17,7 +17,11 @@ interface preferencesProps {
 
 const Preferences: React.FC<preferencesProps> = ({ formData, updateField }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    updateField(e.target.name || e.target.id, e.target.value);
+    if (e.target.type === 'checkbox') {
+      updateField(e.target.name || e.target.id, (e.target as HTMLInputElement).checked);
+    } else {
+      updateField(e.target.name || e.target.id, e.target.value);
+    }
   };
   return (
     <div className="formScreen">
@@ -34,6 +38,7 @@ const Preferences: React.FC<preferencesProps> = ({ formData, updateField }) => {
             inputClass={PREFERENCES.AUTOMATED_REBALANCING.CLASS[1]}
             value={formData.automatedRebalancing}
             onChange={handleInputChange}
+            required={PREFERENCES.AUTOMATED_REBALANCING.REQUIRED}
           />
         </div>
       </div>
@@ -50,6 +55,7 @@ const Preferences: React.FC<preferencesProps> = ({ formData, updateField }) => {
           inputClass={PREFERENCES.TAX_SAVING_PREF.CLASS[1]}
           value={formData.taxSavingPreference}
           onChange={handleInputChange}
+          required={PREFERENCES.TAX_SAVING_PREF.REQUIRED}
         />
       </div>
 
@@ -76,10 +82,13 @@ const Preferences: React.FC<preferencesProps> = ({ formData, updateField }) => {
             id={PREFERENCES.RISK_ACKNOWLEDGEMENT.ID}
             hidden={PREFERENCES.RISK_ACKNOWLEDGEMENT.HIDDEN}
             inputClass={PREFERENCES.RISK_ACKNOWLEDGEMENT.CLASS[0]}
-            value={formData.riskAcknowledgement}
+            value={formData.riskAcknowledgement ? '' : 'unchecked'}
             onChange={handleInputChange}
           />
-          <div className="fieldTitle">{PREFERENCES.RISK_ACKNOWLEDGEMENT.LABEL}</div>
+          <div className="fieldTitle">
+            {PREFERENCES.RISK_ACKNOWLEDGEMENT.LABEL}
+            <span className="required"> *</span>
+          </div>
         </div>
         <div>{PREFERENCES.RISK_ACKNOWLEDGEMENT.TEXT_CONTENT}</div>
       </div>

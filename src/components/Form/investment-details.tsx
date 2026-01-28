@@ -49,6 +49,7 @@ const InvestmentDetails: React.FC<investmentDetailsProps> = ({ formData, updateF
           inputClass={INVESTMENT_DETAILS.PORTFOLIO_TYPE.CLASS[1]}
           value={formData.portfolioType}
           onChange={handleInputChange}
+          required={INVESTMENT_DETAILS.PORTFOLIO_TYPE.REQUIRED}
         />
       </div>
 
@@ -63,6 +64,7 @@ const InvestmentDetails: React.FC<investmentDetailsProps> = ({ formData, updateF
             fieldClass={INVESTMENT_DETAILS.INVESTMENT_GOAL.CLASS[0]}
             value={formData.investmentGoal}
             onChange={handleInputChange}
+            required={INVESTMENT_DETAILS.INVESTMENT_GOAL.REQUIRED}
           />
         </div>
 
@@ -76,6 +78,7 @@ const InvestmentDetails: React.FC<investmentDetailsProps> = ({ formData, updateF
             fieldClass={INVESTMENT_DETAILS.INVESTMENT_HORIZON.CLASS[0]}
             value={formData.investmentHorizon}
             onChange={handleInputChange}
+            required={INVESTMENT_DETAILS.INVESTMENT_HORIZON.REQUIRED}
           />
         </div>
       </div>
@@ -92,6 +95,7 @@ const InvestmentDetails: React.FC<investmentDetailsProps> = ({ formData, updateF
           inputClass={INVESTMENT_DETAILS.RISK_TOLERANCE.CLASS[1]}
           value={formData.riskTolerance}
           onChange={handleInputChange}
+          required={INVESTMENT_DETAILS.RISK_TOLERANCE.REQUIRED}
         />
       </div>
     </div>

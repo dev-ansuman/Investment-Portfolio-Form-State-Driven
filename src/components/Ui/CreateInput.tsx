@@ -39,20 +39,22 @@ const CreateInput: React.FC<CreateInputProps> = ({
       </>
     );
   } else {
-    <>
-      <div className={fieldClass}>
-        {fieldTitle}
-        <span className="required">*</span>
-      </div>
-      <Input
-        type={type}
-        placeholder={placeholder}
-        id={id}
-        name={name}
-        value={value}
-        onChange={onChange}
-      />
-    </>;
+    return (
+      <>
+        <div className={fieldClass}>
+          {fieldTitle}
+          <span className="required"> *</span>
+        </div>
+        <Input
+          type={type}
+          placeholder={placeholder}
+          id={id}
+          name={name}
+          value={value}
+          onChange={onChange}
+        />
+      </>
+    );
   }
 };
 
