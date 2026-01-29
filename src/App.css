@@ -105,8 +105,11 @@ header {
 .themeToggle {
   background-color: var(--bg-secondary);
   border: 2px solid var(--border-color);
-  border-radius: 20px;
+  border-radius: 50%;
   font-size: 24px;
+  padding: 7px;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -359,7 +362,7 @@ input[type="checkbox"]:checked+.radioCheckboxText {
   display: flex;
   width: 100%;
   justify-content: space-between;
-} 
+}
 
 #taxSavingPreference {
   display: flex;
@@ -514,9 +517,23 @@ td {
   height: 32px;
 }
 
+table tr {
+  cursor: pointer;
+}
+
+
 table tr.selected {
   background-color: var(--table-selected);
 }
+
+table tr:hover {
+  background-color: var(--bg-secondary);
+}
+
+table tr.selected:hover {
+  background-color: var(--table-selected);
+}
+
 
 table tr.selected td {
   font-weight: 600;

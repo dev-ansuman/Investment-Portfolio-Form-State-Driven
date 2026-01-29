@@ -7,6 +7,7 @@ interface navigationProps {
   nextStep: () => void;
   handleSubmit: () => void;
   currentStep: number;
+  isEditing?: boolean;
 }
 
 const Navigation: React.FC<navigationProps> = ({
@@ -14,6 +15,7 @@ const Navigation: React.FC<navigationProps> = ({
   nextStep,
   handleSubmit,
   currentStep,
+  isEditing
 }) => {
   return (
     <div className="buttonContainer">
@@ -22,6 +24,7 @@ const Navigation: React.FC<navigationProps> = ({
         id={NAVIGATION.PREVIOUS.ID}
         buttonClass="navigationButton"
         action={previousStep}
+        disabled={currentStep === 1}
       />
       {currentStep < 3 ? (
         <Button
@@ -32,7 +35,7 @@ const Navigation: React.FC<navigationProps> = ({
         />
       ) : (
         <Button
-          text={NAVIGATION.SUBMIT.LABEL}
+          text={isEditing ? 'Update' : NAVIGATION.SUBMIT.LABEL}
           id={NAVIGATION.SUBMIT.ID}
           buttonClass="navigationButton"
           action={handleSubmit}

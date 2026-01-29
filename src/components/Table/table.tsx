@@ -2,41 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { getSubmittedRecords } from '../../storage/app.storage';
 import { deleteRecord } from '../../services/tableActions';
 import TableActions from './TableActions';
-import {
-  getCurrentStep,
-  getFormData,
-  getCompletedSteps,
-  clearFormData,
-  saveFormData,
-  saveCurrentStep,
-  saveCompletedSteps,
-} from '../../storage/app.storage';
-import { INITIAL_FORM_DATA, INITIAL_STEP } from '../../storage/initial-form-state';
 import type { Record } from '../../types/Record';
+import { useApp } from '../../app-context/app-context';
 
-interface TableWrapperProp {
-  onEdit: (record: Record) => void;
-}
+const Table: React.FC = () => {
+  const { state, dispatch } = useApp();
+  const { editingRecordId } = state;
 
-const Table: React.FC<TableWrapperProp> = ({ onEdit }) => {
   const [records, setRecords] = useState<Record[]>([]);
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null);
 
-  const [currentStep, setCurrentStep] = useState(() => getCurrentStep(INITIAL_STEP));
-  const [formData, setFormData] = useState(() => getFormData(INITIAL_FORM_DATA));
-  const [completedSteps, setCompletedSteps] = useState<number[]>(() => getCompletedSteps());
-
   useEffect(() => {
-    saveFormData(formData);
-  }, [formData]);
+    if (editingRecordId !== null) {
+      setSelectedRecordId(editingRecordId);
+    }
+  }, [editingRecordId]);
 
-  useEffect(() => {
-    saveCurrentStep(currentStep);
-  }, [currentStep]);
-
-  useEffect(() => {
-    saveCompletedSteps(completedSteps);
-  }, [completedSteps]);
 
   useEffect(() => {
     const loadRecords = () => {
@@ -46,29 +27,19 @@ const Table: React.FC<TableWrapperProp> = ({ onEdit }) => {
     loadRecords();
 
     window.addEventListener('records_updated', loadRecords);
-    window.addEventListener('storage', loadRecords);
 
     return () => {
       window.removeEventListener('records_updated', loadRecords);
-      window.removeEventListener('storage', loadRecords);
     };
   }, []);
 
   const handleRowClick = (id: number) => {
-    setSelectedRecordId(id);
+    setSelectedRecordId(prev => (prev === id ? null : id));
   };
+
+
 
   const handleClearForm = () => {
-    console.log('clear form');
-    clearForm();
-  };
-
-  const clearForm = () => {
-    clearFormData();
-    setFormData(INITIAL_FORM_DATA);
-    setCurrentStep(INITIAL_STEP);
-    setCompletedSteps([]);
-
     window.dispatchEvent(new Event('form_clear_requested'));
   };
 
@@ -80,6 +51,7 @@ const Table: React.FC<TableWrapperProp> = ({ onEdit }) => {
 
     deleteRecord(records, selectedRecordId);
     setSelectedRecordId(null);
+    window.dispatchEvent(new Event('records_updated'));
   };
 
   const handleEditForm = () => {
@@ -90,10 +62,22 @@ const Table: React.FC<TableWrapperProp> = ({ onEdit }) => {
 
     const recordToEdit = records.find((r) => r.id === selectedRecordId);
     if (recordToEdit) {
-      onEdit(recordToEdit);
+      dispatch({ type: 'START_EDIT', payload: recordToEdit });
     }
-    setSelectedRecordId(null);
   };
+
+  useEffect(() => {
+    const clearSelection = () => {
+      setSelectedRecordId(null);
+    };
+
+    window.addEventListener('edit_completed', clearSelection);
+
+    return () => {
+      window.removeEventListener('edit_completed', clearSelection);
+    };
+  }, []);
+
 
   return (
     <div className="tableContainer">
@@ -121,7 +105,7 @@ const Table: React.FC<TableWrapperProp> = ({ onEdit }) => {
           <tbody id="tableBody">
             {records.map((record: Record) => {
               return (
-                <tr key={record.id} onClick={() => handleRowClick(record.id)}>
+                <tr key={record.id} onClick={() => handleRowClick(record.id)} className={selectedRecordId === record.id ? 'selected' : ''}>
                   <td>{record.portfolioName}</td>
                   <td>{record.portfolioType}</td>
                   <td>{record.investmentGoal}</td>

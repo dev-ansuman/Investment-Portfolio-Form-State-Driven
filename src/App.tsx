@@ -1,37 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import Form from './components/Form/form';
-import Table from './components/Table/Table';
-import { INITIAL_FORM_DATA } from './storage/initial-form-state';
-import { addSubmittedRecord, updateRecord } from './storage/app.storage';
-import type { Record } from './types/Record';
+import Table from './components/Table/table';
+import Navbar from './components/Navbar';
 
 const App: React.FC = () => {
-  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
-  const [editingRecordId, setEditingRecordId] = useState<number | null>(null);
-
-  const handleEdit = (record: Record) => {
-    setFormData(record);
-    setEditingRecordId(record.id);
-  };
-
-  const handleSubmit = () => {
-    if (editingRecordId !== null) {
-      updateRecord(editingRecordId, formData);
-    } else {
-      addSubmittedRecord(formData);
-    }
-
-    setFormData(INITIAL_FORM_DATA);
-    setEditingRecordId(null);
-  };
   return (
     <>
-      {/* <Navbar /> */}
-      <div className="content">
-        <Form formData={formData} setFormData={setFormData} onSubmit={handleSubmit} />
-        <Table onEdit={handleEdit} />
-      </div>
+    <Navbar />
+    <div className="content">
+      <Form />
+      <Table />
+    </div>
     </>
   );
 };

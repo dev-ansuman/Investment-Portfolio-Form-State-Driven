@@ -1,30 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { useApp } from '../../app-context/app-context';
 import InvestmentDetails from './investment-details';
 import Navigation from './navigation';
-import { INITIAL_FORM_DATA, INITIAL_STEP } from '../../storage/initial-form-state';
+// import { INITIAL_STEP } from '../../storage/initial-form-state';
 import AssetAllocation from './asset-allocation';
 import Preferences from './preferences';
 import Stepper from './Stepper';
 import type { Asset } from '../../types/Asset';
-import type { Record } from '../../types/Record';
+import { addSubmittedRecord, getSubmittedRecords } from '../../storage/app.storage';
+import { editRecord } from '../../services/tableActions';
 
-import {
-  getCurrentStep,
-  getCompletedSteps,
-  saveCompletedSteps,
-  saveCurrentStep,
-  saveFormData,
-} from '../../storage/app.storage';
+import { saveFormData } from '../../storage/app.storage';
 
-interface FormProps {
-  formData: Record;
-  setFormData: React.Dispatch<React.SetStateAction<Record>>;
-  onSubmit: () => void;
-}
+const Form: React.FC = () => {
+  const [viewStep, setViewStep] = useState(1);
 
-const Form: React.FC<FormProps> = ({ formData, setFormData, onSubmit }) => {
-  const [currentStep, setCurrentStep] = useState(() => getCurrentStep(INITIAL_STEP));
-  const [completedSteps, setCompletedSteps] = useState<number[]>(() => getCompletedSteps());
+  const { state, dispatch } = useApp();
+  const { formData, editingRecordId } = state;
+  const isEditing = editingRecordId !== null;
 
   const [showInvestmentDetailsErrors, setShowInvestmentDetailsErrors] = useState(false);
   const [showAssetAllocationErrors, setShowAssetAllocationErrors] = useState(false);
@@ -35,21 +28,13 @@ const Form: React.FC<FormProps> = ({ formData, setFormData, onSubmit }) => {
   }, [formData]);
 
   useEffect(() => {
-    saveCurrentStep(currentStep);
-  }, [currentStep]);
-
-  useEffect(() => {
-    saveCompletedSteps(completedSteps);
-  }, [completedSteps]);
-
-  useEffect(() => {
     const handleClearRequest = () => {
-      setFormData(INITIAL_FORM_DATA);
-      setCurrentStep(INITIAL_STEP);
-      setCompletedSteps([]);
+      dispatch({ type: 'CLEAR_FORM' })
       setShowInvestmentDetailsErrors(false);
       setShowAssetAllocationErrors(false);
       setShowPreferencesError(false);
+      setViewStep(1);
+
     };
 
     window.addEventListener('form_clear_requested', handleClearRequest);
@@ -57,11 +42,21 @@ const Form: React.FC<FormProps> = ({ formData, setFormData, onSubmit }) => {
     return () => {
       window.removeEventListener('form_clear_requested', handleClearRequest);
     };
-  }, []);
+  }, [dispatch]);
 
   const updateField = (field: string, value: string | boolean | Asset[]) => {
-    setFormData((prev: Record) => ({ ...prev, [field]: value }));
+    dispatch({
+      type: 'SET_FORM_DATA',
+      payload: { ...formData, [field]: value }
+    });
   };
+
+  useEffect(() => {
+    if (editingRecordId !== null) {
+      setViewStep(1);
+    }
+  }, [editingRecordId]);
+
 
   const isInvestmentDetailsValid = () => {
     return (
@@ -101,6 +96,23 @@ const Form: React.FC<FormProps> = ({ formData, setFormData, onSubmit }) => {
     setShowAssetAllocationErrors(false);
   };
 
+  const getDerivedCompletedSteps = () => {
+    const completed: number[] = [];
+
+    if (isInvestmentDetailsValid()) completed.push(1);
+    if (isAssetAllocationValid()) completed.push(2);
+
+    return completed;
+  }
+
+  const currentStep = viewStep;
+  const derivedCompletedSteps = getDerivedCompletedSteps();
+
+  const completedSteps = isEditing
+    ? derivedCompletedSteps.filter(step => step < currentStep)
+    : derivedCompletedSteps;
+
+
   const nextStep = () => {
     if (currentStep === 1) {
       if (!isInvestmentDetailsValid()) {
@@ -108,9 +120,6 @@ const Form: React.FC<FormProps> = ({ formData, setFormData, onSubmit }) => {
         return;
       }
       setShowInvestmentDetailsErrors(false);
-      if (!completedSteps.includes(1)) {
-        setCompletedSteps((prev) => [...prev, 1]);
-      }
     }
 
     if (currentStep === 2) {
@@ -119,55 +128,82 @@ const Form: React.FC<FormProps> = ({ formData, setFormData, onSubmit }) => {
         return;
       }
       setShowAssetAllocationErrors(false);
-      if (!completedSteps.includes(2)) {
-        setCompletedSteps((prev) => [...prev, 2]);
-      }
     }
 
-    setCurrentStep((prev: number) => Math.min(prev + 1, 3));
+    setViewStep((prev) => Math.min(prev + 1, 3));
   };
 
-  const previousStep = () => setCurrentStep((prev: number) => Math.max(prev - 1, 1));
+
+  // const previousStep = () => setCurrentStep((prev: number) => Math.max(prev - 1, 1));
+
+  const previousStep = () => {
+    setViewStep((prev) => Math.max(prev - 1, 1));
+  };
+
 
   const handleSubmitClick = () => {
-    onSubmit();
+    if (
+      formData.automatedRebalancing === '' ||
+      formData.riskAcknowledgement !== true
+    ) {
+      setShowPreferencesError(true);
+      return;
+    }
+
+    setShowPreferencesError(false);
+
+    const records = getSubmittedRecords();
+
+    if (editingRecordId !== null) {
+      editRecord(records, formData, editingRecordId);
+    } else {
+      addSubmittedRecord(formData);
+    }
+
+    window.dispatchEvent(new Event('records_updated'));
+
+    dispatch({ type: 'CLEAR_FORM' });
+    window.dispatchEvent(new Event('edit_completed'));
+
+    setViewStep(1);
+    setShowInvestmentDetailsErrors(false);
+    setShowAssetAllocationErrors(false);
+    setShowPreferencesError(false);
+
+    // setCurrentStep(INITIAL_STEP);
+    // setCompletedSteps([]);
   };
 
-  const renderCurrentStep = () => {
-    switch (currentStep) {
-      case 1:
-        return (
+
+  return (
+    <div className="formContainer">
+      <div className="formParent">
+        <Stepper currentStep={currentStep} completedSteps={completedSteps} />
+        {/* {renderCurrentStep()} */}
+        {currentStep === 1 && (
           <InvestmentDetails
             formData={formData}
             updateField={updateField}
             showErrors={showInvestmentDetailsErrors}
           />
-        );
-      case 2:
-        return (
+        )}
+
+        {currentStep === 2 && (
           <AssetAllocation
             formData={formData}
             updateField={updateField}
             showErrors={showAssetAllocationErrors}
             resetErrors={resetAssetAllocationErrors}
           />
-        );
-      case 3:
-        return (
+        )}
+
+        {currentStep === 3 && (
           <Preferences
             formData={formData}
             updateField={updateField}
             showErrors={showPreferencesError}
           />
-        );
-    }
-  };
-
-  return (
-    <div className="formContainer">
-      <div className="formParent">
-        <Stepper currentStep={currentStep} completedSteps={completedSteps} />
-        {renderCurrentStep()}
+        )}
       </div>
 
       <Navigation
@@ -175,6 +211,7 @@ const Form: React.FC<FormProps> = ({ formData, setFormData, onSubmit }) => {
         nextStep={nextStep}
         handleSubmit={handleSubmitClick}
         currentStep={currentStep}
+        isEditing={isEditing}
       />
     </div>
   );
