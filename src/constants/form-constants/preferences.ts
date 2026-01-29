@@ -1,0 +1,43 @@
+export const PREFERENCES = {
+  AUTOMATED_REBALANCING: {
+    LABEL: 'Opt for Automated Rebalancing?',
+    OPTIONS: ['Yes', 'No'],
+    ID: 'automatedRebalancing',
+    NAME: 'automatedRebalancing',
+    TYPE: 'radio',
+    HIDDEN: true,
+    CLASS: ['fieldTitle', 'radioCheckboxText'],
+    REQUIRED: true,
+  },
+  TAX_SAVING_PREF: {
+    LABEL: 'Tax Saving Preference',
+    OPTIONS: ['Yes', 'No'],
+    ID: 'taxSavingPreference',
+    NAME: 'taxSavingPreference',
+    TYPE: 'radio',
+    HIDDEN: true,
+    CLASS: ['fieldTitle', 'radioCheckboxText'],
+    REQUIRED: false,
+  },
+  FINANCIAL_GOALS: {
+    LABEL: 'Future Finalcial Goals',
+    PLACEHOLDER: 'Describe Briefly',
+    ID: 'financialGoal',
+    NAME: 'financialGoal',
+    ROWS: 12,
+    CLASS: ['fieldTitle'],
+    REQUIRED: false,
+  },
+  RISK_ACKNOWLEDGEMENT: {
+    LABEL: 'Risk Acknowledgement',
+    OPTIONS: [''],
+    ID: 'riskAcknowledgement',
+    NAME: 'riskAcknowledgement',
+    TYPE: 'checkbox',
+    TEXT_CONTENT:
+      'All investments are subject to market risks. Please read all scheme-related documents carefully before investing.',
+    HIDDEN: false,
+    CLASS: [''],
+    REQUIRED: true,
+  },
+};
