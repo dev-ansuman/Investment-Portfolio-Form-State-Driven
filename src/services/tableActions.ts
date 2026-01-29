@@ -1,42 +1,16 @@
-import { saveSubmittedRecords } from '../app.storage';
+import { saveSubmittedRecords } from '../storage/app.storage';
+import type { Record } from '../types/Record';
 
-interface Asset {
-  assetClass: string;
-  percentageAllocation: string;
-  specificFund: string;
-  currentValue: string;
-}
-
-interface Record {
-  id: number;
-
-  portfolioName: string;
-  portfolioType: string;
-  investmentGoal: string;
-  investmentHorizon: string;
-  riskTolerance: string;
-
-  currency: string;
-  annualInvestmentCapacity: string;
-  lumpSumAmount: string;
-  monthlyContribution: string;
-  assets: Asset[];
-  investmentStyle: string;
-
-  automatedRebalancing: string;
-  taxSavingPreference: string;
-  financialGoals: string;
-  riskAcknowledgement: boolean;
-}
-
-export const deleteRecord = (records: Record[], recordID: number) => {
+const deleteRecord = (records: Record[], recordID: number) => {
   const updatedRecords = records.filter((record) => record.id !== recordID);
   saveSubmittedRecords(JSON.stringify(updatedRecords));
 };
 
-export const editRecord = (records: Record[], newRecord: Record, recordID: number) => {
+const editRecord = (records: Record[], newRecord: Record, recordID: number) => {
   const updatedRecords = records.map((record) =>
     record.id === recordID ? { ...record, ...newRecord } : record
   );
   saveSubmittedRecords(JSON.stringify(updatedRecords));
 };
+
+export { deleteRecord, editRecord };

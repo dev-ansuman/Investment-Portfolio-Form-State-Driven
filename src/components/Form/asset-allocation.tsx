@@ -1,11 +1,11 @@
 import React from 'react';
-import CreateInput from '../Ui/CreateInput';
-import { ASSET_ALLOCATION } from '../../constants/form-constants';
-import CreateRadioCheckbox from '../Ui/CreateRadioCheckbox';
-import Button from '../Ui/button';
-import CreateDropdown from '../Ui/CreateDropdown';
-import Input from '../Ui/input';
-import Dropdown from '../Ui/dropdown';
+import CreateInput from '../Ui/custom/CreateInput';
+import { ASSET_ALLOCATION } from '../../constants/form-constants/asset-allocation';
+import CreateRadioCheckbox from '../Ui/custom/CreateRadioCheckbox';
+import Button from '../Ui/default/button';
+import CreateDropdown from '../Ui/custom/CreateDropdown';
+import Input from '../Ui/default/input';
+import Dropdown from '../Ui/default/dropdown';
 
 interface assetAllocationProps {
   formData: {

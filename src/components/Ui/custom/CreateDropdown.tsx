@@ -1,5 +1,5 @@
 import React from 'react';
-import Dropdown from './dropdown';
+import Dropdown from '../default/dropdown';
 
 interface CreateDropdownProps {
   fieldTitle: string;

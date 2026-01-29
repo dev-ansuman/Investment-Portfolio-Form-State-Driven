@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from '../Ui/button';
-import { TABLE_ACTION } from '../../constants/form-constants';
+import Button from '../Ui/default/button';
+import { TABLE_ACTION } from '../../constants/table-constants/table-action';
 
 interface TableActionsProps {
   clearFormAction: () => void;

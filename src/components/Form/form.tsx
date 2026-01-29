@@ -1,50 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import InvestmentDetails from './investment-details';
 import Navigation from './navigation';
-import { INITIAL_FORM_DATA, INITIAL_STEP } from '../../constants/form-initial-state';
+import { INITIAL_FORM_DATA, INITIAL_STEP } from '../../storage/initial-form-state';
 import AssetAllocation from './asset-allocation';
 import Preferences from './preferences';
 import Stepper from './Stepper';
+import type { Asset } from '../../types/Asset';
+import type { Record } from '../../types/Record';
 
 import {
-  // addSubmittedRecord,
-  // clearFormData,
   getCurrentStep,
   getCompletedSteps,
-  // getFormData,
   saveCompletedSteps,
   saveCurrentStep,
   saveFormData,
-} from '../../app.storage';
-
-interface Asset {
-  assetClass: string;
-  percentageAllocation: string;
-  specificFund: string;
-  currentValue: string;
-}
-
-interface Record {
-  id: number;
-
-  portfolioName: string;
-  portfolioType: string;
-  investmentGoal: string;
-  investmentHorizon: string;
-  riskTolerance: string;
-
-  currency: string;
-  annualInvestmentCapacity: string;
-  lumpSumAmount: string;
-  monthlyContribution: string;
-  assets: Asset[];
-  investmentStyle: string;
-
-  automatedRebalancing: string;
-  taxSavingPreference: string;
-  financialGoals: string;
-  riskAcknowledgement: boolean;
-}
+} from '../../storage/app.storage';
 
 interface FormProps {
   formData: Record;
@@ -54,7 +24,6 @@ interface FormProps {
 
 const Form: React.FC<FormProps> = ({ formData, setFormData, onSubmit }) => {
   const [currentStep, setCurrentStep] = useState(() => getCurrentStep(INITIAL_STEP));
-  // const [formData, setFormData] = useState(() => getFormData(INITIAL_FORM_DATA));
   const [completedSteps, setCompletedSteps] = useState<number[]>(() => getCompletedSteps());
 
   const [showInvestmentDetailsErrors, setShowInvestmentDetailsErrors] = useState(false);
@@ -132,10 +101,6 @@ const Form: React.FC<FormProps> = ({ formData, setFormData, onSubmit }) => {
     setShowAssetAllocationErrors(false);
   };
 
-  // const isPreferenceValid = () => {
-  //   return formData.automatedRebalancing !== '' && formData.riskAcknowledgement === true;
-  // };
-
   const nextStep = () => {
     if (currentStep === 1) {
       if (!isInvestmentDetailsValid()) {
@@ -163,26 +128,6 @@ const Form: React.FC<FormProps> = ({ formData, setFormData, onSubmit }) => {
   };
 
   const previousStep = () => setCurrentStep((prev: number) => Math.max(prev - 1, 1));
-
-  // const clearForm = () => {
-  //   clearFormData();
-  //   setFormData(INITIAL_FORM_DATA);
-  //   setCurrentStep(INITIAL_STEP);
-  //   setCompletedSteps([]);
-  //   setShowPreferencesError(false);
-  // };
-
-  // const handleSubmit = () => {
-  //   if (!isPreferenceValid()) {
-  //     setShowPreferencesError(true);
-  //     return;
-  //   }
-  //   addSubmittedRecord(formData);
-  //   console.log('form submitted', formData);
-  //   alert('form submitted');
-
-  //   clearForm();
-  // };
 
   const handleSubmitClick = () => {
     onSubmit();

@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from '../Ui/button';
-import { NAVIGATION } from '../../constants/form-constants';
+import Button from '../Ui/default/button';
+import { NAVIGATION } from '../../constants/form-constants/navigation';
 
 interface navigationProps {
   previousStep: () => void;

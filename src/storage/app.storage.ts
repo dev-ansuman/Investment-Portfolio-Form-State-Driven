@@ -1,37 +1,10 @@
-interface Asset {
-  assetClass: string;
-  percentageAllocation: string;
-  specificFund: string;
-  currentValue: string;
-}
+import type { Record } from '../types/Record';
 
-interface Record {
-  id: number;
-
-  portfolioName: string;
-  portfolioType: string;
-  investmentGoal: string;
-  investmentHorizon: string;
-  riskTolerance: string;
-
-  currency: string;
-  annualInvestmentCapacity: string;
-  lumpSumAmount: string;
-  monthlyContribution: string;
-  assets: Asset[];
-  investmentStyle: string;
-
-  automatedRebalancing: string;
-  taxSavingPreference: string;
-  financialGoals: string;
-  riskAcknowledgement: boolean;
-}
-
-export const saveFormData = (data: Record) => {
+const saveFormData = (data: Record) => {
   localStorage.setItem('form_data', JSON.stringify(data));
 };
 
-export const getFormData = (initialValue: Record) => {
+const getFormData = (initialValue: Record) => {
   try {
     const saved = localStorage.getItem('form_data');
     return saved ? JSON.parse(saved) : initialValue;
@@ -40,11 +13,11 @@ export const getFormData = (initialValue: Record) => {
   }
 };
 
-export const saveCurrentStep = (step: number) => {
+const saveCurrentStep = (step: number) => {
   localStorage.setItem('current_step', JSON.stringify(step));
 };
 
-export const getCurrentStep = (initialStep: number) => {
+const getCurrentStep = (initialStep: number) => {
   try {
     const saved = localStorage.getItem('current_step');
     return saved ? JSON.parse(saved) : initialStep;
@@ -53,11 +26,11 @@ export const getCurrentStep = (initialStep: number) => {
   }
 };
 
-export const saveCompletedSteps = (steps: number[]) => {
+const saveCompletedSteps = (steps: number[]) => {
   localStorage.setItem('completed_steps', JSON.stringify(steps));
 };
 
-export const getCompletedSteps = () => {
+const getCompletedSteps = () => {
   try {
     const saved = localStorage.getItem('completed_step');
     return saved ? JSON.parse(saved) : [];
@@ -66,12 +39,12 @@ export const getCompletedSteps = () => {
   }
 };
 
-export const saveSubmittedRecords = (records: string) => {
+const saveSubmittedRecords = (records: string) => {
   localStorage.setItem('submitted_records', records);
   window.dispatchEvent(new Event('records_updated'));
 };
 
-export const addSubmittedRecord = (record: Record) => {
+const addSubmittedRecord = (record: Record) => {
   try {
     const saved = localStorage.getItem('submitted_records');
     const records = saved ? JSON.parse(saved) : [];
@@ -88,7 +61,7 @@ export const addSubmittedRecord = (record: Record) => {
   }
 };
 
-export const getSubmittedRecords = () => {
+const getSubmittedRecords = () => {
   try {
     const saved = localStorage.getItem('submitted_records');
     const records = saved ? JSON.parse(saved) : [];
@@ -98,7 +71,7 @@ export const getSubmittedRecords = () => {
   }
 };
 
-export const updateRecord = (id: number, updatedData: Record) => {
+const updateRecord = (id: number, updatedData: Record) => {
   try {
     const saved = localStorage.getItem('submitted_records');
     const records: Record[] = saved ? JSON.parse(saved) : [];
@@ -115,8 +88,22 @@ export const updateRecord = (id: number, updatedData: Record) => {
   }
 };
 
-export const clearFormData = () => {
+const clearFormData = () => {
   localStorage.removeItem('form_data');
   localStorage.removeItem('current_step');
   localStorage.removeItem('completed_steps');
+};
+
+export {
+  saveFormData,
+  getFormData,
+  saveCurrentStep,
+  getCurrentStep,
+  saveCompletedSteps,
+  getCompletedSteps,
+  saveSubmittedRecords,
+  addSubmittedRecord,
+  getSubmittedRecords,
+  updateRecord,
+  clearFormData,
 };

@@ -1,8 +1,8 @@
 import React from 'react';
-import CreateRadioCheckbox from '../Ui/CreateRadioCheckbox';
-import { PREFERENCES } from '../../constants/form-constants';
-import Textarea from '../Ui/textarea';
-import RadioCheckbox from '../Ui/radioCheckbox';
+import CreateRadioCheckbox from '../Ui/custom/CreateRadioCheckbox';
+import { PREFERENCES } from '../../constants/form-constants/preferences';
+import Textarea from '../Ui/default/textarea';
+import RadioCheckbox from '../Ui/custom/radioCheckbox';
 
 interface preferencesProps {
   formData: {

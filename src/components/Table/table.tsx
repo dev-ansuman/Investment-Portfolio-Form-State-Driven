@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getSubmittedRecords } from '../../app.storage';
+import { getSubmittedRecords } from '../../storage/app.storage';
 import { deleteRecord } from '../../services/tableActions';
 import TableActions from './TableActions';
 import {
@@ -10,43 +10,15 @@ import {
   saveFormData,
   saveCurrentStep,
   saveCompletedSteps,
-} from '../../app.storage';
-import { INITIAL_STEP, INITIAL_FORM_DATA } from '../../constants/form-initial-state';
-
-interface Asset {
-  assetClass: string;
-  percentageAllocation: string;
-  specificFund: string;
-  currentValue: string;
-}
-
-interface Record {
-  id: number;
-
-  portfolioName: string;
-  portfolioType: string;
-  investmentGoal: string;
-  investmentHorizon: string;
-  riskTolerance: string;
-
-  currency: string;
-  annualInvestmentCapacity: string;
-  lumpSumAmount: string;
-  monthlyContribution: string;
-  assets: Asset[];
-  investmentStyle: string;
-
-  automatedRebalancing: string;
-  taxSavingPreference: string;
-  financialGoals: string;
-  riskAcknowledgement: boolean;
-}
+} from '../../storage/app.storage';
+import { INITIAL_FORM_DATA, INITIAL_STEP } from '../../storage/initial-form-state';
+import type { Record } from '../../types/Record';
 
 interface TableWrapperProp {
   onEdit: (record: Record) => void;
 }
 
-const TableWrapper: React.FC<TableWrapperProp> = ({ onEdit }) => {
+const Table: React.FC<TableWrapperProp> = ({ onEdit }) => {
   const [records, setRecords] = useState<Record[]>([]);
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null);
 
@@ -110,15 +82,6 @@ const TableWrapper: React.FC<TableWrapperProp> = ({ onEdit }) => {
     setSelectedRecordId(null);
   };
 
-  // useEffect(() => {
-  //   if(selectedRecordId) {
-  //     const recordToEdit = records.find(record => record.id === selectedRecordId);
-  //     if(recordToEdit) {
-  //       setFormData(recordToEdit);
-  //     }
-  //   }
-  // }, [selectedRecordId, records])
-
   const handleEditForm = () => {
     if (selectedRecordId === null) {
       alert('Please select a record to edit!');
@@ -177,4 +140,4 @@ const TableWrapper: React.FC<TableWrapperProp> = ({ onEdit }) => {
   );
 };
 
-export default TableWrapper;
+export default Table;

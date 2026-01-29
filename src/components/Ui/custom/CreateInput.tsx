@@ -1,5 +1,5 @@
 import React from 'react';
-import Input from './input';
+import Input from '../default/input';
 
 interface CreateInputProps {
   name: string;
