@@ -5,7 +5,7 @@ interface stepperProps {
   completedSteps: number[];
 }
 
-const Stepper: React.FC<stepperProps> = ({ currentStep, completedSteps }) => {
+const Stepper: React.FC<stepperProps> = ({ currentStep, completedSteps = [] }) => {
   const getStepClass = (stepId: number) => {
     if (completedSteps.includes(stepId)) return 'completed';
     else if (stepId === currentStep) return 'active';

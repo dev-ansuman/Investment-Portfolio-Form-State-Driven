@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import InvestmentDetails from './investment-details';
 import Navigation from './navigation';
 import { INITIAL_FORM_DATA, INITIAL_STEP } from '../../constants/form-initial-state';
@@ -6,25 +6,69 @@ import AssetAllocation from './asset-allocation';
 import Preferences from './preferences';
 import Stepper from './Stepper';
 
-// const STEPS = ['Investment Details', 'Asset Allocation', 'Preferences'];
+import {
+  addSubmittedRecord,
+  clearFormData,
+  getCurrentStep,
+  getCompletedSteps,
+  getFormData,
+  saveCompletedSteps,
+  saveCurrentStep,
+  saveFormData,
+} from '../../app.storage';
 
-interface assets {
+interface Asset {
   assetClass: string;
   percentageAllocation: string;
   specificFund: string;
   currentValue: string;
 }
 
+interface Record {
+  id: number;
+
+  portfolioName: string;
+  portfolioType: string;
+  investmentGoal: string;
+  investmentHorizon: string;
+  riskTolerance: string;
+
+  currency: string;
+  annualInvestmentCapacity: string;
+  lumpSumAmount: string;
+  monthlyContribution: string;
+  assets: Asset[];
+  investmentStyle: string;
+
+  automatedRebalancing: string;
+  taxSavingPreference: string;
+  financialGoals: string;
+  riskAcknowledgement: boolean;
+}
+
 const Form: React.FC = () => {
-  const [currentStep, setCurrentStep] = useState(INITIAL_STEP);
-  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [currentStep, setCurrentStep] = useState(() => getCurrentStep(INITIAL_STEP));
+  const [formData, setFormData] = useState(() => getFormData(INITIAL_FORM_DATA));
+  const [completedSteps, setCompletedSteps] = useState<number[]>(() => getCompletedSteps());
+
   const [showInvestmentDetailsErrors, setShowInvestmentDetailsErrors] = useState(false);
   const [showAssetAllocationErrors, setShowAssetAllocationErrors] = useState(false);
   const [showPreferencesError, setShowPreferencesError] = useState(false);
-  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
-  const updateField = (field: string, value: string | boolean | assets[]) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  useEffect(() => {
+    saveFormData(formData);
+  }, [formData]);
+
+  useEffect(() => {
+    saveCurrentStep(currentStep);
+  }, [currentStep]);
+
+  useEffect(() => {
+    saveCompletedSteps(completedSteps);
+  }, [completedSteps]);
+
+  const updateField = (field: string, value: string | boolean | Asset[]) => {
+    setFormData((prev: Record) => ({ ...prev, [field]: value }));
   };
 
   const isInvestmentDetailsValid = () => {
@@ -92,18 +136,28 @@ const Form: React.FC = () => {
       }
     }
 
-    setCurrentStep((prev) => Math.min(prev + 1, 3));
+    setCurrentStep((prev: number) => Math.min(prev + 1, 3));
   };
-  const previousStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
-  // const setStep = (step: number) => setCurrentStep(step);
+  const previousStep = () => setCurrentStep((prev: number) => Math.max(prev - 1, 1));
+
+  const clearForm = () => {
+    clearFormData();
+    setFormData(INITIAL_FORM_DATA);
+    setCurrentStep(INITIAL_STEP);
+    setCompletedSteps([]);
+    setShowPreferencesError(false);
+  };
 
   const handleSubmit = () => {
     if (!isPreferenceValid()) {
       setShowPreferencesError(true);
       return;
     }
+    addSubmittedRecord(formData);
     console.log('form submitted', formData);
     alert('form submitted');
+
+    clearForm();
   };
 
   const renderCurrentStep = () => {
