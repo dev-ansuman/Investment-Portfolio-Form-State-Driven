@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useApp } from '../../app-context/app-context';
+import { useApp } from '../../app-context/use-app';
 import InvestmentDetails from './investment-details';
 import Navigation from './navigation';
-// import { INITIAL_STEP } from '../../storage/initial-form-state';
 import AssetAllocation from './asset-allocation';
 import Preferences from './preferences';
 import Stepper from './Stepper';
@@ -15,7 +14,7 @@ import { saveFormData } from '../../storage/app.storage';
 const Form: React.FC = () => {
   const [viewStep, setViewStep] = useState(1);
 
-  const { state, dispatch } = useApp();
+  const { state, dispatch, setModalConfig } = useApp();
   const { formData, editingRecordId } = state;
   const isEditing = editingRecordId !== null;
 
@@ -29,12 +28,11 @@ const Form: React.FC = () => {
 
   useEffect(() => {
     const handleClearRequest = () => {
-      dispatch({ type: 'CLEAR_FORM' })
+      dispatch({ type: 'CLEAR_FORM' });
       setShowInvestmentDetailsErrors(false);
       setShowAssetAllocationErrors(false);
       setShowPreferencesError(false);
       setViewStep(1);
-
     };
 
     window.addEventListener('form_clear_requested', handleClearRequest);
@@ -47,16 +45,16 @@ const Form: React.FC = () => {
   const updateField = (field: string, value: string | boolean | Asset[]) => {
     dispatch({
       type: 'SET_FORM_DATA',
-      payload: { ...formData, [field]: value }
+      payload: { ...formData, [field]: value },
     });
   };
 
   useEffect(() => {
     if (editingRecordId !== null) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setViewStep(1);
     }
   }, [editingRecordId]);
-
 
   const isInvestmentDetailsValid = () => {
     return (
@@ -103,15 +101,14 @@ const Form: React.FC = () => {
     if (isAssetAllocationValid()) completed.push(2);
 
     return completed;
-  }
+  };
 
   const currentStep = viewStep;
   const derivedCompletedSteps = getDerivedCompletedSteps();
 
   const completedSteps = isEditing
-    ? derivedCompletedSteps.filter(step => step < currentStep)
+    ? derivedCompletedSteps.filter((step) => step < currentStep)
     : derivedCompletedSteps;
-
 
   const nextStep = () => {
     if (currentStep === 1) {
@@ -133,19 +130,12 @@ const Form: React.FC = () => {
     setViewStep((prev) => Math.min(prev + 1, 3));
   };
 
-
-  // const previousStep = () => setCurrentStep((prev: number) => Math.max(prev - 1, 1));
-
   const previousStep = () => {
     setViewStep((prev) => Math.max(prev - 1, 1));
   };
 
-
   const handleSubmitClick = () => {
-    if (
-      formData.automatedRebalancing === '' ||
-      formData.riskAcknowledgement !== true
-    ) {
+    if (formData.automatedRebalancing === '' || formData.riskAcknowledgement !== true) {
       setShowPreferencesError(true);
       return;
     }
@@ -160,26 +150,26 @@ const Form: React.FC = () => {
       addSubmittedRecord(formData);
     }
 
-    window.dispatchEvent(new Event('records_updated'));
+    setModalConfig({
+      title: editingRecordId ? 'Record Updated' : 'Record Submitted',
+      message: editingRecordId
+        ? 'The record has been updated successfully.'
+        : 'The record has been submitted successfully.',
+      type: 'alert',
+      onConfirm: () => {
+        window.dispatchEvent(new Event('records_updated'));
 
-    dispatch({ type: 'CLEAR_FORM' });
-    window.dispatchEvent(new Event('edit_completed'));
+        dispatch({ type: 'CLEAR_FORM' });
 
-    setViewStep(1);
-    setShowInvestmentDetailsErrors(false);
-    setShowAssetAllocationErrors(false);
-    setShowPreferencesError(false);
-
-    // setCurrentStep(INITIAL_STEP);
-    // setCompletedSteps([]);
+        setViewStep(1);
+      },
+    });
   };
-
 
   return (
     <div className="formContainer">
       <div className="formParent">
         <Stepper currentStep={currentStep} completedSteps={completedSteps} />
-        {/* {renderCurrentStep()} */}
         {currentStep === 1 && (
           <InvestmentDetails
             formData={formData}

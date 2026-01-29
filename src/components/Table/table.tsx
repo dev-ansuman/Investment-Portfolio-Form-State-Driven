@@ -3,21 +3,14 @@ import { getSubmittedRecords } from '../../storage/app.storage';
 import { deleteRecord } from '../../services/tableActions';
 import TableActions from './TableActions';
 import type { Record } from '../../types/Record';
-import { useApp } from '../../app-context/app-context';
+import { useApp } from '../../app-context/use-app';
 
 const Table: React.FC = () => {
-  const { state, dispatch } = useApp();
+  const { state, dispatch, setModalConfig } = useApp();
   const { editingRecordId } = state;
 
   const [records, setRecords] = useState<Record[]>([]);
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (editingRecordId !== null) {
-      setSelectedRecordId(editingRecordId);
-    }
-  }, [editingRecordId]);
-
 
   useEffect(() => {
     const loadRecords = () => {
@@ -25,7 +18,6 @@ const Table: React.FC = () => {
     };
 
     loadRecords();
-
     window.addEventListener('records_updated', loadRecords);
 
     return () => {
@@ -34,35 +26,57 @@ const Table: React.FC = () => {
   }, []);
 
   const handleRowClick = (id: number) => {
-    setSelectedRecordId(prev => (prev === id ? null : id));
+    setSelectedRecordId((prev) => (prev === id ? null : id));
   };
-
-
 
   const handleClearForm = () => {
     window.dispatchEvent(new Event('form_clear_requested'));
+    setSelectedRecordId(null);
   };
 
   const handleDelete = () => {
     if (selectedRecordId === null) {
-      alert('Please select a record to delete!');
+      setModalConfig({
+        title: 'No Record Selected',
+        message: 'Please select a record to delete.',
+        type: 'alert',
+      });
       return;
     }
 
-    deleteRecord(records, selectedRecordId);
-    setSelectedRecordId(null);
-    window.dispatchEvent(new Event('records_updated'));
+    setModalConfig({
+      title: 'Delete Record',
+      message: 'Are you sure you want to delete this record?',
+      type: 'confirm',
+      onConfirm: (confirmed) => {
+        if (!confirmed) return;
+
+        deleteRecord(records, selectedRecordId);
+        setSelectedRecordId(null);
+        window.dispatchEvent(new Event('records_updated'));
+      },
+    });
   };
 
   const handleEditForm = () => {
     if (selectedRecordId === null) {
-      alert('Please select a record to edit!');
+      // setModalConfig({
+      //   title: 'No selection',
+      //   message: 'Please select a record to edit.',
+      //   type: 'alert',
+      // });
       return;
     }
 
     const recordToEdit = records.find((r) => r.id === selectedRecordId);
     if (recordToEdit) {
       dispatch({ type: 'START_EDIT', payload: recordToEdit });
+
+      // setModalConfig({
+      //   title: 'Edit Mode',
+      //   message: 'You can now update the selected record.',
+      //   type: 'alert',
+      // });
     }
   };
 
@@ -72,12 +86,10 @@ const Table: React.FC = () => {
     };
 
     window.addEventListener('edit_completed', clearSelection);
-
     return () => {
       window.removeEventListener('edit_completed', clearSelection);
     };
   }, []);
-
 
   return (
     <div className="tableContainer">
@@ -87,6 +99,7 @@ const Table: React.FC = () => {
         deleteAction={handleDelete}
         disabled={selectedRecordId === null}
       />
+
       <div className="tableWrapper">
         <table id="formTable">
           <thead>
@@ -103,9 +116,16 @@ const Table: React.FC = () => {
           </thead>
 
           <tbody id="tableBody">
-            {records.map((record: Record) => {
+            {records.map((record) => {
+              const isSelected = selectedRecordId === record.id;
+              const isEditing = editingRecordId === record.id;
+
               return (
-                <tr key={record.id} onClick={() => handleRowClick(record.id)} className={selectedRecordId === record.id ? 'selected' : ''}>
+                <tr
+                  key={record.id}
+                  onClick={() => handleRowClick(record.id)}
+                  className={isEditing ? 'editing' : isSelected ? 'selected' : ''}
+                >
                   <td>{record.portfolioName}</td>
                   <td>{record.portfolioType}</td>
                   <td>{record.investmentGoal}</td>
