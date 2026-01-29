@@ -42,7 +42,11 @@ interface Record {
   riskAcknowledgement: boolean;
 }
 
-const TableWrapper: React.FC = () => {
+interface TableWrapperProp {
+  onEdit: (record: Record) => void;
+}
+
+const TableWrapper: React.FC<TableWrapperProp> = ({ onEdit }) => {
   const [records, setRecords] = useState<Record[]>([]);
   const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null);
 
@@ -82,16 +86,6 @@ const TableWrapper: React.FC = () => {
     setSelectedRecordId(id);
   };
 
-  const handleDelete = () => {
-    if (selectedRecordId === null) {
-      alert('Please select a record to delete!');
-      return;
-    }
-
-    deleteRecord(records, selectedRecordId);
-    setSelectedRecordId(null);
-  };
-
   const handleClearForm = () => {
     console.log('clear form');
     clearForm();
@@ -102,10 +96,40 @@ const TableWrapper: React.FC = () => {
     setFormData(INITIAL_FORM_DATA);
     setCurrentStep(INITIAL_STEP);
     setCompletedSteps([]);
+
+    window.dispatchEvent(new Event('form_clear_requested'));
   };
 
+  const handleDelete = () => {
+    if (selectedRecordId === null) {
+      alert('Please select a record to delete!');
+      return;
+    }
+
+    deleteRecord(records, selectedRecordId);
+    setSelectedRecordId(null);
+  };
+
+  // useEffect(() => {
+  //   if(selectedRecordId) {
+  //     const recordToEdit = records.find(record => record.id === selectedRecordId);
+  //     if(recordToEdit) {
+  //       setFormData(recordToEdit);
+  //     }
+  //   }
+  // }, [selectedRecordId, records])
+
   const handleEditForm = () => {
-    console.log('Edit form');
+    if (selectedRecordId === null) {
+      alert('Please select a record to edit!');
+      return;
+    }
+
+    const recordToEdit = records.find((r) => r.id === selectedRecordId);
+    if (recordToEdit) {
+      onEdit(recordToEdit);
+    }
+    setSelectedRecordId(null);
   };
 
   return (

@@ -98,6 +98,23 @@ export const getSubmittedRecords = () => {
   }
 };
 
+export const updateRecord = (id: number, updatedData: Record) => {
+  try {
+    const saved = localStorage.getItem('submitted_records');
+    const records: Record[] = saved ? JSON.parse(saved) : [];
+
+    const updateRecords = records.map((record) =>
+      record.id === id ? { ...record, ...updatedData, id } : record
+    );
+
+    localStorage.setItem('submitted_records', JSON.stringify(updateRecords));
+
+    window.dispatchEvent(new Event('records_updated'));
+  } catch (error) {
+    console.error('Error updating record', error);
+  }
+};
+
 export const clearFormData = () => {
   localStorage.removeItem('form_data');
   localStorage.removeItem('current_step');

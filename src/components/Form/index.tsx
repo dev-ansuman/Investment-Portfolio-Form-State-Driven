@@ -7,11 +7,11 @@ import Preferences from './preferences';
 import Stepper from './Stepper';
 
 import {
-  addSubmittedRecord,
-  clearFormData,
+  // addSubmittedRecord,
+  // clearFormData,
   getCurrentStep,
   getCompletedSteps,
-  getFormData,
+  // getFormData,
   saveCompletedSteps,
   saveCurrentStep,
   saveFormData,
@@ -46,9 +46,15 @@ interface Record {
   riskAcknowledgement: boolean;
 }
 
-const Form: React.FC = () => {
+interface FormProps {
+  formData: Record;
+  setFormData: React.Dispatch<React.SetStateAction<Record>>;
+  onSubmit: () => void;
+}
+
+const Form: React.FC<FormProps> = ({ formData, setFormData, onSubmit }) => {
   const [currentStep, setCurrentStep] = useState(() => getCurrentStep(INITIAL_STEP));
-  const [formData, setFormData] = useState(() => getFormData(INITIAL_FORM_DATA));
+  // const [formData, setFormData] = useState(() => getFormData(INITIAL_FORM_DATA));
   const [completedSteps, setCompletedSteps] = useState<number[]>(() => getCompletedSteps());
 
   const [showInvestmentDetailsErrors, setShowInvestmentDetailsErrors] = useState(false);
@@ -66,6 +72,23 @@ const Form: React.FC = () => {
   useEffect(() => {
     saveCompletedSteps(completedSteps);
   }, [completedSteps]);
+
+  useEffect(() => {
+    const handleClearRequest = () => {
+      setFormData(INITIAL_FORM_DATA);
+      setCurrentStep(INITIAL_STEP);
+      setCompletedSteps([]);
+      setShowInvestmentDetailsErrors(false);
+      setShowAssetAllocationErrors(false);
+      setShowPreferencesError(false);
+    };
+
+    window.addEventListener('form_clear_requested', handleClearRequest);
+
+    return () => {
+      window.removeEventListener('form_clear_requested', handleClearRequest);
+    };
+  }, []);
 
   const updateField = (field: string, value: string | boolean | Asset[]) => {
     setFormData((prev: Record) => ({ ...prev, [field]: value }));
@@ -109,9 +132,9 @@ const Form: React.FC = () => {
     setShowAssetAllocationErrors(false);
   };
 
-  const isPreferenceValid = () => {
-    return formData.automatedRebalancing !== '' && formData.riskAcknowledgement === true;
-  };
+  // const isPreferenceValid = () => {
+  //   return formData.automatedRebalancing !== '' && formData.riskAcknowledgement === true;
+  // };
 
   const nextStep = () => {
     if (currentStep === 1) {
@@ -138,26 +161,31 @@ const Form: React.FC = () => {
 
     setCurrentStep((prev: number) => Math.min(prev + 1, 3));
   };
+
   const previousStep = () => setCurrentStep((prev: number) => Math.max(prev - 1, 1));
 
-  const clearForm = () => {
-    clearFormData();
-    setFormData(INITIAL_FORM_DATA);
-    setCurrentStep(INITIAL_STEP);
-    setCompletedSteps([]);
-    setShowPreferencesError(false);
-  };
+  // const clearForm = () => {
+  //   clearFormData();
+  //   setFormData(INITIAL_FORM_DATA);
+  //   setCurrentStep(INITIAL_STEP);
+  //   setCompletedSteps([]);
+  //   setShowPreferencesError(false);
+  // };
 
-  const handleSubmit = () => {
-    if (!isPreferenceValid()) {
-      setShowPreferencesError(true);
-      return;
-    }
-    addSubmittedRecord(formData);
-    console.log('form submitted', formData);
-    alert('form submitted');
+  // const handleSubmit = () => {
+  //   if (!isPreferenceValid()) {
+  //     setShowPreferencesError(true);
+  //     return;
+  //   }
+  //   addSubmittedRecord(formData);
+  //   console.log('form submitted', formData);
+  //   alert('form submitted');
 
-    clearForm();
+  //   clearForm();
+  // };
+
+  const handleSubmitClick = () => {
+    onSubmit();
   };
 
   const renderCurrentStep = () => {
@@ -200,7 +228,7 @@ const Form: React.FC = () => {
       <Navigation
         previousStep={previousStep}
         nextStep={nextStep}
-        handleSubmit={handleSubmit}
+        handleSubmit={handleSubmitClick}
         currentStep={currentStep}
       />
     </div>
