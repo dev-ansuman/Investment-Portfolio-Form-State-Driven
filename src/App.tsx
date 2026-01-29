@@ -1,17 +1,17 @@
 import React from 'react';
+import Form from './components/Form/form';
+import Table from './components/Table/table';
+import Navbar from './components/Navbar';
 import './App.css';
-// import Navbar from './components/Navbar';
-import Form from './components/Form';
-// import Table from "./components/Table/Table";
 
 const App: React.FC = () => {
   return (
     <>
-      {/* <Navbar /> */}
-      <>
+      <Navbar />
+      <div className="content">
         <Form />
-        {/* <Table /> */}
-      </>
+        <Table />
+      </div>
     </>
   );
 };

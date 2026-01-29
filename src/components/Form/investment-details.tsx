@@ -1,8 +1,8 @@
 import React from 'react';
-import CreateInput from '../Ui/CreateInput';
-import CreateDropdown from '../Ui/CreateDropdown.tsx';
-import { INVESTMENT_DETAILS } from '../../constants/form-constants';
-import CreateRadioCheckbox from '../Ui/CreateRadioCheckbox.tsx';
+import CreateInput from '../Ui/custom/CreateInput.tsx';
+import CreateDropdown from '../Ui/custom/CreateDropdown.tsx';
+import { INVESTMENT_DETAILS } from '../../constants/form-constants/investment-details.ts';
+import CreateRadioCheckbox from '../Ui/custom/CreateRadioCheckbox.tsx';
 
 interface investmentDetailsProps {
   formData: {
@@ -11,7 +11,6 @@ interface investmentDetailsProps {
     investmentGoal: string;
     investmentHorizon: string;
     riskTolerance: string;
-    // [key: string]: any
   };
   updateField: (field: string, value: string | boolean) => void;
   showErrors?: boolean;

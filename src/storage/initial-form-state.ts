@@ -1,4 +1,6 @@
 const INITIAL_FORM_DATA = {
+  id: -1,
+
   portfolioName: '',
   portfolioType: '',
   investmentGoal: '',
