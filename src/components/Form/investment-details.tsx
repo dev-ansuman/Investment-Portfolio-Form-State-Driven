@@ -24,7 +24,7 @@ const InvestmentDetails: React.FC<investmentDetailsProps> = ({
   const validateField = (name: string, value: string) => {
     if (!value || value.trim() === '') return 'This is a required Field!';
     if (name === 'portfolioName') {
-      if (!/^[a-zA-Z]+$/.test(value.trim())) return 'Name cannot contain Numbers or Symbols!';
+      if (!/^[a-zA-Z\s]+$/.test(value.trim())) return 'Name cannot contain Numbers or Symbols!';
       if (value.trim().length < 3) return 'Atleast 3 characters required!';
     }
     return '';
