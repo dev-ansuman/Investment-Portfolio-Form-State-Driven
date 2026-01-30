@@ -1,73 +1,148 @@
-# React + TypeScript + Vite
+﻿# Investment-Portfolio-Form
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## This form consists of three parts
 
-Currently, two official plugins are available:
+### Investment Details
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The user inputs the the following in investment details part:
 
-## React Compiler
+1. Portfolio Name (Required Text Field)
+2. Portfolio Type (Required Radio)
+3. Investment Goal (Required dropdown)
+4. Investment Horizon (Required dropdown)
+5. Risk Tolerance (Required Radio)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+![alt text](./readmeImages/image.png)
+![alt text](./readmeImages/image-1.png)
+![alt text](./readmeImages/image-2.png)
 
-## Expanding the ESLint configuration
+### Asset Allocation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The user inputs the the following in asset allocation part:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Annual Investment Capacity (Required Input)
+2. Lump Sum Amount (Optional Input)
+3. Monthly Contribution (Optional Input)
+4. Asset Information : (1 asset required, multiple optional)
+   1. Asset Class
+   2. Percentage Allocation
+   3. Specific Fund
+   4. Current Value
+5. Investment Style (Optional Radio)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+![alt text](./readmeImages/image-3.png)
+![alt text](./readmeImages/image-4.png)
+![alt text](./readmeImages/image-5.png)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+### Preferences
+
+The user inputs the the following in preferences part:
+
+1. option to opt for automated rebalancing (Reqired Radio)
+2. Tax Saving Preference (Optional Checkbox)
+3. Future Financial Goal (Optioanl textArea)
+4. Risk Acknowledgement (Required Checkbox)
+
+![alt text](./readmeImages/image-6.png)
+![alt text](./readmeImages/image-7.png)
+![alt text](./readmeImages/image-8.png)
+
+## On Submit
+
+A modal shows that the form is submitted if all the required validations are met, there is one button on the modal, 'OKAY'.
+
+## On Update (Edit Mode)
+
+A modal shows that the record is updated if all the required validations are met, there is one button on the modal, 'OKAY'.
+
+## On Delete
+
+A modal shows up displaying that the selected record to going to be deleted, there are two buttons on the modal, 'CANCEL' and 'CONFIRM'.
+
+## Folder Structure
+
+```
+src
+ ┣ 📂app-context
+ ┃ ┣ app-actions.ts
+ ┃ ┣ app-context.instance.ts
+ ┃ ┣ app-context.types.ts
+ ┃ ┣ app-provider.tsx
+ ┃ ┣ app-reducer.ts
+ ┃ ┗ use-app.tsx
+ ┣ 📂components
+ ┃ ┣ 📂Form
+ ┃ ┃ ┣ asset-allocation.tsx
+ ┃ ┃ ┣ form.tsx
+ ┃ ┃ ┣ investment-details.tsx
+ ┃ ┃ ┣ navigation.tsx
+ ┃ ┃ ┣ preferences.tsx
+ ┃ ┃ ┗ Stepper.tsx
+ ┃ ┣ 📂Navbar
+ ┃ ┃ ┣ index.tsx
+ ┃ ┃ ┣ theme-toggler.tsx
+ ┃ ┃ ┗ Title.tsx
+ ┃ ┣ 📂Table
+ ┃ ┃ ┣ table.tsx
+ ┃ ┃ ┗ TableActions.tsx
+ ┃ ┗ 📂Ui
+ ┃ ┃ ┣ 📂custom
+ ┃ ┃ ┃ ┣ CreateDropdown.tsx
+ ┃ ┃ ┃ ┣ CreateInput.tsx
+ ┃ ┃ ┃ ┣ CreateRadioCheckbox.tsx
+ ┃ ┃ ┃ ┣ modal.tsx
+ ┃ ┃ ┃ ┗ radioCheckbox.tsx
+ ┃ ┃ ┗ 📂default
+ ┃ ┃ ┃ ┣ button.tsx
+ ┃ ┃ ┃ ┣ dropdown.tsx
+ ┃ ┃ ┃ ┣ input.tsx
+ ┃ ┃ ┃ ┗ textarea.tsx
+ ┣ 📂constants
+ ┃ ┣ 📂form-constants
+ ┃ ┃ ┣ asset-allocation.ts
+ ┃ ┃ ┣ investment-details.ts
+ ┃ ┃ ┣ navigation.ts
+ ┃ ┃ ┗ preferences.ts
+ ┃ ┗ 📂table-constants
+ ┃ ┃ ┣ table-action.ts
+ ┃ ┃ ┗ table.ts
+ ┣ 📂services
+ ┃ ┗ tableActions.ts
+ ┣ 📂storage
+ ┃ ┣ app.storage.ts
+ ┃ ┗ initial-form-state.ts
+ ┣ 📂types
+ ┃ ┣ Asset.ts
+ ┃ ┣ Modal.ts
+ ┃ ┗ Record.ts
+ ┣ App.css
+ ┣ App.tsx
+ ┣ index.css
+ ┗ main.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Steps to run the project locally
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+1. Run the code in the terminal or command prompt
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```
+git clone https://github.com/dev-ansuman/Investment-Portfolio-Form-State-Driven.git
+```
+
+2. Go the cloned project path
+
+```
+cd Investment-Portfolio-Form-State-Driven
+```
+
+3. install the required packages (from package.json)
+
+```
+npm i
+```
+
+3. Run the project
+
+```
+npm run dev
 ```
