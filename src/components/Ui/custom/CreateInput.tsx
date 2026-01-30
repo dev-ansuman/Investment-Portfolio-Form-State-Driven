@@ -1,5 +1,6 @@
 import React from 'react';
-import Input from '../default/input';
+// import Input from '../default/input';
+import MaterialInput from '../default/input';
 
 interface CreateInputProps {
   name: string;
@@ -19,7 +20,7 @@ const CreateInput: React.FC<CreateInputProps> = ({
   type,
   placeholder,
   id,
-  fieldClass,
+  // fieldClass,
   value,
   onChange,
   required,
@@ -27,8 +28,9 @@ const CreateInput: React.FC<CreateInputProps> = ({
   if (!required) {
     return (
       <>
-        <div className={fieldClass}>{fieldTitle}</div>
-        <Input
+        {/* <div className={fieldClass}>{fieldTitle}</div> */}
+        <MaterialInput
+          label={fieldTitle}
           type={type}
           placeholder={placeholder}
           id={id}
@@ -41,11 +43,12 @@ const CreateInput: React.FC<CreateInputProps> = ({
   } else {
     return (
       <>
-        <div className={fieldClass}>
+        {/* <div className={fieldClass}>
           {fieldTitle}
           <span className="required"> *</span>
-        </div>
-        <Input
+        </div> */}
+        <MaterialInput
+          label={fieldTitle}
           type={type}
           placeholder={placeholder}
           id={id}

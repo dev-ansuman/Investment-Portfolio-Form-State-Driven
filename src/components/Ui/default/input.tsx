@@ -1,4 +1,5 @@
 import React from 'react';
+import { TextField } from '@mui/material';
 
 interface InputProps {
   type: string;
@@ -7,11 +8,21 @@ interface InputProps {
   name: string;
   value: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  label: string;
 }
 
-const Input: React.FC<InputProps> = ({ type, placeholder, id, name, value, onChange }) => {
+const MaterialInput: React.FC<InputProps> = ({
+  type,
+  placeholder,
+  id,
+  name,
+  value,
+  onChange,
+  label,
+}) => {
   return (
-    <input
+    <TextField
+      label={label}
       type={type}
       placeholder={placeholder}
       id={id}
@@ -19,8 +30,9 @@ const Input: React.FC<InputProps> = ({ type, placeholder, id, name, value, onCha
       name={name}
       value={value || ''}
       onChange={onChange}
+      style={{ height: '29px' }}
     />
   );
 };
 
-export default Input;
+export default MaterialInput;

@@ -1,6 +1,6 @@
 export const TABLE_ACTION = {
   CLEAR_FORM: {
-    TEXT: 'Clear form',
+    TEXT: 'Clear',
     CLASS: ['tableActionButton', 'clearFormActionButton'],
     ID: 'clearFormButton',
   },
