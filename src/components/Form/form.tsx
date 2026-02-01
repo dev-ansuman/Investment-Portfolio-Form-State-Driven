@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
-// import { useApp } from '../../app-context/use-app';
 import InvestmentDetails from './InvestmentDetails';
-// import Navigation from './Navigation';
 import Navigation from './Navigation';
 import AssetAllocation from './AssetAllocation';
 import Preferences from './Preferences';
 import Stepper from './Stepper';
 import type { Asset } from '../../types/Asset';
-// import { addSubmittedRecord, getSubmittedRecords } from '../../storage/app.storage';
-// import { editRecord } from '../../services/table-actions';
-// import { saveFormData } from '../../storage/app.storage';
 
 import { useAppStore } from '../../store/use-app-store';
 
@@ -27,6 +22,7 @@ const Form: React.FC = () => {
   const addRecord = useAppStore((state) => state.addRecord);
   const updateRecord = useAppStore((state) => state.updateRecord);
   const closeForm = useAppStore((state) => state.closeForm);
+  const showSnackbar = useAppStore((state) => state.showSnackbar);
 
   useEffect(() => {
     if (isFormOpen) {
@@ -145,15 +141,15 @@ const Form: React.FC = () => {
       return;
     }
 
-    setShowPreferencesError(false);
-
     if (isEditMode) {
       updateRecord(formData);
+      showSnackbar('Portfolio updated successfully', 'success');
     } else {
       addRecord({
         ...formData,
         id: Date.now().toString(),
       });
+      showSnackbar('Portfolio added successfully', 'success');
     }
 
     setViewStep(1);

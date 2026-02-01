@@ -6,16 +6,25 @@ const Table: React.FC = () => {
   const records = useAppStore((state) => state.records);
   const openAddForm = useAppStore((state) => state.openAddForm);
   const openEditForm = useAppStore((state) => state.openEditForm);
+  const deleteRecord = useAppStore((state) => state.deleteRecord);
+  const showSnackbar = useAppStore((state) => state.showSnackbar);
+
   const [selectedRecordId, setSelectedRecordId] = useState<string | null>(null);
 
   const handleRowClick = (id: string) => {
     setSelectedRecordId((prev) => (prev === id ? null : id));
   };
 
-  // const handleClearForm = () => {
-  //   window.dispatchEvent(new Event('form_clear_requested'));
-  //   setSelectedRecordId(null);
-  // };
+  const handleDelete = () => {
+    if (!selectedRecordId) return;
+    const confirmed = window.confirm('Are you sure you want to delete this record?');
+
+    if (!confirmed) return;
+
+    deleteRecord(selectedRecordId);
+    setSelectedRecordId(null);
+    showSnackbar('Portfolio deleted successfully', 'success');
+  };
 
   useEffect(() => {
     const clearSelection = () => {
@@ -45,7 +54,7 @@ const Table: React.FC = () => {
       <TableActions
         clearFormAction={handleAddForm}
         editFormAction={handleEditform}
-        deleteAction={() => {}}
+        deleteAction={handleDelete}
         disabled={selectedRecordId === null}
       />
 

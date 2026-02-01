@@ -11,6 +11,14 @@ type AppStore = {
 
   isFormOpen: boolean;
 
+  snackbar: {
+    open: boolean;
+    message: string;
+    severity: 'success' | 'error' | 'info' | 'warning';
+  };
+
+  themeMode: 'light' | 'dark';
+
   openAddForm: () => void;
   openEditForm: (record: Record) => void;
   closeForm: () => void;
@@ -18,6 +26,11 @@ type AppStore = {
   addRecord: (record: Record) => void;
   updateRecord: (record: Record) => void;
   deleteRecord: (id: string) => void;
+
+  showSnackbar: (message: string, severity?: 'success' | 'error' | 'info' | 'warning') => void;
+  hideSnackbar: () => void;
+
+  toggleTheme: () => void;
 };
 
 export const useAppStore = create<AppStore>((set) => ({
@@ -26,6 +39,36 @@ export const useAppStore = create<AppStore>((set) => ({
   isEditMode: false,
   editingRecordId: null,
   isFormOpen: false,
+
+  snackbar: {
+    open: false,
+    message: '',
+    severity: 'success' as 'success' | 'error' | 'info' | 'warning',
+  },
+
+  themeMode: 'light',
+
+  showSnackbar: (message: string, severity = 'success') =>
+    set({
+      snackbar: {
+        open: true,
+        message,
+        severity,
+      },
+    }),
+
+  hideSnackbar: () =>
+    set((state) => ({
+      snackbar: {
+        ...state.snackbar,
+        open: false,
+      },
+    })),
+
+  toggleTheme: () =>
+    set((state) => ({
+      themeMode: state.themeMode === 'light' ? 'dark' : 'light',
+    })),
 
   openAddForm: () =>
     set({
@@ -40,7 +83,7 @@ export const useAppStore = create<AppStore>((set) => ({
       isFormOpen: true,
       isEditMode: true,
       editingRecordId: record.id,
-      formData: INITIAL_FORM_STATE,
+      formData: record,
     }),
 
   closeForm: () =>
