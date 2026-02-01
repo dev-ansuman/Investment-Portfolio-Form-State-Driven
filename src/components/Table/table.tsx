@@ -1,84 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { getSubmittedRecords } from '../../storage/app.storage';
-import { deleteRecord } from '../../services/tableActions';
 import TableActions from './TableActions';
-import type { Record } from '../../types/Record';
-import { useApp } from '../../app-context/use-app';
+import { useAppStore } from '../../store/use-app-store';
 
 const Table: React.FC = () => {
-  const { state, dispatch, setModalConfig } = useApp();
-  const { editingRecordId } = state;
+  const records = useAppStore((state) => state.records);
+  const openAddForm = useAppStore((state) => state.openAddForm);
+  const openEditForm = useAppStore((state) => state.openEditForm);
+  const [selectedRecordId, setSelectedRecordId] = useState<string | null>(null);
 
-  const [records, setRecords] = useState<Record[]>([]);
-  const [selectedRecordId, setSelectedRecordId] = useState<number | null>(null);
-
-  useEffect(() => {
-    const loadRecords = () => {
-      setRecords(getSubmittedRecords());
-    };
-
-    loadRecords();
-    window.addEventListener('records_updated', loadRecords);
-
-    return () => {
-      window.removeEventListener('records_updated', loadRecords);
-    };
-  }, []);
-
-  const handleRowClick = (id: number) => {
+  const handleRowClick = (id: string) => {
     setSelectedRecordId((prev) => (prev === id ? null : id));
   };
 
-  const handleClearForm = () => {
-    window.dispatchEvent(new Event('form_clear_requested'));
-    setSelectedRecordId(null);
-  };
-
-  const handleDelete = () => {
-    if (selectedRecordId === null) {
-      setModalConfig({
-        title: 'No Record Selected',
-        message: 'Please select a record to delete.',
-        type: 'alert',
-      });
-      return;
-    }
-
-    setModalConfig({
-      title: 'Delete Record',
-      message: 'Are you sure you want to delete this record?',
-      type: 'confirm',
-      onConfirm: (confirmed) => {
-        if (!confirmed) return;
-
-        deleteRecord(records, selectedRecordId);
-        setSelectedRecordId(null);
-        window.dispatchEvent(new Event('records_updated'));
-      },
-    });
-  };
-
-  const handleEditForm = () => {
-    if (selectedRecordId === null) {
-      // setModalConfig({
-      //   title: 'No selection',
-      //   message: 'Please select a record to edit.',
-      //   type: 'alert',
-      // });
-      return;
-    }
-
-    const recordToEdit = records.find((r) => r.id === selectedRecordId);
-    if (recordToEdit) {
-      dispatch({ type: 'START_EDIT', payload: recordToEdit });
-
-      // setModalConfig({
-      //   title: 'Edit Mode',
-      //   message: 'You can now update the selected record.',
-      //   type: 'alert',
-      // });
-    }
-  };
+  // const handleClearForm = () => {
+  //   window.dispatchEvent(new Event('form_clear_requested'));
+  //   setSelectedRecordId(null);
+  // };
 
   useEffect(() => {
     const clearSelection = () => {
@@ -91,12 +28,24 @@ const Table: React.FC = () => {
     };
   }, []);
 
+  const handleAddForm = () => {
+    openAddForm();
+    setSelectedRecordId(null);
+  };
+
+  const handleEditform = () => {
+    if (!selectedRecordId) return;
+
+    const recordToEdit = records.find((r) => r.id === selectedRecordId);
+    if (recordToEdit) openEditForm(recordToEdit);
+  };
+
   return (
     <div className="tableContainer">
       <TableActions
-        clearFormAction={handleClearForm}
-        editFormAction={handleEditForm}
-        deleteAction={handleDelete}
+        clearFormAction={handleAddForm}
+        editFormAction={handleEditform}
+        deleteAction={() => {}}
         disabled={selectedRecordId === null}
       />
 
@@ -118,7 +67,7 @@ const Table: React.FC = () => {
           <tbody id="tableBody">
             {records.map((record) => {
               const isSelected = selectedRecordId === record.id;
-              const isEditing = editingRecordId === record.id;
+              const isEditing = false;
 
               return (
                 <tr

@@ -1,12 +1,12 @@
 import React from 'react';
 import Title from './Title';
-import ThemeToggle from './theme-toggler';
+import ThemeToggle from './ThemeToggler';
 
 const Navbar: React.FC = () => {
   return (
     <header>
       <Title />
-      <ThemeToggle/>
+      <ThemeToggle />
     </header>
   );
 };

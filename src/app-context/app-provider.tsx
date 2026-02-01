@@ -2,7 +2,7 @@ import React, { useReducer, useState } from 'react';
 import { appReducer, initialAppState } from './app-reducer';
 import { AppContext } from './app-context.instance';
 import type { ModalConfig } from '../types/Modal';
-import Modal from '../components/Ui/custom/modal';
+import Modal from '../components/Ui/custom/Modal';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialAppState);
@@ -17,7 +17,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           title={modalConfig.title}
           message={modalConfig.message}
           type={modalConfig.type}
-          onClose={(confirmed) => {
+          onClose={(confirmed: boolean) => {
             modalConfig.onConfirm?.(confirmed);
             setModalConfig(null);
           }}

@@ -1,60 +1,65 @@
 import React, { useEffect, useState } from 'react';
-import { useApp } from '../../app-context/use-app';
-import InvestmentDetails from './investment-details';
-import Navigation from './navigation';
-import AssetAllocation from './asset-allocation';
-import Preferences from './preferences';
+// import { useApp } from '../../app-context/use-app';
+import InvestmentDetails from './InvestmentDetails';
+// import Navigation from './Navigation';
+import Navigation from './Navigation';
+import AssetAllocation from './AssetAllocation';
+import Preferences from './Preferences';
 import Stepper from './Stepper';
 import type { Asset } from '../../types/Asset';
-import { addSubmittedRecord, getSubmittedRecords } from '../../storage/app.storage';
-import { editRecord } from '../../services/tableActions';
+// import { addSubmittedRecord, getSubmittedRecords } from '../../storage/app.storage';
+// import { editRecord } from '../../services/table-actions';
+// import { saveFormData } from '../../storage/app.storage';
 
-import { saveFormData } from '../../storage/app.storage';
+import { useAppStore } from '../../store/use-app-store';
 
 const Form: React.FC = () => {
   const [viewStep, setViewStep] = useState(1);
-
-  const { state, dispatch, setModalConfig } = useApp();
-  const { formData, editingRecordId } = state;
-  const isEditing = editingRecordId !== null;
 
   const [showInvestmentDetailsErrors, setShowInvestmentDetailsErrors] = useState(false);
   const [showAssetAllocationErrors, setShowAssetAllocationErrors] = useState(false);
   const [showPreferencesError, setShowPreferencesError] = useState(false);
 
-  useEffect(() => {
-    saveFormData(formData);
-  }, [formData]);
+  const formData = useAppStore((state) => state.formData);
+  const isEditMode = useAppStore((state) => state.isEditMode);
+  const isFormOpen = useAppStore((state) => state.isFormOpen);
+
+  const addRecord = useAppStore((state) => state.addRecord);
+  const updateRecord = useAppStore((state) => state.updateRecord);
+  const closeForm = useAppStore((state) => state.closeForm);
 
   useEffect(() => {
-    const handleClearRequest = () => {
-      dispatch({ type: 'CLEAR_FORM' });
+    if (isFormOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowInvestmentDetailsErrors(false);
+
       setShowAssetAllocationErrors(false);
+
       setShowPreferencesError(false);
+
       setViewStep(1);
-    };
-
-    window.addEventListener('form_clear_requested', handleClearRequest);
-
-    return () => {
-      window.removeEventListener('form_clear_requested', handleClearRequest);
-    };
-  }, [dispatch]);
-
-  const updateField = (field: string, value: string | boolean | Asset[]) => {
-    dispatch({
-      type: 'SET_FORM_DATA',
-      payload: { ...formData, [field]: value },
-    });
-  };
+    }
+  }, [isFormOpen]);
 
   useEffect(() => {
-    if (editingRecordId !== null) {
+    if (isEditMode) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setViewStep(1);
     }
-  }, [editingRecordId]);
+  }, [isEditMode]);
+
+  if (!isFormOpen) return null;
+
+  const isEditing = isEditMode;
+
+  const updateField = (field: string, value: string | boolean | Asset[]) => {
+    useAppStore.setState((state) => ({
+      formData: {
+        ...state.formData,
+        [field]: value,
+      },
+    }));
+  };
 
   const isInvestmentDetailsValid = () => {
     return (
@@ -142,28 +147,17 @@ const Form: React.FC = () => {
 
     setShowPreferencesError(false);
 
-    const records = getSubmittedRecords();
-
-    if (editingRecordId !== null) {
-      editRecord(records, formData, editingRecordId);
+    if (isEditMode) {
+      updateRecord(formData);
     } else {
-      addSubmittedRecord(formData);
+      addRecord({
+        ...formData,
+        id: Date.now().toString(),
+      });
     }
 
-    setModalConfig({
-      title: editingRecordId ? 'Record Updated' : 'Record Submitted',
-      message: editingRecordId
-        ? 'The record has been updated successfully.'
-        : 'The record has been submitted successfully.',
-      type: 'alert',
-      onConfirm: () => {
-        window.dispatchEvent(new Event('records_updated'));
-
-        dispatch({ type: 'CLEAR_FORM' });
-
-        setViewStep(1);
-      },
-    });
+    setViewStep(1);
+    closeForm();
   };
 
   return (

@@ -1,5 +1,5 @@
-const INITIAL_FORM_DATA = {
-  id: -1,
+const INITIAL_FORM_STATE = {
+  id: '',
 
   portfolioName: '',
   portfolioType: '',
@@ -29,4 +29,4 @@ const INITIAL_FORM_DATA = {
 
 const INITIAL_STEP = 1;
 
-export { INITIAL_FORM_DATA, INITIAL_STEP };
+export { INITIAL_FORM_STATE, INITIAL_STEP };

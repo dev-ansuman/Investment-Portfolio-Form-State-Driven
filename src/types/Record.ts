@@ -1,7 +1,7 @@
 import type { Asset } from './Asset';
 
 export interface Record {
-  id: number;
+  id: string;
 
   portfolioName: string;
   portfolioType: string;

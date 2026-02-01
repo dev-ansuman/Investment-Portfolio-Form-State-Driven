@@ -1,68 +1,35 @@
 import React from 'react';
-import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
-import type { ChangeEvent, ReactNode } from 'react';
 
 interface dropdownProps {
   options: string[];
   name: string;
   id: string;
   value: string;
-  // onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  onChange: (
-    event:
-      | ChangeEvent<Omit<HTMLInputElement, 'value'> & { value: string }>
-      | (Event & { target: { value: string; name: string } }),
-    child: ReactNode
-  ) => void;
-  fieldTitle: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const MaterialDropdown: React.FC<dropdownProps> = ({
-  options,
-  name,
-  id,
-  value,
-  onChange,
-  fieldTitle,
-}) => {
+const Dropdown: React.FC<dropdownProps> = ({ options, name, id, value, onChange }) => {
   const createOptions = (option: string, index: number) => {
     if (option !== '-- Select --') {
       return (
-        <MenuItem key={index} value={option}>
+        <option key={index} value={option}>
           {option}
-        </MenuItem>
+        </option>
       );
     } else {
       return (
-        <MenuItem key={index} value="">
+        <option key={index} value="">
           {option}
-        </MenuItem>
+        </option>
       );
     }
   };
 
   return (
-    // <select name={name} id={id} className="fieldInput" value={value || ''} onChange={onChange}>
-    //   {options.map((option: string, index: number) => createOptions(option, index))}
-    // </select>
-
-    <FormControl>
-      <InputLabel id="dropdownSelect">{fieldTitle}</InputLabel>
-      <Select
-        labelId="dropdownSelect"
-        // label="Age"
-
-        name={name}
-        id={id}
-        className="fieldInput"
-        value={value || ''}
-        onChange={onChange}
-        style={{ width: '100%' }}
-      >
-        {options.map((option: string, index: number) => createOptions(option, index))}
-      </Select>
-    </FormControl>
+    <select name={name} id={id} className="fieldInput" value={value || ''} onChange={onChange}>
+      {options.map((option: string, index: number) => createOptions(option, index))}
+    </select>
   );
 };
 
-export default MaterialDropdown;
+export default Dropdown;

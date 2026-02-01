@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from '@mui/material';
 
 interface buttonProps {
   text: string;
@@ -7,34 +6,16 @@ interface buttonProps {
   buttonClass: string;
   action: () => void;
   disabled?: boolean;
-  variant: 'contained' | 'outlined' | 'text';
-  color: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
 }
 
-const MaterialButton: React.FC<buttonProps> = ({
-  text,
-  id,
-  buttonClass,
-  action,
-  disabled = false,
-  variant,
-  color,
-}) => {
+const Button: React.FC<buttonProps> = ({ text, id, buttonClass, action, disabled = false }) => {
   return (
     <>
-      <Button
-        variant={variant}
-        className={buttonClass}
-        id={id}
-        onClick={action}
-        disabled={disabled}
-        color={color}
-        style={{ borderRadius: '19px', width: '100px' }}
-      >
+      <button className={buttonClass} id={id} onClick={action} disabled={disabled}>
         {text}
-      </Button>
+      </button>
     </>
   );
 };
 
-export default MaterialButton;
+export default Button;

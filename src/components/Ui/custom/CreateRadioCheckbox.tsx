@@ -1,5 +1,5 @@
 import React from 'react';
-import RadioCheckbox from './radioCheckbox';
+import RadioCheckbox from './RadioCheckbox';
 
 interface createRadioCheckboxProps {
   fieldTitle: string;

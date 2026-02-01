@@ -2,11 +2,10 @@ import React from 'react';
 import CreateInput from '../Ui/custom/CreateInput';
 import { ASSET_ALLOCATION } from '../../constants/form-constants/asset-allocation';
 import CreateRadioCheckbox from '../Ui/custom/CreateRadioCheckbox';
-import Button from '../Ui/default/button';
+import Button from '../Ui/default/Button';
 import CreateDropdown from '../Ui/custom/CreateDropdown';
-import Input from '../Ui/default/input';
-import Dropdown from '../Ui/default/dropdown';
-import { TextField } from '@mui/material';
+import Input from '../Ui/default/Input';
+import Dropdown from '../Ui/default/Dropdown';
 
 interface assetAllocationProps {
   formData: {
@@ -97,10 +96,10 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({
     <div className="formScreen">
       {/* Annual Investment Capacity Input */}
       <div className="fieldDiv">
-        {/* <div className="fieldTitle">
+        <div className="fieldTitle">
           {ASSET_ALLOCATION.ANNUAL_INVESTMENT_CAPACITY.LABEL}
           <span className="required"> *</span>
-        </div> */}
+        </div>
         <div className="inputCapacity">
           <div>
             <Dropdown
@@ -119,7 +118,6 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({
               name={ASSET_ALLOCATION.ANNUAL_INVESTMENT_CAPACITY.NAME}
               value={formData.annualInvestmentCapacity}
               onChange={handleInputChange}
-              label={ASSET_ALLOCATION.ANNUAL_INVESTMENT_CAPACITY.LABEL}
             />
           </div>
         </div>
@@ -232,9 +230,9 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({
 
             {/* Current Value Input */}
             <div className="fieldDiv">
-              {/* <div className="subFieldTitle">{ASSET_ALLOCATION.CURRENT_VALUE.LABEL}</div> */}
+              <div className="subFieldTitle">{ASSET_ALLOCATION.CURRENT_VALUE.LABEL}</div>
               <div className="deleteAssetContainer">
-                <TextField
+                <Input
                   name={`currentValue-${index}`}
                   type={ASSET_ALLOCATION.CURRENT_VALUE.TYPE}
                   placeholder={ASSET_ALLOCATION.CURRENT_VALUE.PLACEHOLDER}
@@ -243,7 +241,6 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({
                   onChange={(e) => {
                     handleAssetChange(index, 'currentValue', e.target.value);
                   }}
-                  label={ASSET_ALLOCATION.CURRENT_VALUE.LABEL}
                 />
                 <Button
                   text="🗑️"
@@ -251,8 +248,6 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({
                   buttonClass="deleteButton"
                   action={() => deleteAsset(index)}
                   disabled={formData.assets.length == 1}
-                  variant="text"
-                  color="inherit"
                 />
               </div>
             </div>
@@ -266,8 +261,6 @@ const AssetAllocation: React.FC<assetAllocationProps> = ({
         buttonClass="addAssetButton"
         id={ASSET_ALLOCATION.ADD_ASSET.ID}
         action={addAsset}
-        variant="outlined"
-        color="inherit"
       />
 
       {/* Investment Style */}
